@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="d6834063-3663-42de-8cb5-d41849de0b91" name="SW" url="http://nippel.ftp.tools">
+        <fileTransfer host="nippel.ftp.tools" port="21" rootFolder="/ststs.xyz/sw">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

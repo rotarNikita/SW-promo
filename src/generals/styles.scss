@@ -1,0 +1,39 @@
+@import "~reset-css/reset";
+
+@import "variables";
+@import "fonts";
+
+body {
+  font-family: $fontFamilyGotham;
+  font-weight: bold;
+  font-size: 14px;
+  color: $textColor;
+}
+
+a {
+  outline: none;
+}
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
+:global {
+  .container {
+    width: 1190px;
+    min-width: 80%;
+    margin: 0 auto;
+    padding: 0 10px;
+    @media (max-width: 1200px) {
+      width: 920px;
+    }
+  }
+
+  .clearfix {
+    &:after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+  }
+}

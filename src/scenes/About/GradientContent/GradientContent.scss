@@ -1,0 +1,40 @@
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translate(-150%, -50%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-150%, -50%);
+  }
+}
+
+.wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  &.slideLeft {
+    animation: slideLeft 1s;
+  }
+  &.slideRight {
+    animation: slideRight 1s;
+  }
+}
+
+.text {
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.9px;
+}

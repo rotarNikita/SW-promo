@@ -1,0 +1,20 @@
+@import "../../../generals/variables";
+
+.menu {
+  opacity: 0;
+  transition: opacity $menuTransitionTime;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 0;
+  transform: translate(-50%, -50%);
+  &.opened {
+    opacity: 1;
+  }
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+}

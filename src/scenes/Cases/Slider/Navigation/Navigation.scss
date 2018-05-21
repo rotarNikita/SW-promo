@@ -1,0 +1,33 @@
+@keyframes slideLeft {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.list {
+  display: flex;
+  margin: 0 -5px;
+  z-index: -1;
+  &.slideLeft {
+    animation: slideLeft .5s;
+  }
+  &.slideRight {
+    animation: slideRight .5s;
+  }
+}

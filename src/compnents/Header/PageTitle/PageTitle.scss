@@ -1,0 +1,103 @@
+@import "../../../generals/variables";
+
+@keyframes textSlideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0%);
+  }
+}
+
+@keyframes nextPageTitle {
+  from {
+    transform: translate(-100%, calc(100vh - 129px));
+    left: calc(100% - 10px);
+  }
+  to {
+    transform: translate(-50%, 0);
+    left: 50%;
+  }
+}
+
+@keyframes nextPageBefore {
+  from {
+    transform: translateX(-50%) rotate(90deg) translateX(-50%);
+    left: 100%;
+    bottom: 50%;
+  }
+  to {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes prevPageTitle {
+  from {
+    transform: translate(0, calc(100vh - 129px));
+    left: 10px;
+  }
+  to {
+    transform: translate(-50%, 0);
+    left: 50%;
+  }
+}
+
+@keyframes prevPageBefore {
+  from {
+    transform: translateX(-50%) rotate(-90deg) translateX(50%);
+    left: 0;
+    bottom: 50%;
+  }
+  to {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.title {
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  transition: all .3s;
+  cursor: default;
+  white-space: nowrap;
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    transform-origin: bottom;
+    //width: 4px;
+    width: 2px;
+    background-color: $themeColor1;
+    height: 100vh;
+  }
+  &.active {
+    transform: translateX(-50%) translateY(10px);
+    letter-spacing: 2.8px;
+  }
+  &.nextPage {
+    animation: nextPageTitle $pageTransitionTime;
+    &:before {
+      animation: nextPageBefore $pageTransitionTime;
+    }
+  }
+  &.prevPage {
+    animation: prevPageTitle $pageTransitionTime;
+    &:before {
+      animation: prevPageBefore $pageTransitionTime;
+    }
+  }
+  &.slideDown {
+    animation: textSlideDown .5s;
+  }
+}

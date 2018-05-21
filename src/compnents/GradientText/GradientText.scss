@@ -1,0 +1,19 @@
+@import "../../generals/variables";
+
+.text {
+  x: 0;
+  y: 0;
+  fill: $gradientText;
+}
+
+.wrapper {
+  display: inline-block;
+  line-height: 0;
+  font-size: 0;
+  padding: 5px 0;
+}
+
+.svg {
+  line-height: inherit;
+  font-size: inherit;
+}

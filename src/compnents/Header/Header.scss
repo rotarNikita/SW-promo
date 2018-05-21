@@ -1,0 +1,27 @@
+@import "../../generals/variables";
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 110;
+  padding-top: $pageSpaceTopBottom;
+  background-color: transparent;
+  transition: background-color $menuTransitionTime;
+  &.open {
+    background-color: rgba($themeColor3, .9);
+  }
+}
+
+.logoFloatRight {
+  float: right;
+}
+
+:global {
+  #headerRight {
+    position: absolute;
+    right: 10px;
+    top: 0;
+  }
+}

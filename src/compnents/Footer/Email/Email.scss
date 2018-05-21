@@ -1,0 +1,41 @@
+@import "../../../generals/variables";
+
+@keyframes emailSlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+@keyframes emailSlideLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+.mailText {
+  font-family: $fontFamilyGotham;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+}
+
+.wrapper {
+  line-height: 0;
+  font-size: 0;
+  position: absolute;
+  animation: emailSlideRight .5s;
+  &.close {
+    animation: emailSlideLeft .5s
+  }
+}

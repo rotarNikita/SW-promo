@@ -1,0 +1,102 @@
+@import "../../../generals/variables";
+
+@keyframes nextPageTitle {
+  from {
+    transform: translate(-50%, calc(-100vh + 129px));
+    left: 50%;
+  }
+  to {
+    transform: translate(0, 0);
+    left: 10px;
+  }
+}
+
+@keyframes nextPageAfter {
+  from {
+    transform: translateX(-100%) rotate(90deg);
+    top: -7px;
+    left: calc(50% - 1px);
+  }
+  to {
+    left: 0;
+    top: calc(50% - 3px);
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes prevPageTitle {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@mixin hoverDisabled () {
+  &:hover {
+    letter-spacing: 1.4px;
+    transform: translateX(0);
+  }
+}
+
+.text {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  position: relative;
+  transition: all .3s;
+  letter-spacing: 1.4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: calc(50% - 2px);
+    transform: translateX(-100%);
+    width: 100vw;
+    //height: 4px;
+    height: 2px;
+    background-color: $themeColor1;
+    transform-origin: right;
+  }
+  &:hover {
+    letter-spacing: 2.8px;
+    transform: translateX(10px);
+  }
+  &.nextPage {
+    position: absolute;
+    animation: nextPageTitle $pageTransitionTime;
+    @include hoverDisabled;
+    &:after {
+      animation: nextPageAfter $pageTransitionTime;
+    }
+  }
+  &.prevPage {
+    animation: prevPageTitle $pageTransitionTime;
+    @include hoverDisabled;
+  }
+  &.slideRight {
+    animation: prevPageTitle .5s;
+    @include hoverDisabled;
+  }
+  &.slideLeft {
+    animation: slideLeft $pageTransitionTime;
+    @include hoverDisabled;
+  }
+}

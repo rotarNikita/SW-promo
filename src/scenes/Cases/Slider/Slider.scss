@@ -1,0 +1,15 @@
+.wrapper {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  user-select: none;
+  -webkit-user-drag: none;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  position: relative;
+}

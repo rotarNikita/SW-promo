@@ -1,0 +1,70 @@
+@import "../../../../generals/variables";
+
+$dotWidth: 28px;
+$dotMargin: 7px;
+$dotHeight: 3px;
+$dotClickField: 2px;
+$dotRadius: 2px;
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.dots {
+  position: absolute;
+  bottom: 100%;
+  right: 20px;
+  animation: slideLeft .5s;
+  &.hide {
+    animation: slideRight .5s;
+  }
+}
+
+.dot {
+  width: $dotWidth;
+  height: $dotHeight + 2 * $dotClickField;
+  display: inline-block;
+  margin: 0 7px;
+  position: relative;
+  cursor: pointer;
+  &:after, &:before {
+    content: '';
+    position: absolute;
+    top: $dotClickField;
+    left: 0;
+    width: $dotWidth;
+    height: $dotHeight;
+    border-radius: $dotRadius;
+    background-color: $defaultColor;
+    transition: all .3s;
+  }
+  &.active {
+    &:after {
+      background-color: $themeColor1;
+    }
+  }
+}
+
+.numbers {
+  margin: 10px 0;
+  font-size: 16px;
+  padding-right: 5px;
+}

@@ -1,0 +1,62 @@
+@import "../../generals/variables";
+
+.main {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.mainInner {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.pageInRTL {
+  transform: translateX(100%);
+  transition: all $pageTransitionTime ease-out;
+  opacity: 0;
+}
+
+.pageInRTL.pageInRTLActive {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.pageOutRTL {
+  transform: translateX(0);
+  transition: all $pageTransitionTime ease-in;
+  opacity: 1;
+}
+
+.pageOutRTL.pageOutRTLActive {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.pageInLTR {
+  transform: translateX(-100%);
+  transition: all $pageTransitionTime ease-out;
+  opacity: 0;
+}
+
+.pageInLTR.pageInLTRActive {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.pageOutLTR {
+  transform: translateX(0);
+  transition: all $pageTransitionTime ease-in;
+  opacity: 1;
+}
+
+.pageOutLTR.pageOutLTRActive {
+  transform: translateX(100%);
+  opacity: 0;
+}

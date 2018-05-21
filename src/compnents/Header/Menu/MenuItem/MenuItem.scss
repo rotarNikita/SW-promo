@@ -1,0 +1,23 @@
+@import "../../../../generals/variables";
+
+.text {
+  font-family: $fontFamilyGotham;
+  font-size: 26px;
+  font-weight: 400;
+  fill: $textColor;
+}
+
+.active {
+  .text {
+    fill: $gradientText;
+  }
+}
+
+.item {
+  padding: 0 35px;
+  svg:hover {
+    .text {
+      fill: $gradientText;
+    }
+  }
+}

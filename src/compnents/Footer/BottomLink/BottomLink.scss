@@ -1,0 +1,55 @@
+@import "../../../generals/variables";
+
+@keyframes textSlideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0%);
+  }
+}
+
+@keyframes textSlideDown {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0%);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(100%);
+  }
+}
+
+.text {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  letter-spacing: 1.4px;
+  transition: all .3s;
+  padding: 5px 0 10px 0;
+  cursor: pointer;
+  animation: textSlideUp .5s;
+  &.close {
+    animation: textSlideDown .5s;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: calc(50% - 1px);
+    width: 2px;
+    height: 100vh;
+    background-color: $themeColor1;
+  }
+  &:hover {
+    letter-spacing: 2.8px;
+    transform: translateX(-50%) translateY(-10px);
+  }
+}

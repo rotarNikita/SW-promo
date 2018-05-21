@@ -1,0 +1,9 @@
+@import "../../../generals/variables";
+
+.logo {
+  transition: $menuTransitionTime;
+}
+
+.glitchLogoWrapper {
+  float: right;
+}

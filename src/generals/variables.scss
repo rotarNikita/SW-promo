@@ -1,0 +1,55 @@
+$pageSpaceTopBottom: 50px;
+
+$fontFamilyGotham: 'Gotham Pro', sans-serif;
+
+$themeColor1: #ff6666;
+$themeColor2: #004da2;
+$themeColor3: #ffffff;
+
+$textColor: #000;
+$textColorLight: #202020;
+
+$defaultColor: #d0d0d0;
+
+$gradientText: url(#GradientText);
+
+$menuTransitionTime: .5s;
+$pageTransitionTime: 1.5s;
+
+@mixin glitchAnimationMixin($name, $intensity, $height) {
+  @at-root {
+    @keyframes #{$name} {
+      @for $i from 0 through $intensity {
+        #{percentage($i / $intensity)} {
+          clip: rect(random($height) + px, 100vw, random($height) + px, 0);
+        }
+      }
+    }
+  }
+
+  animation: #{$name} 2s infinite linear alternate-reverse;
+}
+
+@mixin glitchAfterMixin($offset, $background) {
+  right: -$offset;
+  background: $background;
+  width: calc(100% + #{2 * $offset});
+  &:before {
+    content: '';
+    display: block;
+    width: 2 * $offset;
+    height: 100%;
+  }
+}
+
+@mixin glitchBeforeMixin($offset, $background) {
+  left: -$offset;
+  background: $background;
+  width: calc(100% + #{2 * $offset});
+  &:after {
+    content: '';
+    display: block;
+    width: 2 * $offset;
+    height: 100%;
+  }
+}

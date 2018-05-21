@@ -1,0 +1,56 @@
+@import "../../../generals/variables";
+
+.burger {
+  float: left;
+  position: relative;
+  width: 38px;
+  height: 25px;
+  cursor: pointer;
+  .lineAfter, .lineBefore {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    background-color: $textColor;
+    height: 1px;
+    transition: top .3s .2s, bottom .3s .2s, max-width .2s ease;
+  }
+  .lineAfter {
+    top: 0;
+  }
+  .lineBefore {
+    bottom: 0;
+  }
+  &:hover {
+    .line {
+      max-width: 100%;
+    }
+  }
+  &.opened {
+    .lineAfter {
+      top: 12px;
+      max-width: 50%;
+      transition: top .3s, max-width .2s .3s ease;
+    }
+    .lineBefore {
+      bottom: 12px;
+      max-width: 50%;
+      transition: bottom .3s, max-width .2s .3s ease;
+    }
+    .line {
+      transition: max-width .3s .2s ease;
+    }
+  }
+}
+
+.line {
+  position: absolute;
+  left: 0;
+  top: 12px;
+  background-color: $textColor;
+  height: 1px;
+  width: 100%;
+  max-width: 50%;
+  transition: max-width .3s ease;
+}

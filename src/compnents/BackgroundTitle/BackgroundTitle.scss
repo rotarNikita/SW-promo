@@ -1,0 +1,23 @@
+@import "../../generals/variables";
+
+.text {
+  position: absolute;
+  top: 110px;
+  color: rgba($textColorLight, .12);
+  font-size: 164px;
+  text-transform: uppercase;
+  letter-spacing: 15px;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.sub {
+  position: absolute;
+  bottom: 24px;
+  letter-spacing: 0;
+  text-transform: none;
+  left: 0;
+  color: #202020;
+  font-size: 48px;
+  font-weight: 700;
+}
