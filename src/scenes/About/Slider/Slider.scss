@@ -25,6 +25,13 @@
 .wrapper {
   position: relative;
   height: 100vh;
+  user-select: none;
+  * {
+    user-select: none;
+  }
+  img {
+    -webkit-user-drag: none;
+  }
 }
 
 .slider {

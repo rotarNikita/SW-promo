@@ -1,0 +1,40 @@
+@import "../../../../generals/variables";
+
+.col {
+  flex-grow: 1;
+}
+
+.title {
+  color: rgba($textColorLight, .5);
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 50px;
+}
+
+.mail, .tel {
+  font-size: 18px;
+  color: $textColor;
+  text-decoration: none;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.mail {
+  font-weight: 500;
+  &:hover {
+    color: $themeColor1
+  }
+}
+
+.tel {
+  font-weight: 700;
+  &:hover {
+    color: $themeColor2
+  }
+}
+
+.address {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}

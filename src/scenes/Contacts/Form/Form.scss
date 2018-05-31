@@ -1,0 +1,133 @@
+@import "../../../generals/variables";
+
+@keyframes showForm {
+  0% {
+    clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
+  }
+  //16.66% {
+  //  clip-path: polygon(61% 38%, 67% 49%, 53% 56%, 40% 50%, 46% 37%);
+  //}
+  //33.32% {
+  //  clip-path: polygon(61% 38%, 67% 49%, 53% 56%, 40% 50%, 46% 37%);
+  //}
+  50% {
+    clip-path: polygon(79% 21%, 88% 75%, 31% 91%, 10% 55%, 27% 17%);
+  }
+  //66.66% {
+  //  clip-path: polygon(79% 21%, 88% 75%, 31% 91%, 10% 55%, 27% 17%);
+  //}
+  //83.32% {
+  //  clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0, 50% 0);
+  //}
+  100% {
+    clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0, 50% 0);
+  }
+}
+
+@keyframes hideForm {
+  0% {
+    clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0, 50% 0);
+  }
+  //16.66% {
+  //  clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0, 50% 0);
+  //}
+  //33.32% {
+  //  clip-path: polygon(79% 21%, 88% 75%, 31% 91%, 10% 55%, 27% 17%);
+  //}
+  50% {
+    clip-path: polygon(79% 21%, 88% 75%, 31% 91%, 10% 55%, 27% 17%);
+  }
+  //66.66% {
+  //  clip-path: polygon(61% 38%, 67% 49%, 53% 56%, 40% 50%, 46% 37%);
+  //}
+  //83.32% {
+  //  clip-path: polygon(61% 38%, 67% 49%, 53% 56%, 40% 50%, 46% 37%);
+  //}
+  100% {
+    clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
+  }
+}
+
+.wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: $themeColor3;
+  z-index: 120;
+}
+
+.form {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.showForm {
+  animation: showForm .5s;
+}
+
+.hideForm {
+  animation: hideForm .5s;
+}
+
+.crossWrapper {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  text-align: right;
+  top: $pageSpaceTopBottom;
+}
+
+.cross {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  cursor: pointer;
+  transform: rotate(0deg);
+  transition: transform .5s;
+  transform-origin: center;
+  &:hover {
+    transform: rotate(180deg);
+  }
+  &:after, &:before {
+    content: '';
+    position: absolute;
+    top: calc(50% - 1px);
+    width: 100%;
+    left: 0;
+    height: 2px;
+    background-color: $textColor;
+    transform-origin: center;
+  }
+  &:after {
+    transform: rotate(45deg);
+  }
+  &:before {
+    transform: rotate(-45deg);
+  }
+}
+
+$padding: 25px;
+
+.row {
+  display: flex;
+  margin: 0 -$padding;
+}
+
+.col {
+  width: 50%;
+  padding: 0 $padding;
+}
+
+.submitWrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(100% + 30px);
+  text-align: center;
+}

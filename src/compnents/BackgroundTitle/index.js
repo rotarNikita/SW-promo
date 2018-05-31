@@ -32,10 +32,10 @@ export default class BackgroundTitle extends PureComponent {
 
     render () {
         const { dx, dy } = this.state;
-        const { subTitle } = this.props;
+        const { subTitle, ...rest } = this.props;
 
         return (
-            <div className={styles.text}>
+            <div className={styles.text} {...rest}>
                 <div style={{transform: `translate(${dx}px, ${dy}px)`}}>
                     {this.props.children}
                 </div>

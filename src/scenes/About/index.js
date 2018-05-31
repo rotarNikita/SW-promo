@@ -16,6 +16,13 @@ export default class About extends Component {
         this.setState({mountGradientContent})
     };
 
+    syncNextButtonClick = value => {
+        this.nextButtonClick = value;
+        this.forceUpdate();
+    };
+
+    nextButtonClick() {}
+
     render () {
         const { mountGradientContent } = this.state;
 
@@ -25,9 +32,10 @@ export default class About extends Component {
                     About us
                 </BackgroundTitle>
 
-                <GradientContent mount={mountGradientContent}/>
+                <GradientContent mount={mountGradientContent} nextButtonClick={this.nextButtonClick}/>
 
-                <Slider gradientContentVisibility={this.gradientContentVisibility}/>
+                <Slider gradientContentVisibility={this.gradientContentVisibility}
+                        syncNextButtonClick={this.syncNextButtonClick}/>
             </div>
         )
     }

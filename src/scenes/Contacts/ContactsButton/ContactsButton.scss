@@ -1,0 +1,43 @@
+@import "../../../generals/variables";
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.button {
+  position: absolute;
+  right: 0;
+  top: -65px;
+  transition: all .3s;
+}
+
+.mouseDown {
+  top: -60px;
+  //box-shadow: 0 5px 25px 2px rgba(darken($themeColor1, 10%), .4);
+}
+
+.slideLeft {
+  animation: slideLeft 1.5s;
+}
+
+.slideRight {
+  animation: slideRight 1.5s;
+}

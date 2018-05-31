@@ -78,8 +78,12 @@ export default class Slide extends PureComponent {
                         <div className={styles.loaderInner} style={{backgroundImage: `url(${loader})`}}/>
                     </div>}
                     {load && <div className={`${styles.media} ${styles.description}`}>
-                        <div className={styles.title}>{data.title}</div>
-                        <a className={styles.link} href={data.link}>DISCOVER</a>
+                        <div className={styles.title}>
+                            {data.title}
+                            <br/>
+                            <div className={styles.subtitle}>{data.subtitle}</div>
+                        </div>
+                        {data.link && <a className={styles.link} href={data.link}>DISCOVER</a>}
                     </div>}
                 </div>
             </div>

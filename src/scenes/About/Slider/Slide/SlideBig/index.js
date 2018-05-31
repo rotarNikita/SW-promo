@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import styles from './SlideBig.scss';
 import loader from '../../../../../generals/photoLoader/index';
 
+const LEFT_BREAKPOINT = [200, 100, 0];
+const SCALE_BREAKPOINT = [0.9, 0.9, 1];
+const OPACITY_BREAKPOINT = [0, 0.7, 1];
+
 export default class SlideBig extends Component {
     constructor (props) {
         super(props);
@@ -14,13 +18,33 @@ export default class SlideBig extends Component {
     slidePosition () {
         const { slide, currentSlide } = this.props;
 
-        if (slide > currentSlide + 1) return styles.doubleRight;
-        if (slide < currentSlide - 1) return styles.doubleLeft;
+        let multiplier = (slide - currentSlide);
 
-        if (slide > currentSlide) return styles.right;
-        if (slide < currentSlide) return styles.left;
+        let left = 0;
+        let scale = 1;
+        let opacity = 1;
 
-        return ''
+        if (multiplier >= 2 || multiplier <= -2) {
+            left = Math.sign(multiplier) * LEFT_BREAKPOINT[0];
+            scale = SCALE_BREAKPOINT[0];
+            opacity = OPACITY_BREAKPOINT[0];
+        } else if (multiplier > 1 || multiplier < -1) {
+            multiplier = multiplier - Math.sign(multiplier) * 1;
+
+            left = multiplier * (LEFT_BREAKPOINT[0] - LEFT_BREAKPOINT[1]) + Math.sign(multiplier) * LEFT_BREAKPOINT[1];
+            scale = Math.abs(multiplier) * (SCALE_BREAKPOINT[0] - SCALE_BREAKPOINT[1]) + SCALE_BREAKPOINT[1];
+            opacity = Math.abs(multiplier) * (OPACITY_BREAKPOINT[0] - OPACITY_BREAKPOINT[1]) + OPACITY_BREAKPOINT[1];
+        } else {
+            left = multiplier * (LEFT_BREAKPOINT[1] - LEFT_BREAKPOINT[2]) + Math.sign(multiplier) * LEFT_BREAKPOINT[2];
+            scale = Math.abs(multiplier) * (SCALE_BREAKPOINT[1] - SCALE_BREAKPOINT[2]) + SCALE_BREAKPOINT[2];
+            opacity = Math.abs(multiplier) * (OPACITY_BREAKPOINT[1] - OPACITY_BREAKPOINT[2]) + OPACITY_BREAKPOINT[2];
+        }
+
+        return {
+            transform: `translateY(-50%) scale(${scale}, ${scale})`,
+            left: `${left}%`,
+            opacity: opacity
+        }
     }
 
     componentDidMount () {
@@ -54,7 +78,7 @@ export default class SlideBig extends Component {
         const { imgLoaded } = this.state;
 
         return (
-            <div className={styles.slide + ' ' + this.slidePosition()}>
+            <div className={styles.slide} style={this.slidePosition()}>
                 <div className={styles.content}>
                     <p className={styles.text}>{text}</p>
                     <div className={styles.description}>

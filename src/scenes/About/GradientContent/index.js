@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import GradientText from '../../../compnents/GradientText';
 import styles from './GradientContent.scss';
+import Button from './Button';
 
 export default class GradientContent extends PureComponent {
     constructor (props) {
@@ -31,26 +32,33 @@ export default class GradientContent extends PureComponent {
 
     render () {
         const { show } = this.state;
-        const { mount } = this.props;
+        const { mount, nextButtonClick } = this.props;
         const animateClass = !this.firstMount ? mount ? styles.slideRight : styles.slideLeft : '';
 
         if (show) return (
             <div onAnimationEnd={this.animationEnd}
                  className={styles.wrapper + ' ' + animateClass}>
                 <GradientText textClass={styles.text}>
-                    <tspan x={3}>
-                        SW AGENCY - креативное диджитал агентство. Мы специализируемся на
+                    <tspan x={59}>
+                        SW AGENCY - креативное digital агентство. Мы специализируемся на
                     </tspan>
                     <tspan x={0} dy="30px">
-                        интернет-маркетинге, дизайне и разработке эффективных веб-ресурсов.
+                        интернет-маркетинге, айдентике, мобильной и веб разработке. Умеем слушать и
                     </tspan>
-                    <tspan x={5} dy="30px">
-                        Умеем слушать и слышать наших клиентов. Видим суть и находим яркие
+                    <tspan x={2} dy="30px">
+                        слышать наших клиентов. Наша команда нацелена на построение долгосрочных
                     </tspan>
-                    <tspan x={60} dy="30px">
-                        решения. Мы не завершаем проекты. Мы заботимся о них.
+                    <tspan x={13} dy="30px">
+                        партнерских отношений, основанных на взаимном доверии. Мы не завершаем
+                    </tspan>
+                    <tspan x={255} dy="30px">
+                        проекты - мы заботимся о них.
                     </tspan>
                 </GradientText>
+
+                <Button style={{marginTop: '50px'}} onClick={nextButtonClick}>
+                    Наша команда
+                </Button>
             </div>
         );
 

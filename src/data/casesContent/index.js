@@ -3,8 +3,9 @@ import generateKey from '../../generals/generateKey';
 export const VIDEOS = [
     {
         id: generateKey(),
-        title: 'Гефест',
-        link: '#',
+        title: 'СТРОИТЕЛЬНАЯ КОМПАНИЯ «ГЕФЕСТ»',
+        subtitle: 'Design, Development',
+        link: false,
         sources: [
             {
                 type: 'image',
@@ -15,28 +16,31 @@ export const VIDEOS = [
     {
         id: generateKey(),
         title: 'ALEXANDROV & PARTNERS',
+        subtitle: 'Design, Development, Motion',
         link: 'http://lawyers.com.ua/',
         sources: [
             {
                 type: 'video/mp4',
-                src: require('./APgotmp4.mp4')
+                src: require('./ap1.mp4')
             }
         ]
     },
     {
         id: generateKey(),
-        title: 'Комплимент',
+        title: 'Центр косметологии «КОМПЛИМЕНТ»',
+        subtitle: 'Design, Development',
         link: 'http://compliment.ua/',
         sources: [
             {
                 type: 'video/mp4',
-                src: require('./komplimentgot1.mp4')
+                src: require('./kompliment1.mp4')
             }
         ]
     },
     {
         id: generateKey(),
-        title: 'Стандарт-Оил',
+        title: 'СТАНДАРТ ОИЛ УКРАИНА',
+        subtitle: 'Design, Development',
         link: 'http://lubeoil1.com.ua/',
         sources: [
             {
@@ -47,7 +51,8 @@ export const VIDEOS = [
     },
     {
         id: generateKey(),
-        title: 'Skad',
+        title: 'Интернет-магазин «СКАД»',
+        subtitle: 'Design, Development',
         link: 'http://skad.in.ua/',
         sources: [
             {
@@ -59,11 +64,60 @@ export const VIDEOS = [
     {
         id: generateKey(),
         title: 'Polishchuk & Projects',
+        subtitle: 'Design, Development, Сorporate identity',
         link: 'http://polishchukproject.com/',
         sources: [
             {
                 type: 'video/mp4',
-                src: require('./ppmp4.mp4')
+                src: require('./polishuk1.mp4')
+            }
+        ]
+    },
+    {
+        id: generateKey(),
+        title: 'АГЕНТСТВО НЕДВИЖИМОСТИ  «СЛОН»',
+        subtitle: 'Design, Development, Сorporate identity',
+        link: 'http://anslon.com.ua/',
+        sources: [
+            {
+                type: 'video/mp4',
+                src: require('./slon1.mp4')
+            }
+        ]
+    },
+    {
+        id: generateKey(),
+        title: 'Ресторан «MOONDEER»',
+        subtitle: 'Design, Development, Сorporate identity',
+        link: 'moon.swagency.xyz',
+        sources: [
+            {
+                type: 'video/mp4',
+                src: require('./moondeer.mp4')
+            }
+        ]
+    },
+    {
+        id: generateKey(),
+        title: 'СТРОИТЕЛЬНАЯ КОМПАНИЯ «DOMIRA»',
+        subtitle: 'Design, Development',
+        link: 'http://domira.com.ua/',
+        sources: [
+            {
+                type: 'video/mp4',
+                src: require('./domira1.mp4')
+            }
+        ]
+    },
+    {
+        id: generateKey(),
+        title: 'Портал недвижимости «VAN.UA»',
+        subtitle: 'MANAGEMENT, Marketing, Сorporate identity',
+        link: 'https://van.ua/',
+        sources: [
+            {
+                type: 'video/mp4',
+                src: require('./van1.mp4')
             }
         ]
     }

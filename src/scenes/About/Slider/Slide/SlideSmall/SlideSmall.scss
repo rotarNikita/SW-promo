@@ -1,13 +1,7 @@
 @import "../../../../../generals/variables";
 
 .slide {
-  width: 33.33%;
-  &:first-of-type {
-    padding-left: 0;
-  }
-  &:last-of-type {
-    padding-right: 0;
-  }
+  width: 350px;
 }
 
 .imageContainer {

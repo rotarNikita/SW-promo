@@ -1,0 +1,158 @@
+@import "../../generals/variables";
+
+.label {
+  width: 33.33%;
+  display: flex;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #c9c9c9;
+}
+
+.input {
+  width: 100%;
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  margin: 0;
+  border: none;
+  outline: none;
+  padding: 0 0 20px 0;
+  background: transparent;
+  color: #4d4d4d;
+  &:-webkit-autofill {
+    background: transparent;
+  }
+  &:focus + .line {
+    right: 0;
+  }
+  &:focus {
+    color: $textColor;
+  }
+  &.required.invalid + .line {
+    background-color: red;
+    right: 0;
+  }
+  &.required.valid + .line {
+    background-color: green;
+  }
+}
+
+.inputWrapper {
+  width: 66.67%;
+  border-bottom: 2px solid #c9c9c9;
+  position: relative;
+}
+
+.line {
+  position: absolute;
+  height: 2px;
+  bottom: -2px;
+  background-color: #585858;
+  left: 0;
+  right: 100%;
+  transition: right .5s;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  padding-bottom: 25px;
+  flex-wrap: wrap;
+  &.right {
+    justify-content: flex-end;
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
+  width: 100%;
+  box-shadow: 0 6px 10px rgba(7, 7, 7, 0.09);
+  overflow: hidden;
+  height: 0;
+  transition: height .5s;
+  z-index: 1;
+  &.opened {
+    height: 192px;
+  }
+}
+
+.option {
+  padding: 25px;
+  background-color: $themeColor3;
+  color: #4d4d4d;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  user-select: none;
+  &.selected, &:hover {
+    background-color: #e8e8e8;
+    color: #2a2929;
+  }
+}
+
+.select {
+  background: url("./check.svg") no-repeat 100% 50%;
+}
+
+.textarea {
+  width: 100%;
+  height: 158px;
+  .input {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    line-height: 1;
+  }
+}
+
+.textareaLabel {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.file {
+  display: none;
+}
+
+.fileLabel {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.fileLabelPlus {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 12px;
+  vertical-align: middle;
+}
+
+.fileName {
+  width: 100%;
+  text-align: right;
+  color: #4d4d4d;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  height: 15px;
+  padding-top: 20px;
+}

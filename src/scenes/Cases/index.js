@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-// import styles from './Cases.scss';
 import BackgroundTitle from '../../compnents/BackgroundTitle';
 import Slider from './Slider';
 import Slide from './Slider/Slide';
 import { VIDEOS } from "../../data/casesContent";
 
 export default class Cases extends Component {
-    // constructor(props) {
-    //     super(props);
-    // }
-
     static loadedSlides = {};
 
     static addToLoadedSlides(id) {

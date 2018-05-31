@@ -7,27 +7,7 @@
   transform: translateY(-50%);
   left: 0;
   opacity: 1;
-  transition: all 1s;
-  &.left {
-    left: -100%;
-    transform: translateY(-50%) scale(0.9, 0.9);
-    opacity: .7;
-  }
-  &.right {
-    left: 100%;
-    transform: translateY(-50%) scale(0.9, 0.9);
-    opacity: .7;
-  }
-  &.doubleLeft {
-    left: -200%;
-    transform: translateY(-50%) scale(0.9, 0.9);
-    opacity: 0;
-  }
-  &.doubleRight {
-    left: 200%;
-    transform: translateY(-50%) scale(0.9, 0.9);
-    opacity: 0;
-  }
+  justify-content: space-between;
 }
 
 .image, .loader {
@@ -56,7 +36,7 @@
 }
 
 .imageContainer {
-  width: 292px;
+  width: 440px;
   height: 440px;
   position: relative;
 }

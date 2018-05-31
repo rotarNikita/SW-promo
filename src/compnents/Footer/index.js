@@ -78,7 +78,7 @@ export default class Footer extends Component {
                                historyPrevPage={historyPrevPage}/>}
                 </div>
                 <div id="footer-center">
-                    <BottomLink mount={currentPage ? currentPage.link === '/about' : false}>Наши партнеры</BottomLink>
+                    {/*<BottomLink mount={currentPage ? currentPage.link === '/about' : false}>Наши партнеры</BottomLink>*/}
                 </div>
                 <div id="footer-right">
                     {nextPage &&

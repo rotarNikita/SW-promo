@@ -15,7 +15,7 @@ class StaticDOM {
     render () {
         ReactDOM.render(
             <div>
-                {this.elements.map((Element, index) => <Element key={Element.id}/>)}
+                {this.elements.map(Element => <Element key={Element.id}/>)}
             </div>
             , document.getElementById('static'))
     }
