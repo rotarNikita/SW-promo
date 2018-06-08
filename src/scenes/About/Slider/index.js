@@ -11,13 +11,13 @@ import NaNimate from '../../../generals/NaNimate'
 import { PAGE_TRANSITION_TIME } from "../../../data/constants";
 
 const ANIMATION_DURATION = {
-    scroll: PAGE_TRANSITION_TIME,
-    swipe: 500
+    slow: PAGE_TRANSITION_TIME,
+    fast: 700
 };
 
 const ANIMATION_TIMING_FUNCTION = {
-    scroll: t => t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
-    swipe: t => -t * t + 2 * t
+    slow: t => t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+    fast: t => -t * t + 2 * t
 };
 
 export default class Slider extends Component {
@@ -31,12 +31,15 @@ export default class Slider extends Component {
             prevButtonMount: false
         };
 
+        const length = Math.ceil((slides.length - 1) / 3) + 1;
         this.sliderData = {
-            length: Math.ceil((slides.length - 1) / 3) + 1,
+            length,
             width: window.innerWidth,
+            leftBoundSlide: 0,
+            rightBoundScroll: length - 1,
             animation: new NaNimate({
-                duration: ANIMATION_DURATION.swipe,
-                timingFunction: ANIMATION_TIMING_FUNCTION.swipe,
+                duration: ANIMATION_DURATION.fast,
+                timingFunction: ANIMATION_TIMING_FUNCTION.fast,
                 progressFunction: () => {}
             })
         };
@@ -108,17 +111,17 @@ export default class Slider extends Component {
             moveData.endX = pageX;
             moveData.positionX = pageX;
 
-            sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.swipe;
-            sliderData.animation.duration = ANIMATION_DURATION.swipe;
+            sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.fast;
+            sliderData.animation.duration = ANIMATION_DURATION.fast;
 
             this.animate();
         }
     };
 
-    animate() {
+    animate(method) {
         const { currentSlide } = this.state;
 
-        let destinationSlide = Math.round(currentSlide);
+        let destinationSlide = Math[method || 'round'](currentSlide);
         this.animateTo(destinationSlide);
     }
 
@@ -139,28 +142,58 @@ export default class Slider extends Component {
     }
 
     scroll = event => {
-        const { scrollData } = this;
+        const { scrollData, sliderData, state } = this;
 
-        scrollData.globalRightAllow = false;
-        scrollData.globalLeftAllow = false;
+        if (scrollData.allow && state.sliderMount) {
+            scrollData.globalRightAllow = false;
+            scrollData.globalLeftAllow = false;
 
-        if (scrollData.allow) {
-            const { sliderMount, currentSlide } = this.state;
+            clearTimeout(scrollData.timeout);
+            sliderData.animation.stop(true);
 
-            scrollData.allow = false;
+            const delta = event.deltaX !== 0 ? event.deltaX : -event.deltaY;
 
-            this.sliderData.animation.duration = ANIMATION_DURATION.scroll;
-            this.sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.scroll;
+            this.setState(prevState => {
+                let {currentSlide} = prevState;
+                currentSlide -= delta / sliderData.width;
 
-            if (event.deltaY > 0 && sliderMount) this.nextButtonClick();
-            else if (!sliderMount) scrollData.globalRightAllow = true;
+                if (currentSlide > sliderData.rightBoundScroll)
+                    currentSlide = sliderData.rightBoundScroll;
+                else if (currentSlide < sliderData.leftBoundSlide)
+                    currentSlide = sliderData.leftBoundSlide;
 
-            if (event.deltaY < 0 && currentSlide > 0) this.prevButtonClick();
-            else if (currentSlide <= 0) scrollData.globalLeftAllow = true;
+                return {currentSlide}
+            });
 
             scrollData.timeout = setTimeout(() => {
-                scrollData.allow = true;
-            }, PAGE_TRANSITION_TIME)
+                scrollData.allow = false;
+
+                if (this.state.currentSlide >= sliderData.rightBoundScroll)
+                    scrollData.globalRightAllow = true;
+                else if (this.state.currentSlide <= sliderData.leftBoundSlide)
+                    scrollData.globalLeftAllow = true;
+
+                sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.fast;
+                sliderData.animation.duration = ANIMATION_DURATION.fast;
+
+                if (delta > 0) this.animate('floor');
+                else if (delta < 0) this.animate('ceil');
+
+                sliderData.animation.callback = () => {
+                    scrollData.allow = true;
+                }
+            }, 50);
+        }
+    };
+
+    setCurrentSlideByClick = slide => {
+        const { moveData, sliderData } = this;
+
+        if (moveData.startX - moveData.positionX === 0){
+            sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.slow;
+            sliderData.animation.duration = ANIMATION_DURATION.slow;
+
+            this.animateTo(slide);
         }
     };
 
@@ -169,6 +202,7 @@ export default class Slider extends Component {
         clearTimeout(this.scrollData.timeout);
         this.scrollData.globalRightAllow = true;
         this.scrollData.globalLeftAllow = true;
+        this.sliderData.animation.stop(true);
 
         window.removeEventListener('mousemove', this.move);
         window.removeEventListener('mouseup', this.endMove);
@@ -176,14 +210,13 @@ export default class Slider extends Component {
 
     nextButtonClick = () => {
         if (this.state.sliderMount) {
-            this.sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.scroll;
-            this.sliderData.animation.duration = ANIMATION_DURATION.scroll;
+            this.sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.slow;
+            this.sliderData.animation.duration = ANIMATION_DURATION.slow;
 
             this.sliderData.animation.stop();
 
-            if (this.state.currentSlide + 1 >= this.sliderData.length)
-                this.scrollData.globalRightAllow = true;
-            else this.animateTo(this.state.currentSlide + 1)
+            if (this.state.currentSlide + 1 < this.sliderData.length)
+                this.animateTo(this.state.currentSlide + 1)
         } else {
             this.props.gradientContentVisibility(false);
             this.setState({
@@ -198,13 +231,16 @@ export default class Slider extends Component {
         if (this.state.currentSlide === 0) {
             this.props.gradientContentVisibility(true);
 
+            this.scrollData.globalLeftAllow = true;
+            this.scrollData.globalRightAllow = true;
+
             this.setState({
                 prevButtonMount: false,
                 sliderMount: false
             });
         } else {
-            this.sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.scroll;
-            this.sliderData.animation.duration = ANIMATION_DURATION.scroll;
+            this.sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.slow;
+            this.sliderData.animation.duration = ANIMATION_DURATION.slow;
 
             this.animateTo(this.state.currentSlide - 1)
         }
@@ -237,6 +273,7 @@ export default class Slider extends Component {
         slidesArray.push(<SlideBig {...slides[0]}
                                    key={slides[0].id}
                                    slide={0}
+                                   onClick={this.setCurrentSlideByClick.bind(null, 0)}
                                    currentSlide={currentSlide}
                                    slideImageSetLoaded={Slider.slideImageSetLoaded}
                                    imgLoaded={Slider.slideImageGetLoaded(slides[0].id) || false}/>);
@@ -265,13 +302,14 @@ export default class Slider extends Component {
                                     return (
                                         <SlideSmallWrapper key={item.id}
                                                            slide={index}
+                                                           onClick={this.setCurrentSlideByClick.bind(null, index)}
                                                            currentSlide={currentSlide}>
                                             {item}
                                             {(() => {
                                                 const additionalElements = [];
 
                                                 for (let i = 0; i < 3 - item.length; i++) {
-                                                    additionalElements.push(<div className={slideSmallStyles.slide}/>)
+                                                    additionalElements.push(<div key={i} className={slideSmallStyles.slide}/>)
                                                 }
 
                                                 return additionalElements;

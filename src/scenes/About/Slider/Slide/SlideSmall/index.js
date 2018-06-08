@@ -101,9 +101,11 @@ export class SlideSmallWrapper extends Component {
     }
 
     render () {
+        const { children, onClick } = this.props;
+
         return (
-            <div className={stylesSlideBig.slide} style={this.slidePosition()}>
-                {this.props.children}
+            <div onClick={onClick} className={stylesSlideBig.slide} style={this.slidePosition()}>
+                {children}
             </div>
         )
     }

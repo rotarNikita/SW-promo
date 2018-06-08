@@ -34,9 +34,13 @@
   cursor: pointer;
   &.open {
     animation: textSlideLeft .5s;
+    opacity: 1;
+    transform: translateX(0%);
   }
   &.close {
     animation: textSlideRight .5s;
+    opacity: 0;
+    transform: translateX(100%);
   }
   &:after {
     content: '';
@@ -49,6 +53,6 @@
   }
   &:hover {
     letter-spacing: 2.8px;
-    transform: translateX(-10px);
+    transform: translateX(-10px)!important;
   }
 }

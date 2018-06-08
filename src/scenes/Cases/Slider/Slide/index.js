@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
 import styles from './Slide.scss';
 import loader from '../../../../generals/photoLoader';
+import PropsTypes from 'prop-types';
 
 export default class Slide extends PureComponent {
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
 
         this.state = {
             load: props.loaded
@@ -52,14 +53,19 @@ export default class Slide extends PureComponent {
         this.props.onLoad();
     };
 
+    static contextTypes = {
+        slideClick: PropsTypes.func
+    };
+
     render() {
-        const { data } = this.props;
+        const { data, slideIndex } = this.props;
         const { resources } = this;
         const { load } = this.state;
+        const { slideClick } = this.context;
 
         return (
             <div className={styles.slide} ref={slide => this.DOMElement = slide}>
-                <div className={styles.inner}>
+                <div onClick={slideClick.bind(null, slideIndex)} className={styles.inner}>
                     {resources.videos.length &&
                     <video className={`${styles.media} ${styles.video}`}
                            onCanPlayThrough={this.hideLoader}

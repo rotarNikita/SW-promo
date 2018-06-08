@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import styles from './BallCanvas.scss';
+import NaNimate from '../../../../generals/NaNimate';
+import Header from '../../../Header';
 import { GRADIENT_COLOR_1, GRADIENT_COLOR_2 } from '../../../../data/constants';
 
 const BALL_RADIUS = 6;
 
 export default class BallCanvas extends Component {
-    constructor (props) {
-        super(props);
-
-        this.clearAnimation = false;
-    }
-
     initCanvas = () => {
         setTimeout(() => {
             const { canvas } = this;
@@ -33,12 +29,19 @@ export default class BallCanvas extends Component {
             this.ddy = 0.10;
             this.ball.dx = this.dx;
 
-            this.animate();
+            this.animation = new NaNimate({
+                duration: Infinity,
+                progressFunction: this.animate,
+                timingFunction: 'linear',
+            });
+
+            Header.openCallback = this.animation.start;
+            Header.closeCallback = this.animation.pause;
         }, 45)
     };
 
     animate = () => {
-        const { ctx, ball, canvas, animate, dx, ddy, x1, x2 } = this;
+        const { ctx, ball, canvas, dx, ddy, x1, x2 } = this;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -49,8 +52,6 @@ export default class BallCanvas extends Component {
         else if (ball.x >= x2 - BALL_RADIUS) ball.dx = -dx;
 
         ball.update();
-
-        if (!this.clearAnimation) requestAnimationFrame(animate);
     };
 
     setBoundaryWithGradient () {
@@ -75,7 +76,9 @@ export default class BallCanvas extends Component {
     }
 
     componentWillUnmount () {
-        this.clearAnimation = true
+        this.animation.stop();
+        Header.openCallback.remove(this.animation.start);
+        Header.closeCallback.remove(this.animation.pause);
     }
 
     render () {

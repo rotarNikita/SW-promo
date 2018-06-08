@@ -64,9 +64,12 @@ export default class Scroll extends PureComponent {
             this.scrollData.allow = false;
             let timeout = false;
 
-            if (event.deltaY > 0 && Scroll.rightScrollAllow)
+            let delta = event.deltaX !== 0 ? -event.deltaX : event.deltaY;
+            delta = Math.abs(delta) > 10 ? delta : 0;
+
+            if (delta > 0 && Scroll.rightScrollAllow)
                 timeout = this.chooseNextPageByChangeType('next');
-            else if (event.deltaY < 0 && Scroll.leftScrollAllow)
+            else if (delta < 0 && Scroll.leftScrollAllow)
                 timeout = this.chooseNextPageByChangeType('prev');
 
             if (timeout) setTimeout(() => {

@@ -12,7 +12,7 @@ export default class NavItem extends PureComponent {
     }
 
     componentDidMount() {
-        if (!this.props.slide.resources.videos.length) {
+        if (this.props.slide.resources.image) {
             this.loadImage();
         }
     }
@@ -37,7 +37,12 @@ export default class NavItem extends PureComponent {
 
         return (
             <li {...restProps} className={`${styles.item} ${active ? styles.active : ''}`}>
+                {resources.image &&
+                <img className={`${slideStyles.media} ${slideStyles.image}`}
+                     src={load ? resources.image : ''}
+                     alt={data.title}/>}
                 {resources.videos.length &&
+                !resources.image &&
                 <video className={`${slideStyles.media} ${slideStyles.video}`}
                        onCanPlayThrough={this.hideLoader}
                        autoPlay
@@ -46,11 +51,6 @@ export default class NavItem extends PureComponent {
                        playsInline>
                     {resources.videos}
                 </video>}
-                {!resources.videos.length &&
-                resources.image &&
-                <img className={`${slideStyles.media} ${slideStyles.image}`}
-                     src={load ? resources.image : ''}
-                     alt={data.title}/>}
             </li>
         )
     }

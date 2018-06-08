@@ -16,13 +16,50 @@ const GlitchHeaderLogo = glitch(HeaderLogo, {
     onlyOnHover: true
 });
 
+const openCallback = Symbol('Symbol.openCallback');
+const closeCallback = Symbol('Symbol.closeCallback');
+
 export default class Header extends Component {
-    constructor () {
-        super();
+    constructor (props) {
+        super(props);
 
         this.state = {
             opened: false
         };
+    }
+
+    static [openCallback] = [];
+
+    static set openCallback(val) {
+        if (typeof val === 'function' && this[openCallback].indexOf(val) === -1)
+            this[openCallback].push(val)
+    }
+
+    static get openCallback() {
+        return {
+            remove: val => {
+                const index = this[openCallback].indexOf(val) === -1;
+
+                if (index !== -1) this[openCallback].splice(index, 1);
+            }
+        }
+    }
+
+    static [closeCallback] = [];
+
+    static set closeCallback(val) {
+        if (typeof val === 'function' && this[closeCallback].indexOf(val) === -1)
+            this[closeCallback].push(val)
+    }
+
+    static get closeCallback() {
+        return {
+            remove: val => {
+                const index = this[closeCallback].indexOf(val) === -1;
+
+                if (index !== -1) this[closeCallback].splice(index, 1);
+            }
+        }
     }
 
     open = () => {
@@ -32,7 +69,9 @@ export default class Header extends Component {
 
         this.setState({
             opened: true
-        })
+        });
+
+        Header[openCallback].forEach(callback => callback())
     };
 
     close = () => {
@@ -42,7 +81,9 @@ export default class Header extends Component {
 
         this.setState({
             opened: false
-        })
+        });
+
+        Header[closeCallback].forEach(callback => callback())
     };
 
     componentDidUpdate () {

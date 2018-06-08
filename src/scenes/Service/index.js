@@ -34,7 +34,6 @@ export default class Service extends PureComponent {
 
             this.menuLink.addEventListener('click', this.burgerClick);
             this.burger.addEventListener('click', this.burgerClick);
-            window.addEventListener('wheel', this.wheelListener);
         });
     }
 
@@ -67,11 +66,6 @@ export default class Service extends PureComponent {
             this.burgerReset();
             this.pageTitleReset();
         }
-    };
-
-    wheelListener = () => {
-        this.burgerChange();
-        this.pageTitleChange();
     };
 
     burgerChange () {
@@ -111,7 +105,6 @@ export default class Service extends PureComponent {
             this.pageTitleReset();
             this.titlePrevReset();
 
-            window.removeEventListener('wheel', this.wheelListener);
             this.burger.removeEventListener('click', this.burgerClick);
             this.menuLink.removeEventListener('click', this.burgerClick);
         }

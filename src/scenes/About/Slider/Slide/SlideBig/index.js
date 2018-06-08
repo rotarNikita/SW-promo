@@ -74,11 +74,11 @@ export default class SlideBig extends Component {
     };
 
     render () {
-        const { text, title, name, img } = this.props;
+        const { text, title, name, img, onClick } = this.props;
         const { imgLoaded } = this.state;
 
         return (
-            <div className={styles.slide} style={this.slidePosition()}>
+            <div onClick={onClick} className={styles.slide} style={this.slidePosition()}>
                 <div className={styles.content}>
                     <p className={styles.text}>{text}</p>
                     <div className={styles.description}>

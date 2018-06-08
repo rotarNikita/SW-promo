@@ -18,9 +18,10 @@ export default class Cases extends Component {
     render() {
         const slidesRefs = [];
 
-        const slides = VIDEOS.map(data => <Slide loaded={Cases.checkLoadById(data.id)}
+        const slides = VIDEOS.map((data, i) => <Slide loaded={Cases.checkLoadById(data.id)}
                                                  onLoad={Cases.addToLoadedSlides.bind(null, data.id)}
                                                  ref={slide => {if (slide !== null) slidesRefs.push(slide)}}
+                                                 slideIndex={i}
                                                  key={data.id}
                                                  data={data}/>);
 

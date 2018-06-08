@@ -7,52 +7,64 @@ export default class Next extends PureComponent {
         super(props);
 
         this.state = {
-            show: false,
-            animation: true
+            show: false
+            // animation: true
         };
 
         this.el = document.createElement('div')
     }
 
     animationEnd = () => {
-        let state = {animation: false};
+        // let state = {animation: false};
+        //
+        // if (!this.props.mount) {
+        //     state.show = false;
+        //     state.animation = true;
+        //     document.getElementById('footer-right').removeChild(this.el)
+        // }
+        //
+        // this.setState(state)
 
         if (!this.props.mount) {
-            state.show = false;
-            state.animation = true;
+            this.setState({show: false});
             document.getElementById('footer-right').removeChild(this.el)
         }
-
-        this.setState(state)
     };
 
     componentWillReceiveProps (nextProps) {
-        this.show(nextProps)
-    }
-
-    componentDidMount () {
+        // this.show(nextProps)
         setTimeout(() => {
-            this.show(this.props)
-        })
+            if (nextProps.mount && !this.state.show) {
+                this.setState({show: true});
+                document.getElementById('footer-right').appendChild(this.el)
+            }
+        });
     }
 
-    show (props) {
-        if (props.mount) {
-            this.setState({ show: true });
-            document.getElementById('footer-right').appendChild(this.el);
-        }
-    }
+    // componentDidMount () {
+    //     setTimeout(() => {
+    //         this.show(this.props)
+    //     })
+    // }
+
+    // show (props) {
+    //     if (props.mount) {
+    //         this.setState({ show: true });
+    //         document.getElementById('footer-right').appendChild(this.el);
+    //     }
+    // }
 
     render () {
         const { mount, ...restProps } = this.props;
         const { show, animation } = this.state;
 
-        const className = styles.text + ' ' + (mount ? animation ? styles.open : '' : styles.close);
+        // const className = styles.text + ' ' + (mount ? animation ? styles.open : '' : styles.close);
+        const className = styles.text + ' ' + (mount ? styles.open : styles.close);
 
         if (show) return ReactDOM.createPortal(
             <div {...restProps}
                  className={className}
-                 onAnimationEnd={this.animationEnd}>
+                 onTransitionEnd={this.animationEnd}>
                 {this.props.children}
             </div>
             , this.el);

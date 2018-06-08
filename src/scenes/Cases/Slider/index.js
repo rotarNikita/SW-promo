@@ -4,15 +4,16 @@ import Scroll from '../../../actions/Scroll';
 import { PAGE_TRANSITION_TIME } from "../../../data/constants";
 import Navigation from './Navigation';
 import NaNimate from '../../../generals/NaNimate';
+import PropTypes from 'prop-types';
 
 const ANIMATION_DURATION = {
-    scroll: PAGE_TRANSITION_TIME,
-    swipe: 300
+    slow: PAGE_TRANSITION_TIME,
+    fast: 600
 };
 
 const ANIMATION_TIMING_FUNCTION = {
-    scroll: t => t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
-    swipe: t => -t * t + 2 * t
+    slow: t => t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+    fast: t => -t * t + 2 * t
 };
 
 export default class Slider extends Component {
@@ -37,16 +38,19 @@ export default class Slider extends Component {
             width: window.innerWidth,
             currentSlide: 0,
             trackWidth: 0,
+            leftBound: 0,
+            rightBound: 0,
             slidesWidths: [],
             slidesPositions: [],
             slides: props.slidesRefs,
             length: 0,
             animation: new NaNimate({
-                duration: ANIMATION_DURATION.swipe,
-                timingFunction: ANIMATION_TIMING_FUNCTION.swipe,
+                duration: ANIMATION_DURATION.fast,
+                timingFunction: ANIMATION_TIMING_FUNCTION.fast,
                 progressFunction: () => {},
                 callback: () => {
                     this.movementData.position = this.state.position;
+                    this.scrollData.scroll = true;
                 }
             })
         };
@@ -66,6 +70,20 @@ export default class Slider extends Component {
         this.menuButton = null;
         this.menuLinks = [];
     }
+
+    static childContextTypes = {
+        slideClick: PropTypes.func
+    };
+
+    getChildContext() {
+        return {
+            slideClick: slide => {
+                const { startX, endX } = this.movementData;
+
+                if (startX === endX) this.goTo(slide)
+            }
+        }
+    };
 
     componentDidMount() {
         this.menuButton = document.getElementById('menuButton');
@@ -99,26 +117,43 @@ export default class Slider extends Component {
     };
 
     slideScroll = event => {
-        const { scrollData, sliderData } = this;
+        const { scrollData, sliderData, state } = this;
 
-        scrollData.globalRight = false;
         scrollData.globalLeft = false;
+        scrollData.globalRight = false;
 
         if (scrollData.scroll) {
-            scrollData.scroll = false;
+            clearTimeout(scrollData.scrollTimeout);
+            sliderData.animation.stop(true);
 
-            this.sliderData.animation.duration = ANIMATION_DURATION.scroll;
-            this.sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.scroll;
+            const delta = event.deltaX !== 0 ? event.deltaX : -event.deltaY;
 
-            if (event.deltaY > 0 && sliderData.currentSlide + 1 <= sliderData.length - 1) this.goTo(sliderData.currentSlide + 1);
-            else if (sliderData.currentSlide + 1 > sliderData.length - 1) scrollData.globalRight = true;
+            this.setState(prevState => {
+                let position = prevState.position + delta;
 
-            if (event.deltaY < 0 && sliderData.currentSlide - 1 >= 0) this.goTo(sliderData.currentSlide - 1);
-            else if (sliderData.currentSlide - 1 < 0) scrollData.globalLeft = true;
+                if (position > sliderData.leftBound) position = sliderData.leftBound;
+                else if (position < sliderData.rightBound) position = sliderData.rightBound;
+
+                return {position}
+            });
+
+            if (state.position === sliderData.leftBound)
+                scrollData.globalLeft = sliderData.currentSlide === 0;
+            else if (state.position === sliderData.rightBound)
+                scrollData.globalRight = sliderData.currentSlide === sliderData.length - 1;
 
             scrollData.scrollTimeout = setTimeout(() => {
-                scrollData.scroll = true;
-            }, PAGE_TRANSITION_TIME)
+                scrollData.scroll = false;
+
+                let method;
+                if (delta < 0) method = 'next';
+                else if (delta > 0) method = 'prev';
+                this.chooseCurrentSlide(method);
+
+                sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.fast;
+                sliderData.animation.duration = ANIMATION_DURATION.fast;
+                this.goTo(sliderData.currentSlide);
+            }, 50);
         }
     };
 
@@ -131,7 +166,8 @@ export default class Slider extends Component {
     };
 
     slideDataCalc() {
-        const { slides, width } = this.sliderData;
+        const { sliderData } = this;
+        const { slides, width } = sliderData;
         const slidesWidths = [];
         const slidesPositions = [];
         let trackWidth = 0;
@@ -145,10 +181,12 @@ export default class Slider extends Component {
             trackWidth += slideWidth;
         }
 
-        this.sliderData.length = slides.length;
-        this.sliderData.slidesWidths = slidesWidths;
-        this.sliderData.slidesPositions = slidesPositions;
-        this.sliderData.trackWidth = trackWidth;
+        sliderData.length = slides.length;
+        sliderData.slidesWidths = slidesWidths;
+        sliderData.slidesPositions = slidesPositions;
+        sliderData.trackWidth = trackWidth;
+        sliderData.leftBound = slidesPositions[0];
+        sliderData.rightBound = slidesPositions[sliderData.length - 1]
     };
 
     moveStart = event => {
@@ -170,8 +208,8 @@ export default class Slider extends Component {
             this.movementData.move = false;
             this.movementData.position = this.state.position;
 
-            this.sliderData.animation.duration = ANIMATION_DURATION.swipe;
-            this.sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.swipe;
+            this.sliderData.animation.duration = ANIMATION_DURATION.fast;
+            this.sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.fast;
 
             this.chooseCurrentSlide();
             this.animatingSlideChange();
@@ -193,12 +231,13 @@ export default class Slider extends Component {
         animation.start();
     }
 
-    chooseCurrentSlide() {
+    chooseCurrentSlide(type) {
         const { length, slidesWidths, width } = this.sliderData;
-        const { endX, startX, position } = this.movementData;
+        const { endX, startX } = this.movementData;
+        const { position } = this.state;
 
 
-        if (startX > endX) { // right
+        if (startX > endX || type === 'next') { // right
             for (let i = length - 1; i >= 0; i--) {
                 let widthPrevSlides = 0;
 
@@ -210,7 +249,7 @@ export default class Slider extends Component {
                     break;
                 }
             }
-        } else { // left
+        } else if (startX < endX || type === 'prev') { // left
             for (let i = 0; i < length; i++) {
                 let widthPrevSlides = 0;
 
@@ -256,8 +295,8 @@ export default class Slider extends Component {
     };
 
     dotClick = slide => {
-        this.sliderData.animation.duration = ANIMATION_DURATION.scroll;
-        this.sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.scroll;
+        this.sliderData.animation.duration = ANIMATION_DURATION.slow;
+        this.sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.slow;
         this.goTo(slide)
     };
 

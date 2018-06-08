@@ -24,7 +24,7 @@ export default class NaNimate {
         this[timeFraction] = 0; // from 0 to 1
         this[timeFractionBeforePause] = 0;
         this[startTime] = undefined;
-        this[pauseBool] = false;
+        this[pauseBool] = true;
     }
 
     [animate] = time => {
@@ -41,14 +41,16 @@ export default class NaNimate {
         }
     };
 
-    start() {
-        this[pauseBool] = false;
-        this[startTime] = performance.now();
+    start = () => {
+        if (this[pauseBool]) {
+            this[pauseBool] = false;
+            this[startTime] = performance.now();
 
-        requestAnimationFrame(this[animate])
-    }
+            requestAnimationFrame(this[animate])
+        }
+    };
 
-    stop(withCallback, toEnd) {
+    stop = (withCallback, toEnd) => {
         this[pauseBool] = true;
         this[timeFractionBeforePause] = 0;
         this[timeFraction] = 0;
@@ -61,14 +63,14 @@ export default class NaNimate {
 
             this.progressFunction(this.timingFunction(this[timeFraction]));
         }
-    }
+    };
 
-    pause(withCallback) {
+    pause = (withCallback) => {
         this[pauseBool] = true;
         this[timeFractionBeforePause] = this[timeFraction];
 
         if (withCallback) this.callback();
-    }
+    };
 
     set duration(val) {
         this[_duration] = NaNimate.checkDuration(val);
@@ -103,8 +105,11 @@ export default class NaNimate {
     }
 
     static checkCallback(callback) {
-        if (typeof callback === 'function' || !callback)
+        if (typeof callback === 'function')
             return callback;
+
+        if (!callback)
+            return () => {};
 
         throw new Error('callback is not a function');
     }

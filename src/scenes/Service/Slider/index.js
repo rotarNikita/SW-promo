@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styles from './Slider.scss';
-// import animate from '../../../generals/animate';
 import NaNimate from '../../../generals/NaNimate';
 import Dots from './Dots';
 import Scroll from "../../../actions/Scroll";
@@ -8,7 +7,7 @@ import { PAGE_TRANSITION_TIME } from "../../../data/constants";
 
 const ANIMATION_DURATION = {
     scroll: PAGE_TRANSITION_TIME,
-    swipe: 300
+    swipe: 500
 };
 
 const ANIMATION_TIMING_FUNCTION = {
@@ -38,9 +37,12 @@ export default class Slider extends Component {
 
         this.dataAnimation = new NaNimate({
             duration: ANIMATION_DURATION.swipe,
-            timingFunction: ANIMATION_TIMING_FUNCTION.swipe,
+            timingFunction: ANIMATION_TIMING_FUNCTION.scroll,
             progressFunction: () => {},
-            callback: () => { this.positionX = this.newPositionX }
+            callback: () => {
+                this.positionX = this.newPositionX;
+                this.dataScroll.delta = 0;
+            }
         });
 
         this.currentSlide = 1;
@@ -168,29 +170,59 @@ export default class Slider extends Component {
     }
 
     changeSlideByScroll = event => {
-        const { dataScroll, dataAnimation } = this;
+        const { dataScroll, dataAnimation, dataSlides, currentSlide} = this;
+
+        clearTimeout(dataScroll.timeout);
+        dataAnimation.stop(true);
 
         dataScroll.globalRight = false;
         dataScroll.globalLeft = false;
 
-        if (dataScroll.scroll) {
-            dataScroll.scroll = false;
+        const delta = event.deltaX !== 0 ? event.deltaX : -event.deltaY;
 
-            dataAnimation.duration = ANIMATION_DURATION.scroll;
-            dataAnimation.timingFunction = ANIMATION_TIMING_FUNCTION.scroll;
+        this.positionX += delta;
 
-            if (event.deltaY > 0 && (this.currentSlide + 1 <= this.dataSlides.length - 1)) this.goTo(this.currentSlide);
-            else if (this.currentSlide + 1 > this.dataSlides.length - 1) dataScroll.globalRight = true;
+        const leftBound = 0;
+        const rightBound = -dataSlides[dataSlides.length - 1].left - dataSlides[dataSlides.length - 1].width + window.innerWidth;
 
-            if (event.deltaY < 0 && (this.currentSlide - 1)) this.goTo(this.currentSlide - 2);
-            else if (!(this.currentSlide - 1)) dataScroll.globalLeft = true;
+        if (this.positionX < rightBound) {
+            if (currentSlide === dataSlides.length - 1 && dataScroll.scroll)
+                dataScroll.globalRight = true;
+
+            this.positionX = rightBound;
 
             dataScroll.timeout = setTimeout(() => {
                 dataScroll.scroll = true;
-                dataScroll.globalRight = true;
+            }, 30);
+        } else if (this.positionX > leftBound) {
+            if (currentSlide === 1 && dataScroll.scroll)
                 dataScroll.globalLeft = true;
-            }, PAGE_TRANSITION_TIME)
+
+            this.positionX = leftBound;
+
+            dataScroll.timeout = setTimeout(() => {
+                dataScroll.scroll = true;
+            }, 30);
+        } else {
+            dataScroll.timeout = setTimeout(() => {
+                this.animateSlide()
+            }, 30)
         }
+
+        dataScroll.scroll = false;
+
+        if (delta < 0) this.chooseCurrentSlideNext();
+        else if (delta > 0) this.chooseCurrentSlidePrev();
+        else this.chooseCurrentSlide();
+
+        this.setState({currentSlide: this.currentSlide});
+
+        this.newPositionX = this.positionX;
+        this.track.style.left = this.positionX + 'px';
+
+        this.pageTitleMaskSetClip();
+        this.titlePrevMaskSetClip();
+        this.menuButtonMaskSetClip();
     };
 
     trackWidthCalc() {
@@ -276,6 +308,22 @@ export default class Slider extends Component {
         for (let i = this.dataSlides.length - 1; i >= 1; i--) {
             this.currentSlide = i;
             if (window.innerWidth - this.positionX >= this.dataSlides[i].left + this.dataSlides[i].width / 2)
+                break;
+        }
+    }
+
+    chooseCurrentSlideNext() {
+        for (let i = this.dataSlides.length - 1; i >= 1; i--) {
+            this.currentSlide = i;
+            if (window.innerWidth - this.positionX >= this.dataSlides[i].left)
+                break;
+        }
+    }
+
+    chooseCurrentSlidePrev() {
+        for (let i = this.dataSlides.length - 1; i >= 1; i--) {
+            this.currentSlide = i - 1;
+            if (window.innerWidth - this.positionX >= this.dataSlides[i].left)
                 break;
         }
     }
