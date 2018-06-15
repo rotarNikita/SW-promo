@@ -1,0 +1,21 @@
+@import "../../../../generals/variables";
+
+.link {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  &:hover {
+    .char {
+      transform: rotateY(180deg);
+    }
+  }
+}
+
+.char {
+  display: inline-block;
+  transform: rotateY(0);
+  color: $themeColor3;
+  transition: all .3s;
+}

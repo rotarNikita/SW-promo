@@ -14,7 +14,7 @@
     max-width: 100%;
     background-color: $textColor;
     height: 1px;
-    transition: top .3s .2s, bottom .3s .2s, max-width .2s ease;
+    transition: top .3s .2s, bottom .3s .2s, max-width .2s, background-color .5s ease;
   }
   .lineAfter {
     top: 0;
@@ -31,15 +31,18 @@
     .lineAfter {
       top: 12px;
       max-width: 50%;
-      transition: top .3s, max-width .2s .3s ease;
+      background-color: $themeColor3;
+      transition: top .3s, max-width .2s .3s, background-color .5s ease;
     }
     .lineBefore {
       bottom: 12px;
       max-width: 50%;
-      transition: bottom .3s, max-width .2s .3s ease;
+      background-color: $themeColor3;
+      transition: bottom .3s, max-width .2s .3s, background-color .5s ease;
     }
     .line {
-      transition: max-width .3s .2s ease;
+      background-color: $themeColor3;
+      transition: max-width .3s .2s, background-color .5s ease;
     }
   }
 }
@@ -52,5 +55,5 @@
   height: 1px;
   width: 100%;
   max-width: 50%;
-  transition: max-width .3s ease;
+  transition: max-width .3s, background-color .5s ease;
 }

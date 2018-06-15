@@ -86,40 +86,40 @@ export default class Header extends Component {
         Header[closeCallback].forEach(callback => callback())
     };
 
-    componentDidUpdate () {
-        this.checkHeight()
-    }
-
-    componentDidMount () {
-        this.checkHeight()
-    }
-
-    checkHeight () {
-        clearTimeout(this.animTimeout);
-
-        if (this.state.opened) {
-            this.header.style.height = '100%'
-        } else {
-            this.animTimeout = setTimeout(() => {
-                this.header.style.height = 'auto'
-            }, MENU_TRANSITION_TIME)
-        }
-    }
+    // componentDidUpdate () {
+    //     this.checkHeight()
+    // }
+    //
+    // componentDidMount () {
+    //     this.checkHeight()
+    // }
+    //
+    // checkHeight () {
+    //     clearTimeout(this.animTimeout);
+    //
+    //     if (this.state.opened) {
+    //         this.header.style.height = '100%'
+    //     } else {
+    //         this.animTimeout = setTimeout(() => {
+    //             this.header.style.height = 'auto'
+    //         }, MENU_TRANSITION_TIME)
+    //     }
+    // }
 
     render () {
         const { opened } = this.state;
 
         return (
             <header ref={header => this.header = header}
-                    className={styles.header + ' ' + (opened ? styles.open : '')}>
-                <div className="container clearfix" style={{position: 'relative'}}>
+                    className={styles.header /*+ ' ' + (opened ? styles.open : '')*/}>
+                <div className={`container clearfix ${styles.container}`}>
                     <Burger opened={opened}
                             open={this.open}
                             close={this.close}/>
                     <PageTitle active={opened}/>
-                    <Link to="/" onClick={this.close}>
-                        <GlitchHeaderLogo opened={opened} close={this.close}/>
-                    </Link>
+                    {/*<Link to="/" onClick={this.close}>*/}
+                        {/*<GlitchHeaderLogo opened={opened} close={this.close}/>*/}
+                    {/*</Link>*/}
                     <div id="headerRight"/>
                 </div>
                 <Menu opened={opened} close={this.close}/>

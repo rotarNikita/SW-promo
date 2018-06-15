@@ -9,9 +9,9 @@
   padding-top: $pageSpaceTopBottom;
   background-color: transparent;
   transition: background-color $menuTransitionTime;
-  &.open {
-    background-color: rgba($themeColor3, .9);
-  }
+  //&.open {
+  //  background-color: rgba($themeColor3, .9);
+  //}
 }
 
 .logoFloatRight {
@@ -24,4 +24,9 @@
     right: 10px;
     top: 0;
   }
+}
+
+.container {
+  position: relative;
+  z-index: 20;
 }

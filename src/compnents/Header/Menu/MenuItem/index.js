@@ -44,21 +44,26 @@ export default class MenuItem extends Component {
     }
 
     render () {
-        const { exact, close, to, children, setActiveMenuItemPosition } = this.props;
+        const { exact, close, to, children, setActiveMenuItemPosition, toggleGradient } = this.props;
 
         return (
             <li className={styles.item}>
                 <NavLink exact={exact}
                          onClick={close}
                          to={to}
+                         className={styles.link}
                          activeClassName={styles.active}>
                     <div ref={linkWrapper => this.linkWrapper = linkWrapper}
-                         style={{lineHeight: 0}}
-                         onMouseEnter={this.getHoverMenuItemPosition}
+                         className={styles.shadow}
+                         onMouseEnter={() => {
+                             this.getHoverMenuItemPosition();
+                             toggleGradient();
+                         }}
                          onMouseLeave={setActiveMenuItemPosition}>
-                        <GradientText textClass={styles.text}>
+                        <span>{children}</span>
+                        <div className={styles.inner}>
                             {children}
-                        </GradientText>
+                        </div>
                     </div>
                 </NavLink>
             </li>

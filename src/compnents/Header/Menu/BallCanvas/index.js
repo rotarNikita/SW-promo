@@ -22,7 +22,7 @@ export default class BallCanvas extends Component {
                 BALL_RADIUS + Math.random() * (canvas.width - 2 * BALL_RADIUS),
                 BALL_RADIUS,
                 BALL_RADIUS,
-                this.ballGradient
+                '#FFFFFF'
             );
 
             this.dx = 2.5;
@@ -58,12 +58,12 @@ export default class BallCanvas extends Component {
         this.x1 = this.props.x1 || 0;
         this.x2 = this.props.x2 || this.canvas.width;
 
-        try {
-            if (!this.ballGradient)
-                this.ballGradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, 0);
-            this.ballGradient.addColorStop(this.x1 / this.canvas.width, GRADIENT_COLOR_1);
-            this.ballGradient.addColorStop(this.x2 / this.canvas.width, GRADIENT_COLOR_2);
-        } catch (e) {}
+        // try {
+        //     if (!this.ballGradient)
+        //         this.ballGradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, 0);
+        //     this.ballGradient.addColorStop(this.x1 / this.canvas.width, GRADIENT_COLOR_1);
+        //     this.ballGradient.addColorStop(this.x2 / this.canvas.width, GRADIENT_COLOR_2);
+        // } catch (e) {}
     }
 
     componentDidMount () {

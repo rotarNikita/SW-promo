@@ -152,6 +152,8 @@ export default class NaNimate {
 
     static [defaultDuration] = 300;
 
+    static getTimingFunction = timingFunction => NaNimate[defaultTimingFunctions][timingFunction];
+
     static [defaultTimingFunctions] = {
         linear: t => t,
         easeInQuad: t => t * t,

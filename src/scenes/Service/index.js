@@ -25,7 +25,7 @@ export default class Service extends PureComponent {
             this.burger = document.getElementById('menuButton');
             this.pageTitle = document.getElementById('pageTitle');
             this.titlePrev = document.getElementById('titlePrev');
-            this.menuLink = document.querySelector('[class^="MenuItem__active"][href="/service"]');
+            this.menuLink = document.querySelector('[class^="MenuItem__link"][href="/service"]');
 
             this.mainBlockChange();
             this.burgerChange();

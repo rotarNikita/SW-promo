@@ -1,0 +1,28 @@
+@import "../../../../generals/variables";
+
+.list {
+  display: flex;
+}
+
+.listItem {
+  margin: 0 5px;
+  cursor: pointer;
+  .link {
+    transform: rotateY(0);
+  }
+  &:hover {
+    .link {
+      transform: rotateY(180deg);
+    }
+  }
+}
+
+.link {
+  mask: no-repeat 50% 50%;
+  mask-size: contain;
+  width: 20px;
+  height: 20px;
+  display: block;
+  background-color: $themeColor3;
+  transition: transform .5s;
+}

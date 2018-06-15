@@ -1,0 +1,81 @@
+@import "../../../../generals/variables";
+
+.lngItem {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: $themeColor3;
+  cursor: pointer;
+  margin: 0 15px;
+  position: relative;
+  &:hover {
+    .char {
+      transform: rotateY(180deg);
+    }
+  }
+  &.active {
+    &:after {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    width: 61px;
+    height: 61px;
+    background-color: rgba(#ffffff, .3);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: all .3s;
+    z-index: -1;
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.lngList {
+  position: absolute;
+  white-space: nowrap;
+  right: 0;
+  top: 6px;
+  transform: translateX(100%);
+  opacity: 0;
+  animation: slideRight $menuTransitionTime / 2 forwards;
+  &.opened {
+    transform: translateX(100%);
+    opacity: 0;
+    animation: slideLeft $menuTransitionTime / 2 $menuTransitionTime / 2 forwards;
+  }
+}
+
+.char {
+  display: inline-block;
+  transform: rotateY(0);
+  transition: transform .3s;
+}

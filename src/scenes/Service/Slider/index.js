@@ -4,6 +4,7 @@ import NaNimate from '../../../generals/NaNimate';
 import Dots from './Dots';
 import Scroll from "../../../actions/Scroll";
 import { PAGE_TRANSITION_TIME } from "../../../data/constants";
+import Header from '../../../compnents/Header';
 
 const ANIMATION_DURATION = {
     scroll: PAGE_TRANSITION_TIME,
@@ -83,6 +84,18 @@ export default class Slider extends Component {
             })
         }
     }
+    
+    menuOpenCallback = () => {
+        this.pageTitleMask.style.clip = `rect(0, ${this.pageTitleMaskWidth}px, ${this.pageTitleMaskHeight}px, 100vw)`;
+    };
+    
+    menuCloseCallback = () => {
+        let left = this.dataSlides[0].width + this.newPositionX - this.pageTitleMaskLeft;
+
+        left = left > 0 ? '100vw' : '-100vw';
+
+        this.pageTitleMask.style.clip = `rect(0, ${this.pageTitleMaskWidth + 100}px, ${this.pageTitleMaskHeight}px, ${left})`;
+    };
 
     initMenuButtonMask() {
         this.menuButton = document.getElementById('menuButton');
@@ -160,6 +173,9 @@ export default class Slider extends Component {
             this.initPageTitleMask();
             this.initTitlePrevMask();
             this.initMenuButtonMask();
+            
+            Header.openCallback = this.menuOpenCallback;
+            Header.closeCallback = this.menuCloseCallback;
 
             window.addEventListener('mouseup', this.dragStop);
         }, 15);
@@ -363,6 +379,9 @@ export default class Slider extends Component {
         this.dataScroll.globalLeft = true;
 
         this.dataAnimation.stop();
+
+        Header.openCallback.remove(this.menuOpenCallback);
+        Header.closeCallback.remove(this.menuCloseCallback);
     }
 
     render() {
