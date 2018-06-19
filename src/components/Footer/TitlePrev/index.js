@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import styles from './TitlePrev.scss';
 import { Link } from 'react-router-dom';
 import pages from "../../../data/pages";
+import Lng from '../../Header/Menu/Lng';
 
 export default class TitlePrev extends PureComponent {
     constructor (props) {
@@ -9,6 +10,14 @@ export default class TitlePrev extends PureComponent {
 
         this.state = this.animationSettings(props);
         this.historyPrevPageIndex = -1;
+    }
+
+    componentDidMount() {
+        Lng.relativeComponentOrCallback = this
+    }
+
+    componentWillUnmount() {
+        Lng.relativeComponentOrCallback.remove(this)
     }
 
     componentWillReceiveProps (nextProps) {

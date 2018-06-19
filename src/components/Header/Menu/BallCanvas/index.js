@@ -3,10 +3,20 @@ import styles from './BallCanvas.scss';
 import NaNimate from '../../../../generals/NaNimate';
 import Header from '../../../Header';
 import { GRADIENT_COLOR_1, GRADIENT_COLOR_2 } from '../../../../data/constants';
+import Lng from '../Lng';
 
 const BALL_RADIUS = 6;
 
 export default class BallCanvas extends Component {
+    sizeCalc = () => {
+        setTimeout(() => {
+            const { canvas } = this;
+
+            canvas.width = canvas.clientWidth;
+            canvas.height = canvas.clientHeight;
+        }, 45)
+    };
+
     initCanvas = () => {
         setTimeout(() => {
             const { canvas } = this;
@@ -67,6 +77,8 @@ export default class BallCanvas extends Component {
     }
 
     componentDidMount () {
+        Lng.relativeComponentOrCallback = this.sizeCalc;
+
         if (document.readyState === 'complete') this.initCanvas();
         else window.addEventListener('load', this.initCanvas)
     }
@@ -76,6 +88,8 @@ export default class BallCanvas extends Component {
     }
 
     componentWillUnmount () {
+        Lng.relativeComponentOrCallback.remove(this.sizeCalc);
+
         this.animation.stop();
         Header.openCallback.remove(this.animation.start);
         Header.closeCallback.remove(this.animation.pause);

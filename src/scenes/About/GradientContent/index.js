@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
-import GradientText from '../../../compnents/GradientText';
+import GradientText from '../../../components/GradientText';
 import styles from './GradientContent.scss';
 import Button from './Button';
+import Lng from '../../../components/Header/Menu/Lng';
+import gradientContent from '../../../data/aboutUsSlider/gradientContent';
 
 export default class GradientContent extends PureComponent {
     constructor (props) {
@@ -17,7 +19,13 @@ export default class GradientContent extends PureComponent {
     }
 
     componentDidMount () {
+        Lng.relativeComponentOrCallback = this;
+
         this.firstMount = false
+    }
+
+    componentWillUnmount() {
+        Lng.relativeComponentOrCallback.remove(this);
     }
 
     componentWillReceiveProps (nextProps) {
@@ -39,25 +47,11 @@ export default class GradientContent extends PureComponent {
             <div onAnimationEnd={this.animationEnd}
                  className={styles.wrapper + ' ' + animateClass}>
                 <GradientText textClass={styles.text}>
-                    <tspan x={59}>
-                        SW AGENCY - креативное digital агентство. Мы специализируемся на
-                    </tspan>
-                    <tspan x={0} dy="30px">
-                        интернет-маркетинге, айдентике, мобильной и веб разработке. Умеем слушать и
-                    </tspan>
-                    <tspan x={2} dy="30px">
-                        слышать наших клиентов. Наша команда нацелена на построение долгосрочных
-                    </tspan>
-                    <tspan x={13} dy="30px">
-                        партнерских отношений, основанных на взаимном доверии. Мы не завершаем
-                    </tspan>
-                    <tspan x={255} dy="30px">
-                        проекты - мы заботимся о них.
-                    </tspan>
+                    {gradientContent()}
                 </GradientText>
 
                 <Button style={{marginTop: '50px'}} onClick={nextButtonClick}>
-                    Наша команда
+                    {({rus: 'Наша команда', eng: 'Our team'})[Lng.currentLng]}
                 </Button>
             </div>
         );

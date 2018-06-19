@@ -33,8 +33,6 @@ export default class LogoText extends Component {
         this.clearAnimation = true
     }
 
-
-
     render () {
         return (
             <text className={styles.text}

@@ -21,6 +21,14 @@ export default class Menu extends Component {
         }
     }
 
+    componentDidMount() {
+        Lng.relativeComponentOrCallback = this;
+    }
+
+    componentWillUnmount() {
+        Lng.relativeComponentOrCallback.remove(this);
+    }
+
     toggleGradient = () => {
         this.setState(prevState => ({toggleGradient: !prevState.toggleGradient}))
     };
@@ -48,7 +56,7 @@ export default class Menu extends Component {
         })
     };
 
-    render () {
+    render() {
         const { hoverMenuItemPositionStart, hoverMenuItemPositionEnd, toggleGradient } = this.state;
         const { opened } = this.props;
 

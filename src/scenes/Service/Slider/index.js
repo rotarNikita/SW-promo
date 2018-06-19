@@ -4,7 +4,8 @@ import NaNimate from '../../../generals/NaNimate';
 import Dots from './Dots';
 import Scroll from "../../../actions/Scroll";
 import { PAGE_TRANSITION_TIME } from "../../../data/constants";
-import Header from '../../../compnents/Header';
+import Header from '../../../components/Header';
+import Lng from '../../../components/Header/Menu/Lng';
 
 const ANIMATION_DURATION = {
     scroll: PAGE_TRANSITION_TIME,
@@ -58,7 +59,7 @@ export default class Slider extends Component {
 
         this.pageTitle = null;
         this.pageTitleMask = null;
-        this.pageTitleMaskWidth = 67;
+        this.pageTitleMaskWidth = ({rus: 67, eng: 83})[Lng.currentLng];
         this.pageTitleMaskHeight = 11;
         this.pageTitleMaskLeft = (window.innerWidth - this.pageTitleMaskWidth) / 2;
 
@@ -90,6 +91,14 @@ export default class Slider extends Component {
     };
     
     menuCloseCallback = () => {
+        this.dragStart({clientX: 0});
+        this.move({clientX: 0});
+        this.dragStop();
+        this.dataAnimation.stop(true);
+
+        this.pageTitleMaskWidth = ({rus: 67, eng: 83})[Lng.currentLng];
+        this.pageTitleMaskLeft = (window.innerWidth - this.pageTitleMaskWidth) / 2;
+
         let left = this.dataSlides[0].width + this.newPositionX - this.pageTitleMaskLeft;
 
         left = left > 0 ? '100vw' : '-100vw';
@@ -130,6 +139,7 @@ export default class Slider extends Component {
         this.titlePrevMask.style.position = 'absolute';
         this.titlePrevMask.style.top = '50%';
         this.titlePrevMask.style.left = '50%';
+        this.titlePrevMask.style.whiteSpace = 'nowrap';
         this.titlePrevMask.style.transform = 'translate(-50%, -50%)';
         this.titlePrevMask.style.color = '#000000';
         this.titlePrevMask.style.zIndex = '1';
@@ -137,6 +147,12 @@ export default class Slider extends Component {
 
         this.titlePrev.appendChild(this.titlePrevMask);
     }
+
+    initTitlePrevMaskTimeout = () => {
+        setTimeout(() => {
+            this.initTitlePrevMask();
+        }, 15)
+    };
 
     titlePrevMaskSetClip() {
         const left = this.dataSlides[0].width + this.newPositionX - this.titlePrevMaskLeft;
@@ -160,6 +176,12 @@ export default class Slider extends Component {
         this.pageTitle.appendChild(this.pageTitleMask);
     }
 
+    initPageTitleMaskTimeout = () => {
+        setTimeout(() => {
+            this.initPageTitleMask();
+        }, 15)
+    };
+
     pageTitleMaskSetClip() {
         const left = this.dataSlides[0].width + this.newPositionX - this.pageTitleMaskLeft;
 
@@ -179,6 +201,9 @@ export default class Slider extends Component {
 
             window.addEventListener('mouseup', this.dragStop);
         }, 15);
+
+        Lng.relativeComponentOrCallback = this.initPageTitleMaskTimeout;
+        Lng.relativeComponentOrCallback = this.initTitlePrevMaskTimeout;
 
         this.dataScroll.timeout = setTimeout(() => {
             Scroll.action = this.changeSlideByScroll;
@@ -382,6 +407,9 @@ export default class Slider extends Component {
 
         Header.openCallback.remove(this.menuOpenCallback);
         Header.closeCallback.remove(this.menuCloseCallback);
+
+        Lng.relativeComponentOrCallback.remove(this.initPageTitleMaskTimeout);
+        Lng.relativeComponentOrCallback.remove(this.initTitlePrevMaskTimeout);
     }
 
     render() {

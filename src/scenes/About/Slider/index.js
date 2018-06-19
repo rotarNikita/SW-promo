@@ -9,6 +9,7 @@ import slides from '../../../data/aboutUsSlider/slides';
 import Scroll from '../../../actions/Scroll';
 import NaNimate from '../../../generals/NaNimate'
 import { PAGE_TRANSITION_TIME } from "../../../data/constants";
+import Lng from '../../../components/Header/Menu/Lng';
 
 const ANIMATION_DURATION = {
     slow: PAGE_TRANSITION_TIME,
@@ -75,6 +76,8 @@ export default class Slider extends Component {
 
         window.addEventListener('mousemove', this.move);
         window.addEventListener('mouseup', this.endMove);
+
+        Lng.relativeComponentOrCallback = this;
     }
 
     startMove = event => {
@@ -206,6 +209,8 @@ export default class Slider extends Component {
 
         window.removeEventListener('mousemove', this.move);
         window.removeEventListener('mouseup', this.endMove);
+
+        Lng.relativeComponentOrCallback.remove(this);
     }
 
     nextButtonClick = () => {
@@ -323,11 +328,11 @@ export default class Slider extends Component {
                 </div>}
 
                 <Prev onClick={this.prevButtonClick} mount={prevButtonMount && currentLocation}>
-                    {currentSlide <= 0 ? 'Верните текст!' : 'Prev'}
+                    {currentSlide <= 0 ? ({rus: 'О нас', eng: 'About us'})[Lng.currentLng] : 'Prev'}
                 </Prev>
 
                 <Next onClick={this.nextButtonClick} mount={slidesArray.length - 1 > currentSlide && currentLocation}>
-                    {sliderMount ? 'Next' : 'Наша команда'}
+                    {sliderMount ? 'Next' : ({rus: 'Наша команда', eng: 'Our team'})[Lng.currentLng]}
                 </Next>
             </div>
         )

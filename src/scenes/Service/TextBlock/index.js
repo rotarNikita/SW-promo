@@ -6,7 +6,7 @@ export default function TextBlock (props) {
         <div className={styles.wrapper}>
             <div className={styles.content}>
                 <p className={styles.title}>{props.title}</p>
-                <p className={styles.text}>{props.text}</p>
+                <p className={styles.text} dangerouslySetInnerHTML={{__html: props.text}}/>
             </div>
         </div>
     )

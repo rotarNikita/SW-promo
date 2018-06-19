@@ -80,7 +80,7 @@ export default class SlideBig extends Component {
         return (
             <div onClick={onClick} className={styles.slide} style={this.slidePosition()}>
                 <div className={styles.content}>
-                    <p className={styles.text}>{text}</p>
+                    <p className={styles.text} dangerouslySetInnerHTML={{__html: text}}/>
                     <div className={styles.description}>
                         <h3 className={styles.title}>{title}</h3>
                         {title && name && <div className={styles.line} />}

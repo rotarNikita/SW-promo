@@ -38,7 +38,7 @@ export default class Header extends Component {
     static get openCallback() {
         return {
             remove: val => {
-                const index = this[openCallback].indexOf(val) === -1;
+                const index = this[openCallback].indexOf(val);
 
                 if (index !== -1) this[openCallback].splice(index, 1);
             }
@@ -55,7 +55,7 @@ export default class Header extends Component {
     static get closeCallback() {
         return {
             remove: val => {
-                const index = this[closeCallback].indexOf(val) === -1;
+                const index = this[closeCallback].indexOf(val);
 
                 if (index !== -1) this[closeCallback].splice(index, 1);
             }

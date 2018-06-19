@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
 import React, { PureComponent } from "react";
-import Button from '../../../compnents/Button';
+import Button from '../../../components/Button';
 import styles from './ContactsButton.scss';
 
 export default class ContactsButton extends PureComponent {

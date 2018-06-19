@@ -3,9 +3,50 @@ import styles from './Lng.scss';
 import { createPortal } from 'react-dom';
 import lngData from './lngData';
 
+const allLngRelativeComponentsOrCallbacks = Symbol('Lng.allLngRelativeComponentsOrCallbacks');
+const currentLng = Symbol('Lng.currentLng');
+
 export default class Lng extends Component {
     constructor(props) {
         super(props);
+    }
+    
+    static [allLngRelativeComponentsOrCallbacks] = [];
+
+    static [currentLng] = lngData[0];
+
+    static set currentLng(val) {
+        this[currentLng] = val;
+
+        this.relativeComponentOrCallback.update();
+    }
+
+    static get currentLng() {
+        return this[currentLng]
+    }
+    
+    static set relativeComponentOrCallback(component) {
+        if (this[allLngRelativeComponentsOrCallbacks].indexOf(component) === -1)
+            this[allLngRelativeComponentsOrCallbacks].push(component);
+    };
+
+    static get relativeComponentOrCallback() {
+        return {
+            remove: component => {
+                const index = this[allLngRelativeComponentsOrCallbacks].indexOf(component);
+                
+                if (index !== -1) this[allLngRelativeComponentsOrCallbacks].splice(index, 1)
+            },
+            update: () => {
+                this[allLngRelativeComponentsOrCallbacks].forEach(component => {
+                    try {
+                        component.forceUpdate()
+                    } catch(e) {
+                        component()
+                    }
+                })
+            }
+        }
     }
 
     state = {
@@ -20,7 +61,9 @@ export default class Lng extends Component {
     }
 
     chooseLng = currentLanguage => {
-        this.setState({currentLanguage})
+        this.setState({currentLanguage});
+
+        Lng.currentLng = currentLanguage;
     };
 
     componentDidMount() {

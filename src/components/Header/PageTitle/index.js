@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import pages from '../../../data/pages';
-import styles from './PageTitle.scss'
+import styles from './PageTitle.scss';
+import Lng from '../Menu/Lng';
 
 export default class PageTitle extends Component {
     constructor(props) {
@@ -38,6 +39,14 @@ export default class PageTitle extends Component {
             return styles.prevPage;
 
         return ''
+    }
+
+    componentDidMount() {
+        Lng.relativeComponentOrCallback = this
+    }
+
+    componentWillUnmount() {
+        Lng.relativeComponentOrCallback.remove(this)
     }
 
     shouldComponentUpdate (nextProps, nextState) {

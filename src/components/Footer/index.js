@@ -5,6 +5,7 @@ import Email from './Email';
 import pages from '../../data/pages';
 import TitlePrev from './TitlePrev';
 import BottomLink from './BottomLink';
+import Lng from '../Header/Menu/Lng';
 
 export default class Footer extends Component {
     constructor (props) {
@@ -21,6 +22,14 @@ export default class Footer extends Component {
 
     componentWillMount () {
         setTimeout(() => this.currentPage());
+    }
+
+    componentDidMount() {
+        Lng.relativeComponentOrCallback = this
+    }
+
+    componentWillUnmount() {
+        Lng.relativeComponentOrCallback.remove(this);
     }
 
     shouldComponentUpdate () {

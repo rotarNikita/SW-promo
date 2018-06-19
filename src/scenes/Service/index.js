@@ -5,6 +5,7 @@ import { PAGE_TRANSITION_TIME } from "../../data/constants";
 import { TEXT_BLOCK_TEXT, TEXT_BLOCK_TITLE, SLIDES } from "../../data/serviceContent";
 import Slider from './Slider';
 import Slide from './Slider/Slide';
+import Lng from '../../components/Header/Menu/Lng'
 
 export default class Service extends PureComponent {
     constructor (props) {
@@ -20,6 +21,8 @@ export default class Service extends PureComponent {
     }
 
     componentDidMount () {
+        Lng.relativeComponentOrCallback = this;
+
         setTimeout(() => {
             this.mainBlock = document.getElementById('main');
             this.burger = document.getElementById('menuButton');
@@ -110,15 +113,19 @@ export default class Service extends PureComponent {
         }
     }
 
+    componentWillUnmount() {
+        Lng.relativeComponentOrCallback.remove(this);
+    }
+
     render () {
-        const slides = SLIDES.map((slide, index) => (<Slide {...slide}
+        const slides = SLIDES().map((slide, index) => (<Slide {...slide}
                                                             key={slide.id}
                                                             slideNumber={index}/>));
 
         return (
             <div className={styles.wrapper}>
                 <Slider>
-                    <TextBlock title={TEXT_BLOCK_TITLE} text={TEXT_BLOCK_TEXT}/>
+                    <TextBlock title={TEXT_BLOCK_TITLE()} text={TEXT_BLOCK_TEXT()}/>
                     {slides}
                 </Slider>
             </div>

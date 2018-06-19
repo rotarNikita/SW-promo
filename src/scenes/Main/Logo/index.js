@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import HeaderLogoDefs from '../../../compnents/Header/HeaderLogo/HeaderLogoDefs';
-import glitch from '../../../compnents/HOCs/glitch';
-import StaticDOM from '../../../compnents/StaticDOM';
+import HeaderLogoDefs from '../../../components/Header/HeaderLogo/HeaderLogoDefs';
+import glitch from '../../../components/HOCs/glitch';
+import StaticDOM from '../../../components/StaticDOM';
 import { HEADER_LOGO_SVG_DEF_ID } from "../../../data/constants";
 import styles from './Logo.scss';
 

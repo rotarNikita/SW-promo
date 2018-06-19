@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import GradientText from '../../../GradientText';
 import styles from './MenuItem.scss';
+import Lng from "../Lng";
 
 export default class MenuItem extends Component {
     constructor (props) {
@@ -34,7 +35,15 @@ export default class MenuItem extends Component {
         }, 30)
     };
 
+    componentWillUnmount() {
+        Lng.relativeComponentOrCallback.remove(this);
+        Lng.relativeComponentOrCallback.remove(this.positionCalc);
+    }
+
     componentDidMount () {
+        Lng.relativeComponentOrCallback = this;
+        Lng.relativeComponentOrCallback = this.positionCalc;
+
         if (document.readyState === 'complete') this.positionCalc();
         else window.addEventListener('load', this.positionCalc)
     }

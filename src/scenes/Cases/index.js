@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BackgroundTitle from '../../compnents/BackgroundTitle';
+import BackgroundTitle from '../../components/BackgroundTitle';
 import Slider from './Slider';
 import Slide from './Slider/Slide';
 import { VIDEOS } from "../../data/casesContent";

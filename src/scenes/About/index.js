@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BackgroundTitle from '../../compnents/BackgroundTitle';
+import BackgroundTitle from '../../components/BackgroundTitle';
 import GradientContent from './GradientContent';
 import Slider from './Slider';
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import pages from './data/pages';
-import Layout from './compnents/Layout';
-import layoutStyles from './compnents/Layout/Layout.scss';
+import Layout from './components/Layout';
+import layoutStyles from './components/Layout/Layout.scss';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { PAGE_TRANSITION_TIME } from "./data/constants";
 import Scroll from './actions/Scroll';

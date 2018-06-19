@@ -1,9 +1,18 @@
 import generateKey from '../../generals/generateKey';
+import Lng from '../../components/Header/Menu/Lng';
 
 export default [
     {
         id: generateKey(),
-        text: 'Наша работа приносит нам удовольствие, помимо этого  мы все следуем  одной цели - сделать лучшее для клиента. SW agency - больше, чем работа, это, прежде всего, наш образ жизни.',
+        get text() {
+            return ({
+                rus: 'Наша работа приносит нам удовольствие, помимо этого  мы все следуем  одной цели - сделать лучшее для клиента. SW agency - больше, чем работа, это, прежде всего, наш образ жизни.',
+                eng: 'SW Agency is people. We build and innovate.' +
+                    '<br/>' +
+                    '<br/>' +
+                    '26 young professionals with 7 years of experience that work with joy and passion.'
+            })[Lng.currentLng]
+        },
         title: 'SW AGENCY',
         name: 'Сороченко Олег, CEO',
         img: require('./oleg.jpg')
