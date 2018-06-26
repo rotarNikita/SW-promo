@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import HeaderLogoDefs from '../../../components/Header/HeaderLogo/HeaderLogoDefs';
-import glitch from '../../../components/HOCs/glitch';
+// import glitch from '../../../components/HOCs/glitch';
 import StaticDOM from '../../../components/StaticDOM';
 import { HEADER_LOGO_SVG_DEF_ID } from "../../../data/constants";
 import styles from './Logo.scss';
 
 
-class Logo extends Component {
+export default class Logo extends Component {
     constructor (props) {
         super(props);
 
@@ -44,11 +44,11 @@ class Logo extends Component {
     }
 }
 
-export default glitch(Logo, {
-    classNames: {
-        glitchWrapper: styles.glitchWrapper,
-        glitchElement: styles.glitchElement,
-        glitchAfter: styles.glitchAfter,
-        glitchBefore: styles.glitchBefore
-    }
-});
+// export default glitch(Logo, {
+//     classNames: {
+//         glitchWrapper: styles.glitchWrapper,
+//         glitchElement: styles.glitchElement,
+//         glitchAfter: styles.glitchAfter,
+//         glitchBefore: styles.glitchBefore
+//     }
+// });
