@@ -2,7 +2,7 @@ import React from 'react';
 import Lng from '../../components/Header/Menu/Lng';
 
 export default () => ({
-    rus: (
+    ru: (
         <React.Fragment>
             <tspan x={59}>
                 SW AGENCY - креативное digital агентство. Мы специализируемся на
@@ -21,5 +21,20 @@ export default () => ({
             </tspan>
         </React.Fragment>
     ),
-    eng: ''
+    en: (
+        <React.Fragment>
+            <tspan x={0}>
+                Digital strategy with all its deliverables is our responsibility that we proudly take.
+            </tspan>
+            <tspan x={0} dy="30px">
+                Our clients are entrepreneurs and businessmen. They are smart, brave and charismatic.
+            </tspan>
+            <tspan x={0} dy="30px">
+                The have passion what they build. We cooperate with them in long-term perspective,
+            </tspan>
+            <tspan x={0} dy="30px">
+                creating a successful technological identity.
+            </tspan>
+        </React.Fragment>
+    )
 })[Lng.currentLng];

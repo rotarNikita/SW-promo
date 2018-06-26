@@ -13,7 +13,7 @@ export const HEADER_LOGO_SVG_DEF_ID = 'header-logo';
 
 export const MAIN_PAGE_TEXT = {
     get data() {return ({
-        rus: [
+        ru: [
             'Купи сайт',
             'Делаем сайты не хуже других',
             'Нам на вас похуй',
@@ -21,7 +21,7 @@ export const MAIN_PAGE_TEXT = {
             'Получится говно',
             'Помогите! Меня держат в подвале'
         ],
-        eng: [
+        en: [
             'Effective Web Solutions'
         ]
     })[Lng.currentLng]},

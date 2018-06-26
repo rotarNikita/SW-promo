@@ -3,8 +3,17 @@ import BackgroundTitle from '../../components/BackgroundTitle';
 import Slider from './Slider';
 import Slide from './Slider/Slide';
 import { VIDEOS } from "../../data/casesContent";
+import Lng from '../../components/Header/Menu/Lng';
 
 export default class Cases extends Component {
+    componentDidMount() {
+        Lng.relativeComponentOrCallback = this;
+    }
+
+    componentWillUnmount() {
+        Lng.relativeComponentOrCallback.remove(this)
+    }
+
     static loadedSlides = {};
 
     static addToLoadedSlides(id) {

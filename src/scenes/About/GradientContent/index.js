@@ -46,12 +46,12 @@ export default class GradientContent extends PureComponent {
         if (show) return (
             <div onAnimationEnd={this.animationEnd}
                  className={styles.wrapper + ' ' + animateClass}>
-                <GradientText textClass={styles.text}>
+                <GradientText textClass={styles.text} alignCenter={true}>
                     {gradientContent()}
                 </GradientText>
 
                 <Button style={{marginTop: '50px'}} onClick={nextButtonClick}>
-                    {({rus: 'Наша команда', eng: 'Our team'})[Lng.currentLng]}
+                    {({ru: 'Наша команда', en: 'Our team'})[Lng.currentLng]}
                 </Button>
             </div>
         );

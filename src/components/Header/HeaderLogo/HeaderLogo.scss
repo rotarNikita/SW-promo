@@ -1,7 +1,39 @@
 @import "../../../generals/variables";
 
+@keyframes slideLeft {
+  from {
+    transform: translate(100%, -50%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0, -50%);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translate(0, -50%);
+    opacity: 1;
+  }
+  to {
+    transform: translate(100%, -50%);
+    opacity: 0;
+  }
+}
+
 .logo {
   transition: $menuTransitionTime;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateY(-50%);
+  &.slideLeft {
+    animation: slideLeft .5s;
+  }
+  &.slideRight {
+    animation: slideRight .5s;
+  }
 }
 
 .glitchLogoWrapper {

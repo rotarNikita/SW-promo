@@ -6,8 +6,8 @@ export default [
         id: generateKey(),
         get text() {
             return ({
-                rus: 'Наша работа приносит нам удовольствие, помимо этого  мы все следуем  одной цели - сделать лучшее для клиента. SW agency - больше, чем работа, это, прежде всего, наш образ жизни.',
-                eng: 'SW Agency is people. We build and innovate.' +
+                ru: 'Наша работа приносит нам удовольствие, помимо этого  мы все следуем  одной цели - сделать лучшее для клиента. SW agency - больше, чем работа, это, прежде всего, наш образ жизни.',
+                en: 'SW Agency is people. We build and innovate.' +
                     '<br/>' +
                     '<br/>' +
                     '26 young professionals with 7 years of experience that work with joy and passion.'

@@ -39,8 +39,7 @@ export default class NavItem extends PureComponent {
             <li {...restProps} className={`${styles.item} ${active ? styles.active : ''}`}>
                 {resources.image &&
                 <img className={`${slideStyles.media} ${slideStyles.image}`}
-                     src={load ? resources.image : ''}
-                     alt={data.title}/>}
+                     src={load ? resources.image : ''}/>}
                 {resources.videos.length &&
                 !resources.image &&
                 <video className={`${slideStyles.media} ${slideStyles.video}`}

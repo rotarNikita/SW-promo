@@ -39,7 +39,7 @@ export default class Contacts extends Component {
                 </BackgroundTitle>
                 <Content data={COLS()}/>
                 <ContactsButton onClick={!showForm ? this.toggleFormVisibility : null} mount={currentPage}>
-                    {({rus: 'Начать проект', eng: 'Discuss the project'})[Lng.currentLng]}
+                    {({ru: 'Начать проект', en: 'Discuss the project'})[Lng.currentLng]}
                 </ContactsButton>
                 <Form mount={showForm && currentPage} close={showForm ? this.toggleFormVisibility : null}/>
             </div>

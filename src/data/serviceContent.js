@@ -1,20 +1,20 @@
 import Lng from '../components/Header/Menu/Lng';
 
 export const TEXT_BLOCK_TITLE = () => ({
-    rus: 'Комплексное решение для вашего бизнеса.',
-    eng: 'SW Agency gives a holistic approach in digital presence.'
+    ru: 'Комплексное решение для вашего бизнеса.',
+    en: 'SW Agency gives a holistic approach in digital presence.'
 })[Lng.currentLng];
 
 export const TEXT_BLOCK_TEXT = () => ({
-    rus: 'SW Agency следует одной цели - сделать лучшее для клиента.',
-    eng: 'We combine effectiveness and creativity to differentiate you from competitors. Our goal is to increase your sales by optimization of conversion rates.' +
+    ru: 'SW Agency следует одной цели - сделать лучшее для клиента.',
+    en: 'It is not only development. We create.' +
         '<br/>' +
         '<br/>' +
-        'The product you get is not just a website, it is an incarnation of branding, marketing, development and business objectives.'
+        'We believe that building an effective digital presence is an investment. It is a comprehensive process with a focus on splendid solution.'
 })[Lng.currentLng];
 
 export const SLIDES = () => ({
-    rus: [
+    ru: [
         {
             id: 0,
             title: 'Веб-разработка',
@@ -66,7 +66,7 @@ export const SLIDES = () => ({
             ]
         }
     ],
-    eng: [
+    en: [
         {
             id: 0,
             title: 'Web Development ',
@@ -82,7 +82,6 @@ export const SLIDES = () => ({
             title: 'Promotion',
             list: [
                 'Google Adwords',
-                'SEO',
                 'SEO',
                 'CPA (Cost-Per-Acquisition)'
             ]

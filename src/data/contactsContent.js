@@ -1,7 +1,7 @@
 import Lng from '../components/Header/Menu/Lng';
 
 export const COLS = () => ({
-    rus: [
+    ru: [
         {
             id: 0,
             title: 'Основной',
@@ -30,7 +30,7 @@ export const COLS = () => ({
             address: 'Canada, City<br>St. Blabla, 56'
         }
     ],
-    eng: [
+    en: [
         {
             id: 0,
             title: 'Canada',

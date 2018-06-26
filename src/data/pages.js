@@ -11,8 +11,8 @@ export default [
         id: 0,
         link: '/',
         get text() {return ({
-            rus: 'Главная',
-            eng: 'Main'
+            ru: 'Главная',
+            en: 'Main'
         })[Lng.currentLng]},
         exact: true,
         template: Main
@@ -21,8 +21,8 @@ export default [
         id: 2,
         link: '/service',
         get text() {return ({
-            rus: 'Услуги',
-            eng: 'Services'
+            ru: 'Услуги',
+            en: 'Services'
         })[Lng.currentLng]},
         template: Service
     },
@@ -30,8 +30,8 @@ export default [
         id: 1,
         link: '/about',
         get text() {return ({
-            rus: 'О студии',
-            eng: 'About Us'
+            ru: 'О студии',
+            en: 'About Us'
         })[Lng.currentLng]},
         template: About
     },
@@ -39,8 +39,8 @@ export default [
         id: 3,
         link: '/cases',
         get text() {return ({
-            rus: 'Кейсы',
-            eng: 'Portfolio'
+            ru: 'Кейсы',
+            en: 'Portfolio'
         })[Lng.currentLng]},
         template: Cases
     },
@@ -48,8 +48,8 @@ export default [
         id: 4,
         link: '/contacts',
         get text() {return ({
-            rus: 'Контакты',
-            eng: 'Contacts'
+            ru: 'Контакты',
+            en: 'Contacts'
         })[Lng.currentLng]},
         template: Contacts
     }

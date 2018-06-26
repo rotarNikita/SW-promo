@@ -78,8 +78,7 @@ export default class Slide extends PureComponent {
                     {!resources.videos.length &&
                     resources.image &&
                     <img className={`${styles.media} ${styles.image}`}
-                         src={load ? resources.image : ''}
-                         alt={data.title}/>}
+                         src={load ? resources.image : ''}/>}
                     {!load && <div className={`${styles.media} ${styles.loader}`}>
                         <div className={styles.loaderInner} style={{backgroundImage: `url(${loader})`}}/>
                     </div>}

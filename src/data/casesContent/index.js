@@ -1,9 +1,15 @@
 import generateKey from '../../generals/generateKey';
+import Lng from '../../components/Header/Menu/Lng';
 
 export const VIDEOS = [
     {
         id: generateKey(),
-        title: 'СТРОИТЕЛЬНАЯ КОМПАНИЯ «ГЕФЕСТ»',
+        get title() {
+          return ({
+              ru: 'СТРОИТЕЛЬНАЯ КОМПАНИЯ «ГЕФЕСТ»',
+              en: 'Construction company Gefest'
+          })[Lng.currentLng]
+        },
         subtitle: 'Design, Development',
         link: false,
         sources: [
@@ -27,7 +33,12 @@ export const VIDEOS = [
     },
     {
         id: generateKey(),
-        title: 'Центр косметологии «КОМПЛИМЕНТ»',
+        get title() {
+            return ({
+                ru: 'Центр косметологии «КОМПЛИМЕНТ»',
+                en: 'Beauty center "Compliment"'
+            })[Lng.currentLng]
+        },
         subtitle: 'Design, Development',
         link: 'http://compliment.ua/',
         sources: [
@@ -39,7 +50,12 @@ export const VIDEOS = [
     },
     {
         id: generateKey(),
-        title: 'СТАНДАРТ ОИЛ УКРАИНА',
+        get title() {
+            return ({
+                ru: 'СТАНДАРТ ОИЛ УКРАИНА',
+                en: 'Standart Oil - Ukraine'
+            })[Lng.currentLng]
+        },
         subtitle: 'Design, Development',
         link: 'http://lubeoil1.com.ua/',
         sources: [
@@ -51,7 +67,12 @@ export const VIDEOS = [
     },
     {
         id: generateKey(),
-        title: 'Интернет-магазин «СКАД»',
+        get title() {
+            return ({
+                ru: 'Интернет-магазин «СКАД»',
+                en: 'Online Store "Skad"'
+            })[Lng.currentLng]
+        },
         subtitle: 'Design, Development',
         link: 'http://skad.in.ua/',
         sources: [
@@ -79,7 +100,12 @@ export const VIDEOS = [
     },
     {
         id: generateKey(),
-        title: 'АГЕНТСТВО НЕДВИЖИМОСТИ  «СЛОН»',
+        get title() {
+            return ({
+                ru: 'АГЕНТСТВО НЕДВИЖИМОСТИ «СЛОН»',
+                en: 'Real Estate Agency "Elefant"'
+            })[Lng.currentLng]
+        },
         subtitle: 'Design, Development, Сorporate identity',
         link: 'http://anslon.com.ua/',
         sources: [
@@ -91,7 +117,12 @@ export const VIDEOS = [
     },
     {
         id: generateKey(),
-        title: 'Ресторан «MOONDEER»',
+        get title() {
+            return ({
+                ru: 'Ресторан «MOONDEER»',
+                en: 'Restaurant "Moondeer"'
+            })[Lng.currentLng]
+        },
         subtitle: 'Design, Development, Сorporate identity',
         link: 'moon.swagency.xyz',
         sources: [
@@ -107,7 +138,12 @@ export const VIDEOS = [
     },
     {
         id: generateKey(),
-        title: 'СТРОИТЕЛЬНАЯ КОМПАНИЯ «DOMIRA»',
+        get title() {
+            return ({
+                ru: 'СТРОИТЕЛЬНАЯ КОМПАНИЯ «DOMIRA»',
+                en: 'Construction company Domira'
+            })[Lng.currentLng]
+        },
         subtitle: 'Design, Development',
         link: 'http://domira.com.ua/',
         sources: [
@@ -119,7 +155,12 @@ export const VIDEOS = [
     },
     {
         id: generateKey(),
-        title: 'Портал недвижимости «VAN.UA»',
+        get title() {
+            return ({
+                ru: 'Портал недвижимости «VAN.UA»',
+                en: 'Real estate portal "VAN.ua"'
+            })[Lng.currentLng]
+        },
         subtitle: 'MANAGEMENT, Marketing, Сorporate identity',
         link: 'https://van.ua/',
         sources: [

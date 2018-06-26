@@ -9,6 +9,13 @@ const currentLng = Symbol('Lng.currentLng');
 export default class Lng extends Component {
     constructor(props) {
         super(props);
+
+        const languageIndex = lngData.indexOf(window.navigator.language) !== -1 ? lngData.indexOf(window.navigator.language) : 1;
+
+        this.state = {
+            show: this.props.mount,
+            currentLanguage: lngData[languageIndex]
+        };
     }
     
     static [allLngRelativeComponentsOrCallbacks] = [];
@@ -48,11 +55,6 @@ export default class Lng extends Component {
             }
         }
     }
-
-    state = {
-        show: this.props.mount,
-        currentLanguage: lngData[0]
-    };
 
     wrapper = document.createElement('div');
 

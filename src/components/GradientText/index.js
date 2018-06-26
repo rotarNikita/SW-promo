@@ -22,6 +22,26 @@ export default class GradientText extends Component {
         else window.addEventListener('load', this.sizeCalc)
     }
 
+    componentDidUpdate() {
+        this.sizeCalc();
+    }
+
+    alignCenterAllTspan() {
+        const tspans = this.textBlock.querySelectorAll('tspan');
+        const tspanSizes = [];
+
+        for (let i = 0; i < tspans.length; i++)
+            tspanSizes.push(tspans[i].textLength.baseVal.value)
+
+        const maxWidth = Math.max.apply(null, tspanSizes);
+
+        for (let i = 0; i < tspanSizes.length; i++) {
+            console.log('' + (maxWidth - tspanSizes[i]) / 2);
+
+            tspans[i].setAttribute('x', '' + (maxWidth - tspanSizes[i]) / 2)
+        }
+    }
+
     sizeCalc = () => {
         setTimeout(() => {
             const textSize = this.textBlock.getBoundingClientRect();
@@ -39,6 +59,8 @@ export default class GradientText extends Component {
             this.SVGBlock.setAttribute('viewBox', `0 0 ${width} ${height}`);
 
             this.textBlock.setAttribute('transform', `translate(0 ${fontSize - dHeight})`);
+
+            if (this.props.alignCenter) this.alignCenterAllTspan();
         }, 15)
     };
 

@@ -6,13 +6,16 @@ import { DefaultInput, TelInput, Select, Option, TextArea, InputFile } from "../
 import Button from '../../../components/Button';
 import PropTypes from 'prop-types';
 import Lng from '../../../components/Header/Menu/Lng';
+import GradientText from '../../../components/GradientText';
 
 export default class Form extends PureComponent {
     constructor(props) {
         super(props);
 
         this.state = {
-            show: false
+            show: false,
+            errorsInValidation: {},
+            success: false
         };
 
         this.container = document.createElement('div');
@@ -21,19 +24,27 @@ export default class Form extends PureComponent {
     }
 
     static childContextTypes = {
-        addToData: PropTypes.func
+        addToData: PropTypes.func,
+        addToReset: PropTypes.func
+    };
+
+    resetCallbacks = [];
+
+    addToReset = callback => {
+        this.resetCallbacks.push(callback);
     };
 
     getChildContext() {
         return {
-            addToData: this.addToData
+            addToData: this.addToData,
+            addToReset: this.addToReset
         };
     }
 
-    addToData = (key, value, isValid) => {
+    addToData = (key, value, isValid, required = false) => {
         const valid = isValid === undefined ? true : isValid;
 
-        this.formData[key] = { value, valid };
+        this.formData[key] = { value, valid, required };
     };
 
     componentDidMount() {
@@ -56,14 +67,52 @@ export default class Form extends PureComponent {
         if (!this.props.mount) this.setState({show: false})
     };
 
+    static checkForEmpty(value) {
+        if (value.length !== undefined) return value.length === 0;
+        return !value
+    }
+
+    reset = () => {
+        this.form.reset();
+
+        this.resetCallbacks.forEach(callback => callback());
+
+        this.setState({success: false});
+    };
+
     submit = event => {
         event.preventDefault();
 
-        console.log(this.formData);
+        // console.log(this.formData);
+        // ajax send data
+
+        const { formData } = this;
+
+        const errorsInValidation = {};
+        let success = true;
+
+        for (let key in formData) {
+            let { value, valid, required } = formData[key];
+
+            let valueIsEmpty = Form.checkForEmpty(value);
+
+            if (required && valueIsEmpty) {
+                errorsInValidation[key] = 'EMPTY';
+                success = false;
+                continue;
+            }
+
+            if (!valid && !valueIsEmpty) {
+                errorsInValidation[key] = 'NOT_VALID';
+                success = false;
+            }
+        }
+
+        this.setState({errorsInValidation, success})
     };
 
     render() {
-        const { show } = this.state;
+        const { show, errorsInValidation, success } = this.state;
         const { mount, close } = this.props;
 
         const animationClass = mount ? styles.showForm : styles.hideForm;
@@ -72,46 +121,67 @@ export default class Form extends PureComponent {
             <div className={`${styles.wrapper} ${animationClass}`}
                  onAnimationEnd={this.animationEnd}>
                 <div className="container">
-                    <BackgroundTitle style={{top: '20px'}} subTitle={({rus: 'Ваша заявка', eng: 'Send a Request'})[Lng.currentLng]}>
+                    <BackgroundTitle style={{top: '20px'}} subTitle={({ru: 'Ваша заявка', en: 'Send a Request'})[Lng.currentLng]}>
                         Hello
                     </BackgroundTitle>
                 </div>
-                <form className={styles.form} onSubmit={this.submit}>
+                <form ref={form => this.form = form} className={styles.form} onSubmit={this.submit}>
                     <div className="container">
                         <div className={styles.row}>
                             <div className={styles.col}>
                                 <DefaultInput required
                                               name="name"
                                               type="text"
-                                              label={({rus: 'Имя', eng: 'Name'})[Lng.currentLng]}/>
+                                              error={errorsInValidation.name}
+                                              label={({ru: 'Имя', en: 'Name'})[Lng.currentLng]}/>
                                 <TelInput required
                                           name="tel"
                                           type="tel"
-                                          label={({rus: 'Телефон', eng: 'Phone'})[Lng.currentLng]}/>
+                                          error={errorsInValidation.tel}
+                                          label={({ru: 'Телефон', en: 'Phone'})[Lng.currentLng]}/>
                                 <DefaultInput required
                                               name="email"
                                               type="email"
+                                              error={errorsInValidation.email}
                                               label="E-mail"/>
                                 <DefaultInput name="company"
+                                              error={errorsInValidation.company}
                                               type="text"
-                                              label={({rus: 'ваша компания', eng: 'Company name'})[Lng.currentLng]}/>
+                                              label={({ru: 'ваша компания', en: 'Company name'})[Lng.currentLng]}/>
                             </div>
                             <div className={styles.col}>
-                                <Select name="budget" label={({rus: 'Бюджет', eng: 'Estimate Budget'})[Lng.currentLng]}>
-                                    <Option>{({rus: 'от', eng: 'from'})[Lng.currentLng]} 10.000 1</Option>
-                                    <Option>{({rus: 'от', eng: 'from'})[Lng.currentLng]} 10.000 2</Option>
-                                    <Option>{({rus: 'от', eng: 'from'})[Lng.currentLng]} 10.000 3</Option>
+                                <Select name="budget"
+                                        error={errorsInValidation.budget}
+                                        label={({ru: 'Бюджет', en: 'Estimate Budget'})[Lng.currentLng]}>
+                                    <Option>2 000$ - 5 000$</Option>
+                                    <Option>5 000$ - 10 000$</Option>
+                                    <Option>10 000$ - 20 000$</Option>
+                                    <Option>20 000$+</Option>
                                 </Select>
-                                <TextArea name="message" label={({rus: 'Сообщение', eng: 'Message'})[Lng.currentLng]}/>
-                                <InputFile name="file" label={({rus: 'Прикрепить файл', eng: 'File(s)'})[Lng.currentLng]}/>
+                                <TextArea name="message"
+                                          error={errorsInValidation.message}
+                                          label={({ru: 'Сообщение', en: 'Message'})[Lng.currentLng]}/>
+                                <InputFile name="file"
+                                           error={errorsInValidation.file}
+                                           label={({ru: 'Прикрепить файл', en: 'File(s)'})[Lng.currentLng]}/>
                             </div>
                         </div>
                     </div>
                     <div className={styles.submitWrapper}>
                         <div className="container">
-                            <Button type="submit">
-                                {({rus: 'Отправить', eng: 'Send'})[Lng.currentLng]}
-                            </Button>
+                            {success || <Button type="submit">
+                                {({ru: 'Отправить', en: 'Send'})[Lng.currentLng]}
+                            </Button>}
+                            {success && <div className={styles.success}>
+                                {({ru: 'вы котичек! ваш запрос отправлен :)', en: 'your request was sent :)'})[Lng.currentLng]}
+                                <br/>
+                                <br/>
+                                <span className={styles.resetButton} onClick={this.reset}>
+                                    <GradientText textClass={styles.gradientText}>
+                                        {({ru: 'Заполнить еще раз', en: 'Send one more message'})[Lng.currentLng]}
+                                    </GradientText>
+                                </span>
+                            </div>}
                         </div>
                     </div>
                 </form>

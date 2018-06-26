@@ -26,6 +26,7 @@
   padding: 0 0 20px 0;
   background: transparent;
   color: #4d4d4d;
+  line-height: 1.3;
   &:-webkit-autofill {
     background: transparent;
   }
@@ -36,11 +37,11 @@
     color: $textColor;
   }
   &.required.invalid + .line {
-    background-color: red;
+    background-color: $themeColor1;
     right: 0;
   }
   &.required.valid + .line {
-    background-color: green;
+    background-color: $themeColor2;
   }
 }
 
@@ -65,9 +66,17 @@
   width: 100%;
   padding-bottom: 25px;
   flex-wrap: wrap;
+  position: relative;
   &.right {
     justify-content: flex-end;
   }
+}
+
+.error {
+  position: absolute;
+  right: 0;
+  top: 42px;
+  color: $themeColor1;
 }
 
 .dropdown {
@@ -81,7 +90,7 @@
   transition: height .5s;
   z-index: 1;
   &.opened {
-    height: 192px;
+    height: 256px;
   }
 }
 
@@ -106,7 +115,7 @@
 
 .textarea {
   width: 100%;
-  height: 158px;
+  height: 170px;
   .input {
     width: 100%;
     height: 100%;
@@ -138,11 +147,27 @@
   vertical-align: middle;
 }
 
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .fileLabelPlus {
   font-size: 24px;
   font-weight: 500;
-  line-height: 12px;
   vertical-align: middle;
+  display: inline-block;
+  height: 21px;
+  position: relative;
+  top: -2px;
+  transform-origin: center;
+  &.loading {
+    animation: rotate 1s infinite linear;
+  }
 }
 
 .fileName {

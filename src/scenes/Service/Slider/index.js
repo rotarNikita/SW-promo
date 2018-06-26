@@ -59,7 +59,7 @@ export default class Slider extends Component {
 
         this.pageTitle = null;
         this.pageTitleMask = null;
-        this.pageTitleMaskWidth = ({rus: 67, eng: 83})[Lng.currentLng];
+        this.pageTitleMaskWidth = ({ru: 67, en: 83})[Lng.currentLng];
         this.pageTitleMaskHeight = 11;
         this.pageTitleMaskLeft = (window.innerWidth - this.pageTitleMaskWidth) / 2;
 
@@ -96,7 +96,7 @@ export default class Slider extends Component {
         this.dragStop();
         this.dataAnimation.stop(true);
 
-        this.pageTitleMaskWidth = ({rus: 67, eng: 83})[Lng.currentLng];
+        this.pageTitleMaskWidth = ({ru: 67, en: 83})[Lng.currentLng];
         this.pageTitleMaskLeft = (window.innerWidth - this.pageTitleMaskWidth) / 2;
 
         let left = this.dataSlides[0].width + this.newPositionX - this.pageTitleMaskLeft;

@@ -328,11 +328,11 @@ export default class Slider extends Component {
                 </div>}
 
                 <Prev onClick={this.prevButtonClick} mount={prevButtonMount && currentLocation}>
-                    {currentSlide <= 0 ? ({rus: 'О нас', eng: 'About us'})[Lng.currentLng] : 'Prev'}
+                    {currentSlide <= 0 ? ({ru: 'О нас', en: 'About us'})[Lng.currentLng] : 'Prev'}
                 </Prev>
 
                 <Next onClick={this.nextButtonClick} mount={slidesArray.length - 1 > currentSlide && currentLocation}>
-                    {sliderMount ? 'Next' : ({rus: 'Наша команда', eng: 'Our team'})[Lng.currentLng]}
+                    {sliderMount ? 'Next' : ({ru: 'Наша команда', en: 'Our team'})[Lng.currentLng]}
                 </Next>
             </div>
         )

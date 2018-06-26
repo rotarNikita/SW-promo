@@ -131,3 +131,21 @@ $padding: 25px;
   top: calc(100% + 30px);
   text-align: center;
 }
+
+.success {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+}
+
+.resetButton {
+  cursor: pointer;
+}
+
+.gradientText {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}

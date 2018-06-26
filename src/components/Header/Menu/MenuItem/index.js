@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import GradientText from '../../../GradientText';
 import styles from './MenuItem.scss';
 import Lng from "../Lng";
+import glitch from '../../../HOCs/glitch';
 
 export default class MenuItem extends Component {
     constructor (props) {
@@ -55,6 +55,19 @@ export default class MenuItem extends Component {
     render () {
         const { exact, close, to, children, setActiveMenuItemPosition, toggleGradient } = this.props;
 
+        const element = () => (
+            <React.Fragment>
+                <span>{children}</span>
+                <div className={styles.inner}>
+                    {children}
+                </div>
+            </React.Fragment>
+        );
+
+        const GlitchElement = glitch(element, {
+            onlyOnHover: true
+        });
+
         return (
             <li className={styles.item}>
                 <NavLink exact={exact}
@@ -69,10 +82,7 @@ export default class MenuItem extends Component {
                              toggleGradient();
                          }}
                          onMouseLeave={setActiveMenuItemPosition}>
-                        <span>{children}</span>
-                        <div className={styles.inner}>
-                            {children}
-                        </div>
+                        <GlitchElement/>
                     </div>
                 </NavLink>
             </li>
