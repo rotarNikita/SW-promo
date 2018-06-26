@@ -49,7 +49,7 @@ export default class GradientContent extends PureComponent {
                 <GradientText textClass={styles.text} alignCenter={true}>
                     {gradientContent()}
                 </GradientText>
-
+                <br/>
                 <Button style={{marginTop: '50px'}} onClick={nextButtonClick}>
                     {({ru: 'Наша команда', en: 'Our team'})[Lng.currentLng]}
                 </Button>
