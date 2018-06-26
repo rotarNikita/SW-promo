@@ -4,10 +4,6 @@ import socialsData from './socialsData';
 
 
 export default class Socials extends PureComponent {
-    constructor(props) {
-        super(props);
-    }
-
     socials = socialsData.map(item => <li className={styles.listItem} key={item.id}>
         <a href={item.href}
            className={styles.link}

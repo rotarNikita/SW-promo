@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styles from './Contacts.scss';
 import ContactsButton from './ContactsButton';
 import BackgroundTitle from '../../components/BackgroundTitle';
 import { COLS } from "../../data/contactsContent";

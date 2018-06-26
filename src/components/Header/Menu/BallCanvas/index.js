@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styles from './BallCanvas.scss';
 import NaNimate from '../../../../generals/NaNimate';
 import Header from '../../../Header';
-import { GRADIENT_COLOR_1, GRADIENT_COLOR_2 } from '../../../../data/constants';
 import Lng from '../Lng';
 
 const BALL_RADIUS = 6;
@@ -67,13 +66,6 @@ export default class BallCanvas extends Component {
     setBoundaryWithGradient () {
         this.x1 = this.props.x1 || 0;
         this.x2 = this.props.x2 || this.canvas.width;
-
-        // try {
-        //     if (!this.ballGradient)
-        //         this.ballGradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, 0);
-        //     this.ballGradient.addColorStop(this.x1 / this.canvas.width, GRADIENT_COLOR_1);
-        //     this.ballGradient.addColorStop(this.x2 / this.canvas.width, GRADIENT_COLOR_2);
-        // } catch (e) {}
     }
 
     componentDidMount () {

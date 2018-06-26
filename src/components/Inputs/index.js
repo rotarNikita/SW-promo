@@ -79,7 +79,7 @@ export class DefaultInput extends PureComponent {
     };
     
     render() {
-        const { label, type, required } = this.props;
+        const { label, required } = this.props;
         const { value, valid, error } = this.state;
 
         return (
@@ -112,10 +112,6 @@ const REGEXP_PATTERN = /\+ \d{2} \(\d{3}\) \d{3} \d{2} \d{2}/;
 const MIN_LENGTH = TELEPHONE_PATTERN.indexOf(CHAR_SAMPLE) + 1;
 
 export class TelInput extends DefaultInput {
-    constructor(props, context) {
-        super(props, context);
-    }
-
     blur = () => {
         if (this.state.value.length < MIN_LENGTH)
             this.setState({value: ''})

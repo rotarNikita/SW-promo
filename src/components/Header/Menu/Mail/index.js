@@ -7,10 +7,6 @@ const DELAY_FUNCTION = NaNimate.getTimingFunction('linear');
 const DURATION = 1000;
 
 export default class Mail extends PureComponent {
-    constructor(props) {
-        super(props)
-    }
-
     email = Array.prototype.map.call(EMAIL, (char, index, {length}) =>
         <span key={index}
               className={styles.char}

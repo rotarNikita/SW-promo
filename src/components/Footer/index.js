@@ -4,7 +4,6 @@ import TitleNext from './TitleNext';
 import Email from './Email';
 import pages from '../../data/pages';
 import TitlePrev from './TitlePrev';
-import BottomLink from './BottomLink';
 import Lng from '../Header/Menu/Lng';
 
 export default class Footer extends Component {
@@ -87,7 +86,6 @@ export default class Footer extends Component {
                                historyPrevPage={historyPrevPage}/>}
                 </div>
                 <div id="footer-center">
-                    {/*<BottomLink mount={currentPage ? currentPage.link === '/about' : false}>Наши партнеры</BottomLink>*/}
                 </div>
                 <div id="footer-right">
                     {nextPage &&

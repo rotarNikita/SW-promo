@@ -16,6 +16,8 @@ export default class Lng extends Component {
             show: this.props.mount,
             currentLanguage: lngData[languageIndex]
         };
+
+        Lng.relativeComponentOrCallback.update();
     }
     
     static [allLngRelativeComponentsOrCallbacks] = [];
