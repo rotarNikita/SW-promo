@@ -8,23 +8,12 @@ export default class Next extends PureComponent {
 
         this.state = {
             show: false
-            // animation: true
         };
 
         this.el = document.createElement('div')
     }
 
     animationEnd = () => {
-        // let state = {animation: false};
-        //
-        // if (!this.props.mount) {
-        //     state.show = false;
-        //     state.animation = true;
-        //     document.getElementById('footer-right').removeChild(this.el)
-        // }
-        //
-        // this.setState(state)
-
         if (!this.props.mount) {
             this.setState({show: false});
             document.getElementById('footer-right').removeChild(this.el)
@@ -32,7 +21,6 @@ export default class Next extends PureComponent {
     };
 
     componentWillReceiveProps (nextProps) {
-        // this.show(nextProps)
         setTimeout(() => {
             if (nextProps.mount && !this.state.show) {
                 this.setState({show: true});
@@ -41,24 +29,10 @@ export default class Next extends PureComponent {
         });
     }
 
-    // componentDidMount () {
-    //     setTimeout(() => {
-    //         this.show(this.props)
-    //     })
-    // }
-
-    // show (props) {
-    //     if (props.mount) {
-    //         this.setState({ show: true });
-    //         document.getElementById('footer-right').appendChild(this.el);
-    //     }
-    // }
-
     render () {
         const { mount, ...restProps } = this.props;
-        const { show, animation } = this.state;
+        const { show } = this.state;
 
-        // const className = styles.text + ' ' + (mount ? animation ? styles.open : '' : styles.close);
         const className = styles.text + ' ' + (mount ? styles.open : styles.close);
 
         if (show) return ReactDOM.createPortal(

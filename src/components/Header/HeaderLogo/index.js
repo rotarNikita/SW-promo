@@ -4,13 +4,9 @@ import HeaderLogoDefs from './HeaderLogoDefs';
 import StaticDOM from '../../StaticDOM';
 import { NavLink } from 'react-router-dom';
 import glitch from '../../HOCs/glitch';
-import { MENU_TRANSITION_TIME, HEADER_LOGO_SVG_DEF_ID } from "../../../data/constants";
+import { HEADER_LOGO_SVG_DEF_ID } from "../../../data/constants";
 
 export default class HeaderLogo extends Component {
-    constructor(props) {
-        super(props)
-    }
-
     state = {
         show: this.props.mount
     };

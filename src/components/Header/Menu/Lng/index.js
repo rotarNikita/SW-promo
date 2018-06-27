@@ -16,11 +16,11 @@ export default class Lng extends Component {
             show: this.props.mount,
             currentLanguage: lngData[languageIndex]
         };
+
+        Lng.currentLng = lngData[languageIndex];
     }
     
     static [allLngRelativeComponentsOrCallbacks] = [];
-
-    static [currentLng] = lngData[0];
 
     static set currentLng(val) {
         this[currentLng] = val;

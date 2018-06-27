@@ -33,7 +33,6 @@ export default class NavItem extends PureComponent {
         const { slide, active, ...restProps } = this.props;
         const { load } = this.state;
         const { resources } = slide;
-        const { data } = slide.props;
 
         return (
             <li {...restProps} className={`${styles.item} ${active ? styles.active : ''}`}>

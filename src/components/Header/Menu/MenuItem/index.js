@@ -23,7 +23,9 @@ export default class MenuItem extends Component {
     }
 
     shouldComponentUpdate (nextProps) {
-        return this.props.location !== nextProps.location
+        const { location, children } = this.props;
+
+        return location !== nextProps.location || children !== nextProps.children
     }
 
     positionCalc = () => {
@@ -49,7 +51,7 @@ export default class MenuItem extends Component {
     }
 
     componentDidUpdate () {
-        this.getDefaultMenuItemPosition();
+        this.positionCalc();
     }
 
     render () {
