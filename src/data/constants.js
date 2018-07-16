@@ -22,9 +22,15 @@ export const MAIN_PAGE_TEXT = {
             'Помогите! Меня держат в подвале'
         ],
         en: [
-            'Effective Web Solutions'
+            'Effective Web Solutions',
+            'SEO',
+            'Web Development',
+            'Promotion',
+            'App Development',
+            'SMM',
+            'Branding'
         ]
     })[Lng.currentLng]},
-    fontSizeRange: [100, 200],
-    speedRange: [2, 4]
+    fontSizeRange: [10, 70],
+    animationDurationRange: [20000, 40000]
 };

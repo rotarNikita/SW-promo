@@ -1,0 +1,93 @@
+@import "../../generals/variables";
+
+.wrapper {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  background-color: $themeColor3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 120;
+  transition: opacity 1s;
+}
+
+@keyframes rotate-svg {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  width: 790px;
+  height: 455px;
+  display: block;
+  animation: rotate-svg 5s infinite linear;
+  transition: all .3s;
+}
+
+svg:not(:root).loader {
+  overflow: unset;
+  * {
+    overflow: unset;
+  }
+}
+
+.polygon {
+  animation: rotate-svg 2.5s infinite linear;
+  transform-origin: center;
+  transition: all .3s;
+}
+
+$pulsarSize: 50px;
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 8px 6px rgba($themeColor2, 0), 0 0 0px 0px rgba($themeColor2, 0);
+  }
+  10% {
+    box-shadow: 0 0 8px 6px $themeColor2, 0 0 2px 10px $themeColor2;
+  }
+  100% {
+    box-shadow: 0 0 8px 6px rgba($themeColor2, 0), 0 0 20px 60px rgba($themeColor2, 0);
+  }
+}
+
+.pulsar {
+  width: $pulsarSize;
+  height: $pulsarSize;
+  border-radius: 50%;
+  position: absolute;
+  background-color: $themeColor2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse 2s 0.5s ease-out infinite;
+  opacity: .5;
+  transition: all 1s;
+  &:after {
+    content: 'Click me';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 10px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity .3s;
+    white-space: nowrap;
+  }
+}
+
+.showClick {
+  cursor: pointer;
+  &:after {
+    opacity: 1;
+  }
+}

@@ -1,4 +1,5 @@
 const defaultTimingFunctions = Symbol('NaNimate.defaultAnimationTimingFunctions');
+const defaultTimingFunctionsInverse = Symbol('NaNimate.defaultTimingFunctionsInverse');
 const defaultDuration = Symbol('NaNimate.defaultDuration');
 
 const _callback = Symbol('NaNimate.callback');
@@ -12,7 +13,7 @@ const startTime = Symbol('NaNimate.startTime');
 const timeFractionBeforePause = Symbol('NaNimate.timeFractionBeforePause');
 const timeFraction = Symbol('NaNimate.timeFraction');
 const pauseBool = Symbol('NaNimate.pauseBool');
-
+const progress = Symbol('NaNimate.progress');
 
 export default class NaNimate {
     constructor(option) {
@@ -25,16 +26,18 @@ export default class NaNimate {
         this[timeFractionBeforePause] = 0;
         this[startTime] = undefined;
         this[pauseBool] = true;
+        this[progress] = 0;
     }
 
     [animate] = time => {
         if (!this[pauseBool]) {
             this[timeFraction] = this[timeFractionBeforePause] + (time - this[startTime]) / this.duration;
+
             if (this[timeFraction] > 1) this[timeFraction] = 1;
 
-            const progress = this.timingFunction(this[timeFraction]);
+            this[progress] = this.timingFunction(this[timeFraction]);
 
-            this.progressFunction(progress);
+            this.progressFunction(this[progress]);
 
             if (this[timeFraction] < 1) requestAnimationFrame(this[animate]);
             else this.stop(!!this.callback)
@@ -71,6 +74,16 @@ export default class NaNimate {
 
         if (withCallback) this.callback();
     };
+
+    get progress() {
+        return this[progress];
+    }
+
+    set progress(val) {
+        this[timeFraction] = NaNimate[defaultTimingFunctionsInverse].easeInOutQuad(val);
+        this.pause();
+        this.progressFunction(this[timeFraction])
+    }
 
     set duration(val) {
         this[_duration] = NaNimate.checkDuration(val);
@@ -169,4 +182,9 @@ export default class NaNimate {
         easeOutQuint: t => 1 + (--t) * t * t * t * t,
         easeInOutQuint: t => t < .5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t
     };
+
+    static [defaultTimingFunctionsInverse] = {
+        linear: x => x,
+        easeInOutQuad: x => x < .5 ? Math.sqrt(x / 2) : 1 - Math.sqrt((1 - x) / 2),
+    }
 }

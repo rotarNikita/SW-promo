@@ -69,7 +69,7 @@ export const SLIDES = () => ({
     en: [
         {
             id: 0,
-            title: 'Web Development ',
+            title: 'Web Development',
             list: [
                 'E-commerce',
                 'Corporate websites',
