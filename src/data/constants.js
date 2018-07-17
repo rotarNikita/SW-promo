@@ -32,5 +32,5 @@ export const MAIN_PAGE_TEXT = {
         ]
     })[Lng.currentLng]},
     fontSizeRange: [10, 70],
-    animationDurationRange: [20000, 40000]
+    animationDurationRange: [20000, 50000]
 };

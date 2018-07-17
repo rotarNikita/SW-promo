@@ -93,7 +93,7 @@ export default class Service extends PureComponent {
     mainBlockReset () {
         clearTimeout(this.mainBlockTimeout);
 
-        this.mainBlock.style.backgroundColor = '#FFFFFF';
+        this.mainBlock.style.backgroundColor = 'transparent';
 
         this.mainBlockTimeout = setTimeout(() => {
             if (window.location.pathname !== '/service')

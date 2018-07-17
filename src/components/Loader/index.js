@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './Loader.scss';
 import { MAIN_COLOR_1 } from "../../data/constants";
 import Scroll from '../../actions/Scroll';
+import NaNimate from '../../generals/NaNimate';
 
 const callbacks = Symbol('Loader.callbacks');
 
@@ -19,12 +20,13 @@ export default class Loader extends Component {
         this.radius = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight);
 
         this.shortLoader = window.location.pathname !== '/';
+
+        this.triangleAnimation = null;
     }
 
     static [callbacks] = {
         startLoad: [],
         finishLoad: [],
-        showMessage: [],
         startHide: [],
         unmount: [],
     };
@@ -36,7 +38,9 @@ export default class Loader extends Component {
         load: false,
         showMsg: false,
         hide: false,
-        mount: true
+        mount: true,
+
+        triangleRotate: 0
     };
 
     static addListener(listener, callback) {
@@ -63,6 +67,26 @@ export default class Loader extends Component {
         }
     };
 
+    createTriangleAnimation() {
+        const animation = new NaNimate({
+            duration: 2500,
+            progressFunction: progress => {
+                const triangleRotate = Math.round(360 * progress);
+
+                if (triangleRotate !== this.state.triangleRotate)
+                    this.setState({triangleRotate})
+            },
+            timingFunction: 'linear',
+            callback: () => {
+                animation.start();
+            }
+        });
+
+        animation.start();
+
+        return animation
+    }
+
     componentDidMount() {
         Loader[callbacks].startLoad.forEach(callback => callback());
 
@@ -78,13 +102,19 @@ export default class Loader extends Component {
     }
 
     hideLoader() {
-        Scroll.leftScrollAllow = true;
-        Scroll.rightScrollAllow = true;
-        Scroll.callbacksScrollAllow = true;
+        if (!this.state.hide) {
+            Scroll.leftScrollAllow = true;
+            Scroll.rightScrollAllow = true;
+            Scroll.callbacksScrollAllow = true;
 
-        this.setState({hide: true});
+            if (!this.shortLoader)
+                this.triangleAnimation.stop(false, true);
 
-        Loader[callbacks].startHide.forEach(callback => callback());
+
+            this.setState({hide: true});
+
+            Loader[callbacks].startHide.forEach(callback => callback());
+        }
     }
 
     load = () => {
@@ -97,22 +127,20 @@ export default class Loader extends Component {
             this.hideLoader();
     };
 
-    svgAnimationEnd = () => {
-        if (!this.state.showMsg)
-            Loader[callbacks].showMessage.forEach(callback => callback());
-
-        this.setState({showMsg: true});
+    svgAnimationStart = () => {
+        this.triangleAnimation = this.createTriangleAnimation();
     };
 
-    clickOnPulse = () => {
-        if (this.state.showMsg) {
-            this.hideLoader();
-        }
+    svgAnimationEnd = () => {
+        this.hideLoader();
     };
 
     wrapperTransitionEnd= () => {
         if (this.state.hide) {
             this.setState({mount: false});
+
+            if (this.shortLoader)
+                this.triangleAnimation.stop(false, true);
 
             Loader.mount = false;
             Loader[callbacks].unmount.forEach(callback => callback());
@@ -120,34 +148,27 @@ export default class Loader extends Component {
     };
 
     render() {
-        const { load, showMsg, hide, mount } = this.state;
-
-        const pulsarClasses = [styles.pulsar, showMsg ? styles.showClick : undefined].join(' ');
+        const { load, hide, mount, triangleRotate } = this.state;
 
         if (mount) return (
             <div className={styles.wrapper}
                  style={hide ? {opacity: 0} : {}}
                  onTransitionEnd={this.wrapperTransitionEnd}>
                 <svg className={styles.loader}
+                     viewBox={"61.4 194.3 323.1 187"}
                      onAnimationEnd={this.shortLoader ? null : this.svgAnimationEnd}
+                     onAnimationStart={this.svgAnimationStart}
                      style={load ? {animationIterationCount: this.animationIterationCount} : {}}>
-                    <defs>
-                        <symbol id="loader-symbol" viewBox={"61.4 194.3 323.1 187"}>
-                            <polygon style={load ? {animationIterationCount: this.animationIterationCount * 2} : {}}
-                                     className={styles.polygon}
-                                     fill={MAIN_COLOR_1}
-                                     points={'183.3,226.3 123.4,194.3 123.4,258.2'}/>
-                        </symbol>
-                    </defs>
-                    <use xlinkHref="#loader-symbol" href="#loader-symbol"/>
+                    <polygon fill={MAIN_COLOR_1}
+                             transform={`rotate(${triangleRotate} 153.35 226.25)`}
+                             points={'183.3,226.3 123.4,194.3 123.4,258.2'}/>
                 </svg>
-                <div onClick={this.clickOnPulse}
-                     style={hide ? {
+                <div style={hide ? {
                          width: this.radius + 'px',
                          height: this.radius + 'px',
                          animation: 'none'
                      } : {}}
-                     className={pulsarClasses} />
+                     className={styles.pulsar} />
             </div>
         );
 

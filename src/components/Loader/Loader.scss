@@ -39,12 +39,6 @@ svg:not(:root).loader {
   }
 }
 
-.polygon {
-  animation: rotate-svg 2.5s infinite linear;
-  transform-origin: center;
-  transition: all .3s;
-}
-
 $pulsarSize: 50px;
 
 @keyframes pulse {
@@ -71,23 +65,23 @@ $pulsarSize: 50px;
   animation: pulse 2s 0.5s ease-out infinite;
   opacity: .5;
   transition: all 1s;
-  &:after {
-    content: 'Click me';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    padding-top: 10px;
-    text-align: center;
-    opacity: 0;
-    transition: opacity .3s;
-    white-space: nowrap;
-  }
+  //&:after {
+  //  content: 'Click me';
+  //  position: absolute;
+  //  top: 100%;
+  //  left: 50%;
+  //  transform: translateX(-50%);
+  //  padding-top: 10px;
+  //  text-align: center;
+  //  opacity: 0;
+  //  transition: opacity .3s;
+  //  white-space: nowrap;
+  //}
 }
 
-.showClick {
-  cursor: pointer;
-  &:after {
-    opacity: 1;
-  }
-}
+//.showClick {
+//  cursor: pointer;
+//  &:after {
+//    opacity: 1;
+//  }
+//}

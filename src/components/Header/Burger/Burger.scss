@@ -13,7 +13,7 @@
     width: 100%;
     max-width: 100%;
     background-color: $textColor;
-    height: 1px;
+    height: 2px;
     transition: top .3s .2s, bottom .3s .2s, max-width .2s, background-color .5s ease;
   }
   .lineAfter {
@@ -35,7 +35,7 @@
       transition: top .3s, max-width .2s .3s, background-color .5s ease;
     }
     .lineBefore {
-      bottom: 12px;
+      bottom: 11px;
       max-width: 50%;
       background-color: $themeColor3;
       transition: bottom .3s, max-width .2s .3s, background-color .5s ease;
@@ -52,7 +52,7 @@
   left: 0;
   top: 12px;
   background-color: $textColor;
-  height: 1px;
+  height: 2px;
   width: 100%;
   max-width: 50%;
   transition: max-width .3s, background-color .5s ease;

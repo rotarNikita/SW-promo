@@ -80,9 +80,14 @@ export default class NaNimate {
     }
 
     set progress(val) {
-        this[timeFraction] = NaNimate[defaultTimingFunctionsInverse].easeInOutQuad(val);
-        this.pause();
-        this.progressFunction(this[timeFraction])
+        try {
+            this[timeFraction] = NaNimate[defaultTimingFunctionsInverse][this.timingFunction.name](val);
+            this.pause();
+            this.progressFunction(this[timeFraction])
+        } catch (e) {
+            console.error(`${this.timingFunction} is not a default timing functions. You can set progress only on default timing function`)
+        }
+
     }
 
     set duration(val) {

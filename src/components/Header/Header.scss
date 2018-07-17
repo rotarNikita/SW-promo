@@ -12,6 +12,9 @@
   //&.open {
   //  background-color: rgba($themeColor3, .9);
   //}
+  * {
+    user-select: none;
+  }
 }
 
 .logoFloatRight {

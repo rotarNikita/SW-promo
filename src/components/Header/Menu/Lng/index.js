@@ -10,7 +10,8 @@ export default class Lng extends Component {
     constructor(props) {
         super(props);
 
-        const languageIndex = lngData.indexOf(window.navigator.language) !== -1 ? lngData.indexOf(window.navigator.language) : 1;
+        const currentLng = window.navigator.language.substr(0, 2).toLowerCase();
+        const languageIndex = lngData.indexOf(currentLng) !== -1 ? lngData.indexOf(currentLng) : 1;
 
         this.state = {
             show: this.props.mount,
