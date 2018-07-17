@@ -10,9 +10,6 @@ export default class Loader extends Component {
     constructor(props) {
         super(props);
 
-        this.animationIterationCount = 0;
-        this.addAnimationIterationCount();
-
         Scroll.leftScrollAllow = false;
         Scroll.rightScrollAllow = false;
         Scroll.callbacksScrollAllow = false;
@@ -21,7 +18,7 @@ export default class Loader extends Component {
 
         this.shortLoader = window.location.pathname !== '/';
 
-        this.triangleAnimation = null;
+        this.animation = null;
     }
 
     static [callbacks] = {
@@ -35,12 +32,10 @@ export default class Loader extends Component {
     static mount = true;
 
     state = {
-        load: false,
-        showMsg: false,
         hide: false,
         mount: true,
 
-        triangleRotate: 0
+        rotate: 0
     };
 
     static addListener(listener, callback) {
@@ -59,26 +54,19 @@ export default class Loader extends Component {
             this[callbacks][listener].splice(index, 1);
     }
 
-    addAnimationIterationCount = () => {
-        if (!Loader.checkLoad()) {
-            this.animationIterationCount++;
-
-            setTimeout(this.addAnimationIterationCount, 5000)
-        }
-    };
-
-    createTriangleAnimation() {
+    createAnimation() {
         const animation = new NaNimate({
-            duration: 2500,
+            duration: 5000,
             progressFunction: progress => {
-                const triangleRotate = Math.round(360 * progress);
+                const rotate = Math.round(360 * progress);
 
-                if (triangleRotate !== this.state.triangleRotate)
-                    this.setState({triangleRotate})
+                if (rotate !== this.state.rotate)
+                    this.setState({rotate})
             },
             timingFunction: 'linear',
             callback: () => {
-                animation.start();
+                if (!Loader.load) animation.start();
+                else if (!this.shortLoader) this.hideLoader();
             }
         });
 
@@ -89,6 +77,8 @@ export default class Loader extends Component {
 
     componentDidMount() {
         Loader[callbacks].startLoad.forEach(callback => callback());
+
+        this.animation = this.createAnimation();
 
         window.addEventListener('load', this.load);
     }
@@ -107,10 +97,6 @@ export default class Loader extends Component {
             Scroll.rightScrollAllow = true;
             Scroll.callbacksScrollAllow = true;
 
-            if (!this.shortLoader)
-                this.triangleAnimation.stop(false, true);
-
-
             this.setState({hide: true});
 
             Loader[callbacks].startHide.forEach(callback => callback());
@@ -118,17 +104,12 @@ export default class Loader extends Component {
     }
 
     load = () => {
-        this.setState({load: true});
         Loader.load = true;
 
         Loader[callbacks].finishLoad.forEach(callback => callback());
 
         if (this.shortLoader)
             this.hideLoader();
-    };
-
-    svgAnimationStart = () => {
-        this.triangleAnimation = this.createTriangleAnimation();
     };
 
     svgAnimationEnd = () => {
@@ -140,7 +121,7 @@ export default class Loader extends Component {
             this.setState({mount: false});
 
             if (this.shortLoader)
-                this.triangleAnimation.stop(false, true);
+                this.animation.stop();
 
             Loader.mount = false;
             Loader[callbacks].unmount.forEach(callback => callback());
@@ -148,7 +129,7 @@ export default class Loader extends Component {
     };
 
     render() {
-        const { load, hide, mount, triangleRotate } = this.state;
+        const { hide, mount, rotate } = this.state;
 
         if (mount) return (
             <div className={styles.wrapper}
@@ -156,11 +137,9 @@ export default class Loader extends Component {
                  onTransitionEnd={this.wrapperTransitionEnd}>
                 <svg className={styles.loader}
                      viewBox={"61.4 194.3 323.1 187"}
-                     onAnimationEnd={this.shortLoader ? null : this.svgAnimationEnd}
-                     onAnimationStart={this.svgAnimationStart}
-                     style={load ? {animationIterationCount: this.animationIterationCount} : {}}>
+                     style={{transform: `rotate(${rotate}deg)`}}>
                     <polygon fill={MAIN_COLOR_1}
-                             transform={`rotate(${triangleRotate} 153.35 226.25)`}
+                             transform={`rotate(${rotate * 2} 153.35 226.25)`}
                              points={'183.3,226.3 123.4,194.3 123.4,258.2'}/>
                 </svg>
                 <div style={hide ? {

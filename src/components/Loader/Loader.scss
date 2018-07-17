@@ -4,6 +4,7 @@
   position: fixed;
   left: 0;
   top: 0;
+  padding: 10px;
   width: 100%;
   height: 100%;
   opacity: 1;
@@ -15,21 +16,12 @@
   transition: opacity 1s;
 }
 
-@keyframes rotate-svg {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .loader {
+  max-width: 100%;
+  max-height: 100%;
   width: 790px;
   height: 455px;
   display: block;
-  animation: rotate-svg 5s infinite linear;
-  transition: all .3s;
 }
 
 svg:not(:root).loader {
@@ -65,23 +57,4 @@ $pulsarSize: 50px;
   animation: pulse 2s 0.5s ease-out infinite;
   opacity: .5;
   transition: all 1s;
-  //&:after {
-  //  content: 'Click me';
-  //  position: absolute;
-  //  top: 100%;
-  //  left: 50%;
-  //  transform: translateX(-50%);
-  //  padding-top: 10px;
-  //  text-align: center;
-  //  opacity: 0;
-  //  transition: opacity .3s;
-  //  white-space: nowrap;
-  //}
 }
-
-//.showClick {
-//  cursor: pointer;
-//  &:after {
-//    opacity: 1;
-//  }
-//}

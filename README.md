@@ -1,16 +1,20 @@
-#SW-promo
+# SW-promo
 
-##Version log
+## Version log
 
-###v. 1.1.0
+### v. 1.2.0
+- mobile loader
+- bug with never close loader on home page on mobile
+
+### v. 1.1.0
 - starting log
 - basic complete desktop
 
-###v. 1.0.1
+### v. 1.0.1
 
-###v. 1.0.0
+### v. 1.0.0
 
-##Description
+## Description
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
