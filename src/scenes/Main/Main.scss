@@ -7,5 +7,7 @@
   align-items: center;
   * {
     user-select: none;
+    position: relative;
+    z-index: -1;
   }
 }

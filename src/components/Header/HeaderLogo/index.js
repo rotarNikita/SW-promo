@@ -5,6 +5,7 @@ import StaticDOM from '../../StaticDOM';
 import { NavLink } from 'react-router-dom';
 import glitch from '../../HOCs/glitch';
 import { HEADER_LOGO_SVG_DEF_ID } from "../../../data/constants";
+import MQC from '../../../actions/MediaQueryChecker';
 
 export default class HeaderLogo extends Component {
     state = {
@@ -30,10 +31,13 @@ export default class HeaderLogo extends Component {
 
         const logoClassName = [styles.logo, mount ? styles.slideLeft : styles.slideRight].join(' ');
 
-        const GlitchWrapper = glitch(() => (
+        const SVGElement = () => (
             <svg width={82} height={48}>
                 <use href={`#${HEADER_LOGO_SVG_DEF_ID}`} xlinkHref={`#${HEADER_LOGO_SVG_DEF_ID}`} />
-            </svg>), {
+            </svg>
+        );
+
+        const GlitchWrapper = MQC.isTouchDevice ? SVGElement : glitch(SVGElement, {
                 onlyOnHover: true
             }
         );

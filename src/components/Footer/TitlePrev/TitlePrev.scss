@@ -2,12 +2,25 @@
 
 @keyframes nextPageTitle {
   from {
-    transform: translate(-50%, calc(-100vh + 129px));
+    transform: translate(-50%, calc(-100vh + #{2 * $pageSpaceTopBottom + 29px}));
     left: 50%;
   }
   to {
     transform: translate(0, 0);
     left: 10px;
+  }
+}
+
+@media (max-width: $mediaS) {
+  @keyframes nextPageTitle {
+    from {
+      transform: translate(-50%, calc(-100vh + #{2 * $pageSpaceTopBottomS + 29px + 60px}));
+      left: 50%;
+    }
+    to {
+      transform: translate(0, 0);
+      left: 10px;
+    }
   }
 }
 
@@ -78,6 +91,10 @@
   &:hover {
     letter-spacing: 2.8px;
     transform: translateX(10px);
+    @media (hover: none) and (pointer: coarse) {
+      letter-spacing: 1.4px;
+      transform: none;
+    }
   }
   &.nextPage {
     position: absolute;

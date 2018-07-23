@@ -13,12 +13,47 @@
 
 @keyframes nextPageTitle {
   from {
-    transform: translate(-100%, calc(100vh - 129px));
+    transform: translate(-100%, calc(100vh - #{$pageSpaceTopBottom * 2 + 29px}));
     left: calc(100% - 10px);
   }
   to {
     transform: translate(-50%, 0);
     left: 50%;
+  }
+}
+
+@keyframes prevPageTitle {
+  from {
+    transform: translate(0, calc(100vh - #{$pageSpaceTopBottom * 2 + 29px}));
+    left: 10px;
+  }
+  to {
+    transform: translate(-50%, 0);
+    left: 50%;
+  }
+}
+
+@media (max-width: $mediaS) {
+  @keyframes nextPageTitle {
+    from {
+      transform: translate(-100%, calc(100vh - #{$pageSpaceTopBottomS * 2 + 29px + 60px}));
+      left: calc(100% - 10px);
+    }
+    to {
+      transform: translate(-50%, 0);
+      left: 50%;
+    }
+  }
+
+  @keyframes prevPageTitle {
+    from {
+      transform: translate(0, calc(100vh - #{$pageSpaceTopBottomS * 2 + 29px + 60px}));
+      left: 10px;
+    }
+    to {
+      transform: translate(-50%, 0);
+      left: 50%;
+    }
   }
 }
 
@@ -32,17 +67,6 @@
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
-  }
-}
-
-@keyframes prevPageTitle {
-  from {
-    transform: translate(0, calc(100vh - 129px));
-    left: 10px;
-  }
-  to {
-    transform: translate(-50%, 0);
-    left: 50%;
   }
 }
 
@@ -87,6 +111,7 @@
     letter-spacing: 2.8px;
   }
   &.nextPage {
+    position: fixed;
     animation: nextPageTitle $pageTransitionTime;
     &:before {
       animation: nextPageBefore $pageTransitionTime;

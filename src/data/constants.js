@@ -31,6 +31,6 @@ export const MAIN_PAGE_TEXT = {
             'Branding'
         ]
     })[Lng.currentLng]},
-    fontSizeRange: [10, 70],
+    fontSizeRange: [10, 30],
     animationDurationRange: [20000, 50000]
 };

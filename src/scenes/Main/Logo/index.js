@@ -4,6 +4,7 @@ import styles from './Logo.scss';
 import generateKey from '../../../generals/generateKey';
 import NaNimate from '../../../generals/NaNimate';
 import Loader from '../../../components/Loader';
+import MQC from '../../../actions/MediaQueryChecker';
 
 const DELTA_ANGLE = 30;
 const DELTA_TRANSLATE = 70;
@@ -43,51 +44,51 @@ export default class Logo extends Component {
     logoId = 'mainPageLogo__' + generateKey();
 
     componentWillUnmount() {
-        window.removeEventListener('mousedown', this.mouseDown);
-        window.removeEventListener('mousemove', this.mouseMove);
-        window.removeEventListener('mouseup', this.mouseUp);
-        window.removeEventListener('mousemove', this.rotateByMouse);
+        this.eventListeners('remove');
 
         this.actionOnCurrentQueueAnimation('stop');
+    }
+
+    eventListeners(action) {
+        if (MQC.isTouchDevice) {
+            window[action + 'EventListener']('deviceorientation', this.rotateLogo);
+            window[action + 'EventListener']('touchstart', this.mouseDown);
+            window[action + 'EventListener']('touchmove', this.mouseMove);
+            window[action + 'EventListener']('touchend', this.mouseUp);
+        } else {
+            window[action + 'EventListener']('mousemove', this.rotateLogo);
+            window[action + 'EventListener']('mousedown', this.mouseDown);
+            window[action + 'EventListener']('mousemove', this.mouseMove);
+            window[action + 'EventListener']('mouseup', this.mouseUp);
+        }
     }
 
     startLogoAnimation = () => {
         this.animatePolygonsQueue();
 
-        window.addEventListener('mousemove', this.rotateByMouse);
-        window.addEventListener('mousedown', this.mouseDown);
-        window.addEventListener('mousemove', this.mouseMove);
-        window.addEventListener('mouseup', this.mouseUp);
+        this.eventListeners('add');
     };
 
     componentDidMount () {
         if (!Loader.addListener('startHide', this.startLogoAnimation)) {
-            window.addEventListener('mousemove', this.rotateByMouse);
-            window.addEventListener('mousedown', this.mouseDown);
-            window.addEventListener('mousemove', this.mouseMove);
-            window.addEventListener('mouseup', this.mouseUp);
+            this.eventListeners('add');
 
             const length = this.polygonsQueue.length;
 
             this.animatePolygonsQueue();
             this.actionOnCurrentQueueAnimation('pause');
 
-            for (let i = 0; i < length; i++) {
+            for (let i = 0; i < length; i++)
                 this.addStream(i)
-            }
-            // for (let i = 0; i < length; i++)
-            //     this.setQueueProgress(i);
+
             this.animationData.globalProgress = length;
         }
     }
 
     createStarterCasePolygon(fill, from) {
-        let indexInPolygons;
         const idInPolygons = generateKey();
 
         this.setState(prevState => {
-            indexInPolygons = prevState.polygons.length;
-
             prevState.polygons[idInPolygons] = {
                 fill,
                 points: from
@@ -306,11 +307,18 @@ export default class Logo extends Component {
         ]
     ];
 
-    rotateByMouse = event => {
-        const { clientX, clientY } = event;
+    rotateLogo = event => {
+        const { clientX, clientY, beta, gamma } = event;
+        let varX;
+        let varY;
 
-        const varX = clientX / window.innerWidth - .5;
-        const varY = clientY / window.innerHeight - .5;
+        if (typeof beta === 'number' && typeof gamma === 'number') {
+            varY = Math.abs(beta) / 180 - .5;
+            varX = gamma / 180;
+        } else {
+            varX = clientX / window.innerWidth - .5;
+            varY = clientY / window.innerHeight - .5;
+        }
 
         const rotateX = -varY * DELTA_ANGLE;
         const rotateY = varX * DELTA_ANGLE;
@@ -330,7 +338,7 @@ export default class Logo extends Component {
     }
 
     mouseDown = event => {
-        this.movementData.startX = event.clientX;
+        this.movementData.startX = event.clientX !== undefined ? event.clientX : event.touches[0].clientX;
         this.movementData.canMove = true;
         this.movementData.startProgress = this.animationData.globalProgress;
 
@@ -394,7 +402,8 @@ export default class Logo extends Component {
         const { movementData } = this;
 
         if (movementData.canMove) {
-            movementData.relativePositionX = event.clientX - movementData.startX;
+            const clientX = event.clientX !== undefined ? event.clientX : event.touches[0].clientX;
+            movementData.relativePositionX = clientX - movementData.startX;
 
             const newProgress = movementData.startProgress + movementData.relativePositionX * movementData.progressByPx;
 
@@ -403,7 +412,7 @@ export default class Logo extends Component {
     };
 
     mouseUp = event => {
-        this.movementData.endX = event.clientX;
+        this.movementData.endX = event.clientX !== undefined ? event.clientX : event.changedTouches[0].clientX;
         this.movementData.canMove = false;
 
         this.actionOnCurrentQueueAnimation('start');
@@ -414,6 +423,9 @@ export default class Logo extends Component {
 
         return (
             <svg style={{transform: `translate(${translateX}px, ${translateY}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`}}
+                 onTouchMove={event => event.preventDefault()}
+                 onTouchStart={event => event.preventDefault()}
+                 onTouchEnd={event => event.preventDefault()}
                  className={styles.logo}>
                 <defs>
                     <symbol id={this.logoId} viewBox={"61.4 194.3 323.1 187"}>
@@ -421,6 +433,9 @@ export default class Logo extends Component {
                             {
                                 Object.keys(polygons).reverse().map(function(key) {
                                     return <polygon key={key}
+                                                    onTouchMove={event => event.preventDefault()}
+                                                    onTouchStart={event => event.preventDefault()}
+                                                    onTouchEnd={event => event.preventDefault()}
                                                     fill={polygons[key].fill}
                                                     points={polygons[key].points.map(item => item.join(',')).join(' ')}/>
                                 })

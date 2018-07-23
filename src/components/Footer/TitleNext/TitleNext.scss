@@ -24,12 +24,25 @@
 
 @keyframes prevPageTitle {
   from {
-    transform: translate(50%, calc(-100vh + 129px));
+    transform: translate(50%, calc(-100vh + #{2 * $pageSpaceTopBottom + 29px}));
     right: 50%;
   }
   to {
     transform: translate(0, 0);
     right: 10px;
+  }
+}
+
+@media (max-width: $mediaS) {
+  @keyframes prevPageTitle {
+    from {
+      transform: translate(50%, calc(-100vh + #{2 * $pageSpaceTopBottomS + 29px + 60px}));
+      right: 50%;
+    }
+    to {
+      transform: translate(0, 0);
+      right: 10px;
+    }
   }
 }
 
@@ -77,6 +90,10 @@
   &:hover {
     letter-spacing: 2.8px;
     transform: translateX(-10px);
+    @media (hover: none) and (pointer: coarse) {
+      letter-spacing: 1.4px;
+      transform: none;
+    }
   }
   &.slideLeft {
     animation: slideLeft .5s;

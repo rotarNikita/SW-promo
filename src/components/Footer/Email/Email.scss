@@ -28,6 +28,9 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.4px;
+  @media (max-width: $mediaS) {
+    font-size: 12px;
+  }
 }
 
 .wrapper {

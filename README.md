@@ -3,6 +3,9 @@
 ## Version log
 
 ### v. 1.2.0
+- mobile footer
+- mobile header
+- mobile home page
 - mobile loader
 - bug with never close loader on home page on mobile
 
