@@ -61,6 +61,7 @@ export default class Header extends Component {
             opened: true
         });
 
+        Header.opened = true;
         Header[openCallback].forEach(callback => callback())
     };
 
@@ -73,6 +74,7 @@ export default class Header extends Component {
             opened: false
         });
 
+        Header.opened = false;
         Header[closeCallback].forEach(callback => callback())
     };
 

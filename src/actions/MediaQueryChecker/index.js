@@ -3,7 +3,6 @@ import generateKey from '../../generals/generateKey';
 class MediaQueryChecker {
     constructor() {
         window.addEventListener('resize', this.resize);
-        window.addEventListener('touchstart', this.detectTouch);
     }
 
     windowWidth = window.innerWidth;

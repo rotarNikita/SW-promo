@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styles from './MenuItem.scss';
 import Lng from "../Lng";
 import glitch from '../../../HOCs/glitch';
+import MQC from '../../../../actions/MediaQueryChecker';
 
 export default class MenuItem extends Component {
     constructor (props) {
@@ -10,6 +11,12 @@ export default class MenuItem extends Component {
 
         this.x1 = undefined;
         this.x2 = undefined;
+
+        this.MQCIDs = MQC.addResizeChecker({
+            callback: () => {
+                this.forceUpdate();
+            }
+        });
     }
 
     getHoverMenuItemPosition = () => {
@@ -29,9 +36,16 @@ export default class MenuItem extends Component {
     }
 
     positionCalc = () => {
-        setTimeout(() => {
-            this.x1 = this.linkWrapper.offsetLeft;
-            this.x2 = this.x1 + this.linkWrapper.offsetWidth;
+        clearTimeout(this._positionCalcTimeout);
+
+        this._positionCalcTimeout = setTimeout(() => {
+            this.x1 = window.innerWidth >= 1201 ?
+                this.linkWrapper.offsetLeft :
+                this.linkWrapper.offsetTop;
+
+            this.x2 = this.x1 + (window.innerWidth >= 1201 ?
+                this.linkWrapper.offsetWidth :
+                this.linkWrapper.offsetHeight);
 
             this.getDefaultMenuItemPosition();
         }, 30)
@@ -40,6 +54,8 @@ export default class MenuItem extends Component {
     componentWillUnmount() {
         Lng.relativeComponentOrCallback.remove(this);
         Lng.relativeComponentOrCallback.remove(this.positionCalc);
+
+        MQC.removeResizeChecker(this.MQCIDs);
     }
 
     componentDidMount () {
@@ -60,34 +76,37 @@ export default class MenuItem extends Component {
         const element = () => (
             <React.Fragment>
                 <span>{children}</span>
-                <div className={styles.inner}>
+                {!MQC.isTouchDevice && <div className={styles.inner}>
                     {children}
-                </div>
+                </div>}
             </React.Fragment>
         );
 
-        const GlitchElement = glitch(element, {
+        const GlitchElement = MQC.isTouchDevice ? element : glitch(element, {
             onlyOnHover: true
         });
 
         return (
-            <li className={styles.item}>
-                <NavLink exact={exact}
-                         onClick={close}
-                         to={to}
-                         className={styles.link}
-                         activeClassName={styles.active}>
-                    <div ref={linkWrapper => this.linkWrapper = linkWrapper}
-                         className={styles.shadow}
-                         onMouseEnter={() => {
-                             this.getHoverMenuItemPosition();
-                             toggleGradient();
-                         }}
-                         onMouseLeave={setActiveMenuItemPosition}>
-                        <GlitchElement/>
-                    </div>
-                </NavLink>
-            </li>
+            <React.Fragment>
+                <li className={styles.item}>
+                    <NavLink exact={exact}
+                             onClick={close}
+                             to={to}
+                             className={styles.link}
+                             activeClassName={styles.active}>
+                        <div ref={linkWrapper => this.linkWrapper = linkWrapper}
+                             className={styles.shadow}
+                             onMouseEnter={() => {
+                                 this.getHoverMenuItemPosition();
+                                 toggleGradient();
+                             }}
+                             onMouseLeave={setActiveMenuItemPosition}>
+                            <GlitchElement/>
+                        </div>
+                    </NavLink>
+                </li>
+                <br/>
+            </React.Fragment>
         )
     }
 }

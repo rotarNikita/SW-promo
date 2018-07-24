@@ -7,8 +7,14 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  //height: 0;
   transform: translate(-50%, -50%);
+  @media (max-width: $mediaM) {
+    left: unset;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-right: 50px;
+  }
   &.opened {
     opacity: 1;
   }
@@ -17,6 +23,10 @@
 .list {
   display: flex;
   justify-content: center;
+  @media (max-width: $mediaM) {
+    display: block;
+    text-align: right;
+  }
 }
 
 .menuWrapper {
@@ -41,11 +51,17 @@
     opacity: 1;
     z-index: -2;
     background-image: linear-gradient(to right, #0b58a3 6%, #434c85 28%, #b93247 74%, #fc2324 100%);
+    @media (max-width: $mediaS) {
+      background-image: linear-gradient(to bottom, #0b58a3 6%, #434c85 28%, #b93247 74%, #fc2324 100%);
+    }
   }
   &:before {
     opacity: 0;
     z-index: -1;
     background-image: linear-gradient(to right, #fc2324 6%, #b93247 28%, #434c85 74%, #0b58a3 100%);
+    @media (max-width: $mediaS) {
+      background-image: linear-gradient(to bottom, #fc2324 6%, #b93247 28%, #434c85 74%, #0b58a3 100%);
+    }
   }
   &.toggleGradient {
     &:before {
@@ -64,8 +80,12 @@
   transform: translateX(-50%);
   display: flex;
   justify-content: space-between;
+  align-items: center;
   opacity: 0;
   transition: opacity $menuTransitionTime;
+  @media (max-width: $mediaS) {
+    bottom: $pageSpaceTopBottomS;
+  }
   &.opened {
     opacity: 1;
   }

@@ -25,6 +25,9 @@
   &:hover {
     .line {
       max-width: 100%;
+      @media #{$isTouch} {
+        max-width: 50%;
+      }
     }
   }
   &.opened {

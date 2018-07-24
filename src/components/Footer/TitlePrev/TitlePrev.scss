@@ -91,7 +91,7 @@
   &:hover {
     letter-spacing: 2.8px;
     transform: translateX(10px);
-    @media (hover: none) and (pointer: coarse) {
+    @media #{$isTouch} {
       letter-spacing: 1.4px;
       transform: none;
     }

@@ -6,9 +6,15 @@
   font-weight: 700;
   text-decoration: none;
   text-transform: uppercase;
+  @media (max-width: $mediaS) {
+    text-transform: none;
+  }
   &:hover {
     .char {
       transform: rotateY(180deg);
+      @media #{$isTouch} {
+        transform: none;
+      }
     }
   }
 }

@@ -10,9 +10,15 @@
   cursor: pointer;
   margin: 0 15px;
   position: relative;
+  @media (max-width: $mediaS) {
+    font-size: 10px;
+  }
   &:hover {
     .char {
       transform: rotateY(180deg);
+      @media #{$isTouch} {
+        transform: none;
+      }
     }
   }
   &.active {
@@ -34,6 +40,11 @@
     opacity: 0;
     transition: all .3s;
     z-index: -1;
+    @media (max-width: $mediaS) {
+      top: calc(50% - 2px);
+      width: 42px;
+      height: 42px;
+    }
   }
 }
 

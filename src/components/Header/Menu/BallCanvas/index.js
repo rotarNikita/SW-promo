@@ -3,10 +3,36 @@ import styles from './BallCanvas.scss';
 import NaNimate from '../../../../generals/NaNimate';
 import Header from '../../../Header';
 import Lng from '../Lng';
+import MQC from '../../../../actions/MediaQueryChecker';
 
 const BALL_RADIUS = 6;
+const BALL_RADIUS_SMALL = 4.5;
 
 export default class BallCanvas extends Component {
+    constructor() {
+        super();
+
+        this.MQC_IDs = MQC.addResizeChecker({
+            to: 1200,
+            callback: () => {
+                this.reset();
+                this.setBoundaryWithGradient();
+                this.initBall(BALL_RADIUS_SMALL);
+                this.startSettings();
+                this.initAnimation(this.animateSmall);
+            }
+        }, {
+            from: 1201,
+            callback: () => {
+                this.reset();
+                this.setBoundaryWithGradient();
+                this.initBall(BALL_RADIUS);
+                this.startSettings();
+                this.initAnimation(this.animate);
+            }
+        })
+    }
+
     sizeCalc = () => {
         setTimeout(() => {
             const { canvas } = this;
@@ -16,37 +42,74 @@ export default class BallCanvas extends Component {
         }, 45)
     };
 
+    reset() {
+        const { canvas } = this;
+
+        if (this.animation) this.animation.stop();
+
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+        this.ctx = canvas.getContext('2d');
+    }
+
+    initBall(ballRadius) {
+        this.ball = new Ball(
+            this.ctx,
+            ballRadius + Math.random() * (this.canvas.width - 2 * ballRadius),
+            ballRadius,
+            ballRadius,
+            '#FFFFFF'
+        );
+    }
+
+    initAnimation(animation) {
+        this.animation = new NaNimate({
+            duration: Infinity,
+            progressFunction: animation,
+            timingFunction: 'linear',
+        });
+
+        if (Header.opened) this.animation.start();
+    }
+
+    startSettings() {
+        this.dx = window.innerWidth >= 1201 ? 2.5 : 1.5;
+        this.ddy = 0.10;
+        this.ball.dx = this.dx;
+        this.ball.dy = window.innerWidth >= 1201 ? 0 : this.dx;
+    }
+
     initCanvas = () => {
         setTimeout(() => {
-            const { canvas } = this;
-
-            canvas.width = canvas.clientWidth;
-            canvas.height = canvas.clientHeight;
-            this.ctx = canvas.getContext('2d');
+            this.reset();
 
             this.setBoundaryWithGradient();
 
-            this.ball = new Ball(
-                this.ctx,
-                BALL_RADIUS + Math.random() * (canvas.width - 2 * BALL_RADIUS),
-                BALL_RADIUS,
-                BALL_RADIUS,
-                '#FFFFFF'
-            );
+            if (window.innerWidth >= 1201) this.initBall(BALL_RADIUS);
+            else this.initBall(BALL_RADIUS_SMALL);
 
-            this.dx = 2.5;
-            this.ddy = 0.10;
-            this.ball.dx = this.dx;
+            this.startSettings();
 
-            this.animation = new NaNimate({
-                duration: Infinity,
-                progressFunction: this.animate,
-                timingFunction: 'linear',
-            });
+            if (window.innerWidth >= 1201) this.initAnimation(this.animate);
+            else this.initAnimation(this.animateSmall);
 
             Header.openCallback = this.animation.start;
             Header.closeCallback = this.animation.pause;
         }, 45)
+    };
+
+    animateSmall = () => {
+        const { ctx, ball, canvas, dx, x1, x2 } = this;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (ball.y >= x2 - BALL_RADIUS_SMALL) ball.dy = -dx;
+        else if (ball.y <= x1 + BALL_RADIUS_SMALL) ball.dy = dx;
+
+        if (ball.x <= BALL_RADIUS_SMALL) ball.dx = dx;
+        else if (ball.x >= canvas.width - BALL_RADIUS_SMALL) ball.dx = -dx;
+
+        ball.update();
     };
 
     animate = () => {
@@ -65,7 +128,7 @@ export default class BallCanvas extends Component {
 
     setBoundaryWithGradient () {
         this.x1 = this.props.x1 || 0;
-        this.x2 = this.props.x2 || this.canvas.width;
+        this.x2 = this.props.x2 || (window.innerWidth >= 1201 ? this.canvas.width : this.canvas.height);
     }
 
     componentDidMount () {
@@ -85,6 +148,8 @@ export default class BallCanvas extends Component {
         this.animation.stop();
         Header.openCallback.remove(this.animation.start);
         Header.closeCallback.remove(this.animation.pause);
+
+        MQC.removeResizeChecker(this.MQC_IDs);
     }
 
     render () {
