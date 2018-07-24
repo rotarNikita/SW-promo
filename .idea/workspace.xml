@@ -2,20 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e89eafe7-71e0-4ccf-ad42-d5e01d6285bf" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/actions/MediaQueryChecker/index.js" afterPath="$PROJECT_DIR$/src/actions/MediaQueryChecker/index.js" />
-      <change beforePath="$PROJECT_DIR$/src/components/Footer/TitleNext/TitleNext.scss" afterPath="$PROJECT_DIR$/src/components/Footer/TitleNext/TitleNext.scss" />
-      <change beforePath="$PROJECT_DIR$/src/components/Footer/TitlePrev/TitlePrev.scss" afterPath="$PROJECT_DIR$/src/components/Footer/TitlePrev/TitlePrev.scss" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header/Burger/Burger.scss" afterPath="$PROJECT_DIR$/src/components/Header/Burger/Burger.scss" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header/Menu/BallCanvas/BallCanvas.scss" afterPath="$PROJECT_DIR$/src/components/Header/Menu/BallCanvas/BallCanvas.scss" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header/Menu/BallCanvas/index.js" afterPath="$PROJECT_DIR$/src/components/Header/Menu/BallCanvas/index.js" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header/Menu/Lng/Lng.scss" afterPath="$PROJECT_DIR$/src/components/Header/Menu/Lng/Lng.scss" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header/Menu/Mail/Mail.scss" afterPath="$PROJECT_DIR$/src/components/Header/Menu/Mail/Mail.scss" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header/Menu/Menu.scss" afterPath="$PROJECT_DIR$/src/components/Header/Menu/Menu.scss" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header/Menu/MenuItem/MenuItem.scss" afterPath="$PROJECT_DIR$/src/components/Header/Menu/MenuItem/MenuItem.scss" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header/Menu/MenuItem/index.js" afterPath="$PROJECT_DIR$/src/components/Header/Menu/MenuItem/index.js" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header/index.js" afterPath="$PROJECT_DIR$/src/components/Header/index.js" />
-      <change beforePath="$PROJECT_DIR$/src/generals/variables.scss" afterPath="$PROJECT_DIR$/src/generals/variables.scss" />
+      <change beforePath="$PROJECT_DIR$/src/data/aboutUsSlider/slides.js" afterPath="$PROJECT_DIR$/src/data/aboutUsSlider/slides.js" />
+      <change beforePath="$PROJECT_DIR$/src/data/casesContent/index.js" afterPath="$PROJECT_DIR$/src/data/casesContent/index.js" />
+      <change beforePath="$PROJECT_DIR$/src/scenes/About/Slider/Slide/SlideSmall/index.js" afterPath="$PROJECT_DIR$/src/scenes/About/Slider/Slide/SlideSmall/index.js" />
+      <change beforePath="$PROJECT_DIR$/src/scenes/Main/Logo/index.js" afterPath="$PROJECT_DIR$/src/scenes/Main/Logo/index.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,31 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="variables.scss" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/generals/variables.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="46" lean-forward="false" selection-start-line="0" selection-start-column="46" selection-end-line="0" selection-end-column="46" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/actions/MediaQueryChecker/index.js">
+        <entry file="file://$PROJECT_DIR$/src/scenes/About/Slider/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="35" lean-forward="false" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/Header/Menu/BallCanvas/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="82" column="26" lean-forward="true" selection-start-line="82" selection-start-column="26" selection-end-line="82" selection-end-column="26" />
+            <state relative-caret-position="220">
+              <caret line="256" column="42" lean-forward="false" selection-start-line="256" selection-start-column="42" selection-end-line="256" selection-end-column="42" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -59,10 +29,68 @@
         </entry>
       </file>
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Header/Menu/MenuItem/index.js">
+        <entry file="file://$PROJECT_DIR$/src/scenes/About/Slider/Slide/SlideSmall/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="56" column="0" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+            <state relative-caret-position="238">
+              <caret line="20" column="16" lean-forward="false" selection-start-line="20" selection-start-column="16" selection-end-line="30" selection-end-column="31" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="slides.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/data/aboutUsSlider/slides.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="439">
+              <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="93" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#53#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/data/casesContent/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="165" column="3" lean-forward="false" selection-start-line="165" selection-start-column="3" selection-end-line="165" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#53#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/scenes/Cases/Slider/Slide/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="44" column="53" lean-forward="false" selection-start-line="44" selection-start-column="14" selection-end-line="44" selection-end-column="53" />
+              <folding>
+                <element signature="e#0#45#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Loader/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/scenes/About/Slider/Slide/SlideBig/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -89,6 +117,8 @@
       <find>pageX</find>
       <find>console.log</find>
       <find>mouseUp</find>
+      <find>slideImageSetLoaded</find>
+      <find>startLoad</find>
     </findStrings>
     <replaceStrings>
       <replace>rotateLogo</replace>
@@ -114,7 +144,6 @@
         <option value="$PROJECT_DIR$/src/scenes/Main/Ticker/Ticker.scss" />
         <option value="$PROJECT_DIR$/src/scenes/Main/Main.scss" />
         <option value="$PROJECT_DIR$/src/scenes/Main/Ticker/index.js" />
-        <option value="$PROJECT_DIR$/src/scenes/Main/Logo/index.js" />
         <option value="$PROJECT_DIR$/src/components/Header/Header.scss" />
         <option value="$PROJECT_DIR$/src/components/Footer/Footer.scss" />
         <option value="$PROJECT_DIR$/src/components/Header/PageTitle/PageTitle.scss" />
@@ -136,6 +165,10 @@
         <option value="$PROJECT_DIR$/src/components/Header/Menu/Menu.scss" />
         <option value="$PROJECT_DIR$/src/components/Header/Menu/MenuItem/index.js" />
         <option value="$PROJECT_DIR$/src/components/Header/Menu/BallCanvas/index.js" />
+        <option value="$PROJECT_DIR$/src/scenes/Main/Logo/index.js" />
+        <option value="$PROJECT_DIR$/src/scenes/About/Slider/Slide/SlideSmall/index.js" />
+        <option value="$PROJECT_DIR$/src/data/aboutUsSlider/slides.js" />
+        <option value="$PROJECT_DIR$/src/data/casesContent/index.js" />
       </list>
     </option>
   </component>
@@ -224,64 +257,85 @@
               <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="components" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Header" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Loader" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="sw" type="b2602c69:ProjectViewProjectNode" />
               <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="components" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Header" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Burger" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="data" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="sw" type="b2602c69:ProjectViewProjectNode" />
               <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="components" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Header" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Menu" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="data" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="aboutUsSlider" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="sw" type="b2602c69:ProjectViewProjectNode" />
               <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="components" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Header" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Menu" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="BallCanvas" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="sw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="components" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Header" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Menu" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Mail" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="sw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="components" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Header" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Menu" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="MenuItem" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="sw" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="components" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Header" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="PageTitle" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="data" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="casesContent" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="sw" type="b2602c69:ProjectViewProjectNode" />
               <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="generals" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="sw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="scenes" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="sw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="scenes" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="About" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="sw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="scenes" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Cases" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="sw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="scenes" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Cases" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Slider" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="sw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="scenes" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Cases" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Slider" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Slide" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="sw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="scenes" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Main" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="sw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sw" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="scenes" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Main" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Logo" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
@@ -341,27 +395,28 @@
       <workItem from="1532347064511" duration="199000" />
       <workItem from="1532351706121" duration="4868000" />
       <workItem from="1532358521339" duration="7592000" />
-      <workItem from="1532432980106" duration="2784000" />
+      <workItem from="1532432980106" duration="6584000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="84603000" />
+    <option name="totallyTimeSpent" value="88403000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-27" width="1366" height="795" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34924242" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34924242" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -369,7 +424,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -384,48 +438,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/actions/MediaQueryChecker/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scenes/Main/Logo/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1394">
-          <caret line="82" column="0" lean-forward="false" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scenes/Main/Ticker/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1564">
-          <caret line="97" column="0" lean-forward="false" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scenes/Main/Main.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="16" lean-forward="false" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Loader/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/actions/MediaQueryChecker/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="54" lean-forward="false" selection-start-line="4" selection-start-column="54" selection-end-line="4" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/scenes/Main/Logo/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4981">
@@ -531,13 +543,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Loader/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="60" column="58" lean-forward="false" selection-start-line="60" selection-start-column="58" selection-end-line="60" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/scenes/Main/Ticker/Ticker.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -563,13 +568,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="97" column="0" lean-forward="false" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scenes/Main/Logo/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="413" column="24" lean-forward="false" selection-start-line="413" selection-start-column="24" selection-end-line="413" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -730,6 +728,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Header/Menu/MenuItem/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#41#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/actions/MediaQueryChecker/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -746,22 +754,88 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Header/Menu/MenuItem/index.js">
+    <entry file="file://$PROJECT_DIR$/src/components/Header/Menu/BallCanvas/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="56" column="0" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+        <state relative-caret-position="170">
+          <caret line="82" column="26" lean-forward="false" selection-start-line="82" selection-start-column="26" selection-end-line="82" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#41#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scenes/Main/Logo/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1918">
+          <caret line="150" column="0" lean-forward="true" selection-start-line="150" selection-start-column="0" selection-end-line="150" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scenes/About/Slider/Slide/SlideBig/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Header/Menu/BallCanvas/index.js">
+    <entry file="file://$PROJECT_DIR$/src/scenes/About/Slider/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="82" column="26" lean-forward="true" selection-start-line="82" selection-start-column="26" selection-end-line="82" selection-end-column="26" />
+        <state relative-caret-position="220">
+          <caret line="256" column="42" lean-forward="false" selection-start-line="256" selection-start-column="42" selection-end-line="256" selection-end-column="42" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scenes/About/Slider/Slide/SlideSmall/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="20" column="16" lean-forward="false" selection-start-line="20" selection-start-column="16" selection-end-line="30" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Loader/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/data/aboutUsSlider/slides.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="439">
+          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="93" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scenes/Cases/Slider/Slide/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="44" column="53" lean-forward="false" selection-start-line="44" selection-start-column="14" selection-end-line="44" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/data/casesContent/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="165" column="3" lean-forward="false" selection-start-line="165" selection-start-column="3" selection-end-line="165" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
           </folding>
         </state>
       </provider>

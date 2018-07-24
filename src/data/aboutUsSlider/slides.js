@@ -1,7 +1,8 @@
 import generateKey from '../../generals/generateKey';
 import Lng from '../../components/Header/Menu/Lng';
+import Loader from '../../components/Loader';
 
-export default [
+const slidesData = [
     {
         id: generateKey(),
         get text() {
@@ -83,4 +84,13 @@ export default [
         name: 'Марга Игорь, Star of Front-end',
         img: require('./ihor.jpg')
     }
-]
+];
+
+Loader.addListener('startLoad', () => {
+    slidesData.forEach(slide => {
+        const image = new Image();
+        image.src = slide.img;
+    });
+});
+
+export default slidesData;

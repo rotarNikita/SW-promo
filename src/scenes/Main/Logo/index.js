@@ -65,14 +65,10 @@ export default class Logo extends Component {
 
     startLogoAnimation = () => {
         this.animatePolygonsQueue();
-
-        this.eventListeners('add');
     };
 
     componentDidMount () {
         if (!Loader.addListener('startHide', this.startLogoAnimation)) {
-            this.eventListeners('add');
-
             const length = this.polygonsQueue.length;
 
             this.animatePolygonsQueue();
@@ -83,6 +79,9 @@ export default class Logo extends Component {
 
             this.animationData.globalProgress = length;
         }
+
+        if (!Loader.addListener('unmount', this.eventListeners.bind(this, 'add')))
+            this.eventListeners('add');
     }
 
     createStarterCasePolygon(fill, from) {
@@ -423,9 +422,6 @@ export default class Logo extends Component {
 
         return (
             <svg style={{transform: `translate(${translateX}px, ${translateY}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`}}
-                 onTouchMove={event => event.preventDefault()}
-                 onTouchStart={event => event.preventDefault()}
-                 onTouchEnd={event => event.preventDefault()}
                  className={styles.logo}>
                 <defs>
                     <symbol id={this.logoId} viewBox={"61.4 194.3 323.1 187"}>
@@ -433,9 +429,6 @@ export default class Logo extends Component {
                             {
                                 Object.keys(polygons).reverse().map(function(key) {
                                     return <polygon key={key}
-                                                    onTouchMove={event => event.preventDefault()}
-                                                    onTouchStart={event => event.preventDefault()}
-                                                    onTouchEnd={event => event.preventDefault()}
                                                     fill={polygons[key].fill}
                                                     points={polygons[key].points.map(item => item.join(',')).join(' ')}/>
                                 })

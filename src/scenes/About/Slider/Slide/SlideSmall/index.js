@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './SlideSmall.scss';
 import stylesSlideBig from '../SlideBig/SlideBig.scss';
 import loader from '../../../../../generals/photoLoader/index';
+import Loader from '../../../../../components/Loader';
 
 export default class SlideSmall extends Component {
     constructor (props) {

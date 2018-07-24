@@ -1,5 +1,6 @@
 import generateKey from '../../generals/generateKey';
 import Lng from '../../components/Header/Menu/Lng';
+import Loader from "../../components/Loader";
 
 export const VIDEOS = [
     {
@@ -171,3 +172,24 @@ export const VIDEOS = [
         ]
     }
 ];
+
+Loader.addListener('startLoad', () => {
+    VIDEOS.forEach(video => {
+        const videoDOM = document.createElement('video');
+        const image = new Image();
+
+        video.sources.forEach(src => {
+            if (/video/.test(src.type)) {
+                const sourceDOM = document.createElement('source');
+
+                sourceDOM.setAttribute('type', src.type);
+                sourceDOM.src = src.src;
+
+                videoDOM.appendChild(sourceDOM);
+            } else if (/image/.test(src.type))
+                image.src = src.src;
+        });
+
+        videoDOM.load();
+    })
+});
