@@ -2,6 +2,9 @@
 
 ## Version log
 
+### v. 1.2.1
+- menu ball canvas bug fix on resolution change
+
 ### v. 1.2.0
 - mobile footer
 - mobile header

@@ -45,7 +45,11 @@ export default class BallCanvas extends Component {
     reset() {
         const { canvas } = this;
 
-        if (this.animation) this.animation.stop();
+        if (this.animation) {
+            this.animation.stop();
+            Header.openCallback.remove(this.animation.start);
+            Header.closeCallback.remove(this.animation.stop);
+        }
 
         canvas.width = canvas.clientWidth;
         canvas.height = canvas.clientHeight;
@@ -70,6 +74,9 @@ export default class BallCanvas extends Component {
         });
 
         if (Header.opened) this.animation.start();
+
+        Header.openCallback = this.animation.start;
+        Header.closeCallback = this.animation.pause;
     }
 
     startSettings() {
