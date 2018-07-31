@@ -6,6 +6,8 @@ import Scroll from "../../../actions/Scroll";
 import { PAGE_TRANSITION_TIME } from "../../../data/constants";
 import Header from '../../../components/Header';
 import Lng from '../../../components/Header/Menu/Lng';
+import MQC from '../../../actions/MediaQueryChecker';
+import Loader from '../../../components/Loader';
 
 const ANIMATION_DURATION = {
     scroll: PAGE_TRANSITION_TIME,
@@ -51,6 +53,8 @@ export default class Slider extends Component {
         this.width = 0;
         this.dataSlides = [];
         this.stopAnimation = null;
+        this.slideFrom = window.innerWidth >= 1201 ? 1 : 0;
+        this.sensitiveTouch = window.innerWidth >= 1201 ? 2 : 10;
 
         this.startX = 0;
         this.newStartX = 0;
@@ -75,25 +79,54 @@ export default class Slider extends Component {
         this.menuButtonMaskHeight = 25;
         this.menuButtonMaskLeft = 0;
 
+        this.titleNext = null;
+        this.titleNextMask = null;
+        this.titleNextMaskWidth = ({ru: 109, en: 108})[Lng.currentLng];
+        this.titleNextMaskHeight = 24;
+        this.titleNextMaskRight = 0;
+
         try {
             this.titlePrevMaskLeft = (window.innerWidth - document.querySelector('.container').offsetWidth) / 2 + 20;
+            this.titleNextMaskRight = this.titlePrevMaskLeft;
             this.menuButtonMaskLeft = this.titlePrevMaskLeft - 10;
         } catch (e) {
             document.addEventListener('DOMContentLoaded', () => {
                 this.titlePrevMaskLeft = (window.innerWidth - document.querySelector('.container').offsetWidth) / 2 + 20;
+                this.titleNextMaskRight = this.titlePrevMaskLeft;
                 this.menuButtonMaskLeft = this.titlePrevMaskLeft - 10;
             })
         }
+
+        this.MQCIDs = MQC.addResizeChecker({
+            callback: () => {
+                this.trackWidthCalc();
+
+                this.pageTitleMaskLeft = (window.innerWidth - this.pageTitleMaskWidth) / 2;
+                this.titlePrevMaskLeft = (window.innerWidth - document.querySelector('.container').offsetWidth) / 2 + 20;
+                this.menuButtonMaskLeft = this.titlePrevMaskLeft - 10;
+
+                this.pageTitleMaskSetClip();
+
+                this.slideFrom = window.innerWidth >= 1201 ? 1 : 0;
+                this.sensitiveTouch = window.innerWidth >= 1201 ? 2 : 10;
+
+                this.goTo(this.currentSlide - 1);
+            }
+        })
     }
     
     menuOpenCallback = () => {
         this.pageTitleMask.style.clip = `rect(0, ${this.pageTitleMaskWidth}px, ${this.pageTitleMaskHeight}px, 100vw)`;
+        this.menuButtonMask.style.clip = `rect(0, ${this.menuButtonMaskWidth}px, ${this.menuButtonMaskHeight}px, 100vw)`;
     };
     
     menuCloseCallback = () => {
+        this.titleNextMaskWidth = ({ru: 109, en: 108})[Lng.currentLng];
+        this.initTitleNextMask();
+
         this.dragStart({clientX: 0});
         this.move({clientX: 0});
-        this.dragStop();
+        this.dragStop({clientX: 0});
         this.dataAnimation.stop(true);
 
         this.pageTitleMaskWidth = ({ru: 67, en: 83})[Lng.currentLng];
@@ -129,6 +162,31 @@ export default class Slider extends Component {
         const left = this.dataSlides[0].width + this.newPositionX - this.menuButtonMaskLeft;
 
         this.menuButtonMask.style.clip = `rect(0, ${this.menuButtonMaskWidth}px, ${this.menuButtonMaskHeight}px, ${left}px)`;
+    }
+
+    initTitleNextMask() {
+        this.titleNext = document.getElementById('titleNext').children[0];
+
+        this.titleNextMask = document.createElement('span');
+        this.titleNextMask.innerHTML = this.titleNext.innerHTML;
+        this.titleNextMask.style.position = 'absolute';
+        this.titleNextMask.style.top = '50%';
+        this.titleNextMask.style.left = '50%';
+        this.titleNextMask.style.whiteSpace = 'nowrap';
+        this.titleNextMask.style.transform = 'translate(-50%, -50%)';
+        this.titleNextMask.style.color = '#000000';
+        this.titleNextMask.style.zIndex = '1';
+        this.titleNextMask.style.clip = `rect(0, ${this.titleNextMaskWidth}px, ${this.titleNextMaskHeight}px, ${this.titleNextMaskWidth}px)`;
+
+        this.titleNext.appendChild(this.titleNextMask);
+    }
+
+    titleNextMaskSetClip() {
+        const left = this.dataSlides[0].width + this.newPositionX - (window.innerWidth - this.titleNextMaskWidth);
+
+        console.log(this.dataSlides[0].width, this.newPositionX, this.titleNextMaskRight);
+
+        this.titleNextMask.style.clip = `rect(0, ${this.titleNextMaskWidth}px, ${this.titleNextMaskHeight}px, ${left}px)`;
     }
 
     initTitlePrevMask() {
@@ -188,19 +246,25 @@ export default class Slider extends Component {
         this.pageTitleMask.style.clip = `rect(0, ${this.pageTitleMaskWidth}px, ${this.pageTitleMaskHeight}px, ${left}px)`;
     }
 
+    onLoad = () => {
+        this.trackWidthCalc();
+
+        this.initPageTitleMask();
+        this.initTitlePrevMask();
+        this.initMenuButtonMask();
+        this.initTitleNextMask();
+
+        this.titleNextMaskSetClip();
+
+        Header.openCallback = this.menuOpenCallback;
+        Header.closeCallback = this.menuCloseCallback;
+
+        if (MQC.isTouchDevice) window.addEventListener('touchend', this.dragStop);
+        else window.addEventListener('mouseup', this.dragStop);
+    };
+
     componentDidMount() {
-        setTimeout(() => {
-            this.trackWidthCalc();
-
-            this.initPageTitleMask();
-            this.initTitlePrevMask();
-            this.initMenuButtonMask();
-            
-            Header.openCallback = this.menuOpenCallback;
-            Header.closeCallback = this.menuCloseCallback;
-
-            window.addEventListener('mouseup', this.dragStop);
-        }, 15);
+        if (!Loader.addListener('startHide', this.onLoad)) setTimeout(this.onLoad, 30);
 
         Lng.relativeComponentOrCallback = this.initPageTitleMaskTimeout;
         Lng.relativeComponentOrCallback = this.initTitlePrevMaskTimeout;
@@ -236,7 +300,7 @@ export default class Slider extends Component {
                 dataScroll.scroll = true;
             }, 30);
         } else if (this.positionX > leftBound) {
-            if (currentSlide === 1 && dataScroll.scroll)
+            if (currentSlide === this.slideFrom && dataScroll.scroll)
                 dataScroll.globalLeft = true;
 
             this.positionX = leftBound;
@@ -264,18 +328,21 @@ export default class Slider extends Component {
         this.pageTitleMaskSetClip();
         this.titlePrevMaskSetClip();
         this.menuButtonMaskSetClip();
+        this.titleNextMaskSetClip();
     };
 
     trackWidthCalc() {
         const { children } = this.track;
         let width = 0;
 
+        this.track.style.width = 'unset';
+        this.dataSlides = [];
+
         for (let i = 0; i < children.length; i++) {
             let slideWidth = children[i].offsetWidth;
             let slideLeft = width;
 
             width += slideWidth;
-            children[i].style.width = slideWidth + 'px';
 
             let dataSlide = {
                 width: slideWidth,
@@ -286,32 +353,35 @@ export default class Slider extends Component {
         }
 
         this.width = width;
-        this.track.style.width = width + 'px';
     };
 
     dragStart = event => {
         this.dataAnimation.stop(true);
         this.dataAnimation.callback();
 
-        this.startX = event.clientX;
+        this.startX = event.clientX !== undefined ? event.clientX : event.touches[0].clientX;
         this.newStartX = 0;
         this._dragStartBool = true;
         this.dataScroll.scroll = false;
 
-        window.addEventListener('mousemove', this.move)
+        if (MQC.isTouchDevice) window.addEventListener('touchmove', this.move);
+        else window.addEventListener('mousemove', this.move)
     };
 
-    dragStop = () => {
-        window.removeEventListener('mousemove', this.move);
+    dragStop = event => {
+        if (MQC.isTouchDevice) window.removeEventListener('touchmove', this.move);
+        else window.removeEventListener('mousemove', this.move);
 
         if (this._dragStartBool) {
+            const endX = event.clientX !== undefined ? event.clientX : event.changedTouches[0].clientX;
+
             this.dataAnimation.duration = ANIMATION_DURATION.swipe;
             this.dataAnimation.timingFunction = ANIMATION_TIMING_FUNCTION.swipe;
 
             this._dragStartBool = false;
             this.dataScroll.scroll = true;
             this.positionX = this.newPositionX;
-            this.chooseCurrentSlide();
+            this.chooseCurrentSlide(this.startX - endX);
             this.animateSlide();
             this.setState({currentSlide: this.currentSlide})
         }
@@ -337,6 +407,7 @@ export default class Slider extends Component {
                 this.pageTitleMaskSetClip();
                 this.titlePrevMaskSetClip();
                 this.menuButtonMaskSetClip();
+                this.titleNextMaskSetClip();
             } catch (e) {
                 dataAnimation.stop(true);
             }
@@ -345,16 +416,16 @@ export default class Slider extends Component {
         dataAnimation.start()
     }
 
-    chooseCurrentSlide() {
-        for (let i = this.dataSlides.length - 1; i >= 1; i--) {
+    chooseCurrentSlide(swipeLeftOrRight) {
+        for (let i = this.dataSlides.length - 1; i >= this.slideFrom; i--) {
             this.currentSlide = i;
-            if (window.innerWidth - this.positionX >= this.dataSlides[i].left + this.dataSlides[i].width / 2)
+            if (window.innerWidth - this.positionX >= this.dataSlides[i].left + this.dataSlides[i].width / (swipeLeftOrRight >= 0 ? this.sensitiveTouch : this.sensitiveTouch / (this.sensitiveTouch - 1)))
                 break;
         }
     }
 
     chooseCurrentSlideNext() {
-        for (let i = this.dataSlides.length - 1; i >= 1; i--) {
+        for (let i = this.dataSlides.length - 1; i >= this.slideFrom; i--) {
             this.currentSlide = i;
             if (window.innerWidth - this.positionX >= this.dataSlides[i].left)
                 break;
@@ -362,7 +433,7 @@ export default class Slider extends Component {
     }
 
     chooseCurrentSlidePrev() {
-        for (let i = this.dataSlides.length - 1; i >= 1; i--) {
+        for (let i = this.dataSlides.length - 1; i >= this.slideFrom; i--) {
             this.currentSlide = i - 1;
             if (window.innerWidth - this.positionX >= this.dataSlides[i].left)
                 break;
@@ -370,18 +441,20 @@ export default class Slider extends Component {
     }
 
     move = event => {
-        let newPositionX = this.positionX + (event.clientX - this.startX) * 0.7;
+        const clientX = event.clientX !== undefined ? event.clientX : event.touches[0].clientX;
+
+        let newPositionX = this.positionX + (clientX - this.startX) * 0.7;
 
         if (newPositionX >= 0 || this.width + newPositionX <= window.innerWidth) {
-            if (!this.newStartX) this.newStartX = event.clientX
+            if (!this.newStartX) this.newStartX = clientX
         }
 
         if (newPositionX >= 0) {
-            newPositionX = 0 + (event.clientX - this.newStartX) / 5;
+            newPositionX = 0 + (clientX - this.newStartX) / 5;
         }
 
         if (this.width + newPositionX <= window.innerWidth) {
-            newPositionX = window.innerWidth - this.width + (event.clientX - this.newStartX) / 5;
+            newPositionX = window.innerWidth - this.width + (clientX - this.newStartX) / 5;
         }
 
         this.newPositionX = newPositionX;
@@ -390,10 +463,12 @@ export default class Slider extends Component {
         this.pageTitleMaskSetClip();
         this.titlePrevMaskSetClip();
         this.menuButtonMaskSetClip();
+        this.titleNextMaskSetClip();
     };
 
     componentWillUnmount() {
         window.removeEventListener('mouseup', this.dragStop);
+        window.removeEventListener('touchend', this.dragStop);
 
         this.menuButton.removeChild(this.menuButtonMask);
 
@@ -410,6 +485,8 @@ export default class Slider extends Component {
 
         Lng.relativeComponentOrCallback.remove(this.initPageTitleMaskTimeout);
         Lng.relativeComponentOrCallback.remove(this.initTitlePrevMaskTimeout);
+
+        MQC.removeResizeChecker(this.MQCIDs);
     }
 
     render() {
@@ -419,6 +496,7 @@ export default class Slider extends Component {
 
         return (
             <div onMouseDown={this.dragStart}
+                 onTouchStart={this.dragStart}
                  draggable={false}
                  onDrag={() => false}
                  className={styles.wrapper}

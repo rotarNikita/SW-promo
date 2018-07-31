@@ -60,7 +60,7 @@ export default class TitleNext extends PureComponent {
         const prevLinkOpacity = historyPrevPageIndex === -1;
 
         return (
-            <div>
+            <div id="titleNext">
                 <Link className={styles.text + ' ' + animateClass}
                       onAnimationEnd={this.removeAnimateClass}
                       to={nextPage.link}>

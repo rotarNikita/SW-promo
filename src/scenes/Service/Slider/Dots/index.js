@@ -1,16 +1,35 @@
 import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './Dots.scss';
+import MQC from '../../../../actions/MediaQueryChecker';
 
 export default class Dots extends PureComponent {
     constructor(props) {
         super(props);
 
         this.state = {
-            show: false
+            show: false,
+            showNumbers: window.innerWidth >= 426
         };
 
         this.container = document.createElement('div');
+
+        this.MQCIDs = MQC.addResizeChecker({
+            to: 425,
+            callback: () => {
+                this.setState({showNumbers: false})
+            }
+        },
+        {
+            from: 426,
+            callback: () => {
+                this.setState({showNumbers: true})
+            }
+        })
+    }
+
+    componentWillUnmount() {
+        MQC.removeResizeChecker(this.MQCIDs);
     }
 
     componentDidMount() {
@@ -33,7 +52,7 @@ export default class Dots extends PureComponent {
     };
 
     render() {
-        const { show } = this.state;
+        const { show, showNumbers } = this.state;
         const { sliderLength, goTo, currentSlide, mount } = this.props;
 
         const length = sliderLength > 9 ? sliderLength : ' / 0' + sliderLength;
@@ -53,13 +72,15 @@ export default class Dots extends PureComponent {
         }
 
         if (show) return ReactDOM.createPortal(
-            <div className={className} onAnimationEnd={this.animationEnd}>
+            <div className={className}
+                 style={{paddingBottom: !showNumbers ? '10px' : 0}}
+                 onAnimationEnd={this.animationEnd}>
                 <ul>
                     {dots}
                 </ul>
-                <div className={styles.numbers}>
+                {showNumbers && <div className={styles.numbers}>
                     {current + length}
-                </div>
+                </div>}
             </div>
             , this.container
         );

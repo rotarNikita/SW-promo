@@ -17,6 +17,7 @@ export default class Service extends PureComponent {
         this.pageTitle = null;
         this.burger = null;
         this.titlePrev = null;
+        this.titleNext = null;
         this.menuLink = null;
     }
 
@@ -28,16 +29,30 @@ export default class Service extends PureComponent {
             this.burger = document.getElementById('menuButton');
             this.pageTitle = document.getElementById('pageTitle');
             this.titlePrev = document.getElementById('titlePrev');
+            this.titleNext = document.getElementById('titleNext');
             this.menuLink = document.querySelector('[class^="MenuItem__link"][href="/service"]');
 
             this.mainBlockChange();
             this.burgerChange();
             this.pageTitleChange();
             this.titlePrevChange();
+            this.titleNextChange()
 
             this.menuLink.addEventListener('click', this.burgerClick);
             this.burger.addEventListener('click', this.burgerClick);
         });
+    }
+
+    titleNextChange () {
+        [].forEach.call(this.titleNext.children, child => {
+            child.style.color = '#FFFFFF'
+        })
+    }
+
+    titleNextReset () {
+        [].forEach.call(this.titleNext.children, child => {
+            child.setAttribute('style', '')
+        })
     }
 
     titlePrevChange () {
@@ -107,6 +122,7 @@ export default class Service extends PureComponent {
             this.burgerReset();
             this.pageTitleReset();
             this.titlePrevReset();
+            this.titleNextReset();
 
             this.burger.removeEventListener('click', this.burgerClick);
             this.menuLink.removeEventListener('click', this.burgerClick);

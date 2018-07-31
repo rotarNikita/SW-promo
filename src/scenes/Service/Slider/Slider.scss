@@ -1,6 +1,12 @@
 .wrapper {
   height: 100%;
+  width: 100%;
+  overflow: visible;
   position: relative;
   user-select: none;
   -webkit-user-drag: none;
+  white-space: nowrap;
+  * {
+    white-space: initial;
+  }
 }

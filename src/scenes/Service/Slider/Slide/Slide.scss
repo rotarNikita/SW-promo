@@ -5,8 +5,15 @@
   height: 100%;
   background-color: $themeColor3;
   border-right: 1px solid $defaultColor;
-  float: left;
+  //float: left;
   position: relative;
+  display: inline-block;
+  @media (max-width: $mediaM) {
+    width: 50%;
+  }
+  @media (max-width: $mediaS) {
+    width: 100%;
+  }
 }
 
 .title {
@@ -35,6 +42,9 @@
   font-weight: 400;
   position: relative;
   white-space: nowrap;
+  @media (max-width: $mediaXS) {
+    white-space: normal;
+  }
   &:before {
     content: '';
     position: absolute;

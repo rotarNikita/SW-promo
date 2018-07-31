@@ -2,7 +2,8 @@
 
 ## Version log
 
-### v. 1.2.1
+### v. 1.3.1
+- mobile service page
 - menu ball canvas bug fix on resolution change
 
 ### v. 1.2.0
