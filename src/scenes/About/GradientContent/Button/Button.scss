@@ -1,7 +1,5 @@
 @import "../../../../generals/variables";
 
-$height: 40px;
-
 .button {
   font: inherit;
   border: none;
@@ -19,12 +17,27 @@ $height: 40px;
   letter-spacing: 2.4px;
   overflow: hidden;
   color: $textColor;
+  @media (max-width: $mediaXS) {
+    width: 240px;
+    height: 50px;
+  }
   &:hover {
     .textCopy {
       clip: rect(0px, 345px, 80px, 0px);
     }
     .gradientWrapper {
       width: 345px;
+      @media (max-width: $mediaXS) {
+        width: 240px;
+      }
+    }
+    @media #{$isTouch} {
+      .textCopy {
+        clip: unset;
+      }
+      .gradientWrapper {
+        width: 100%;
+      }
     }
   }
 }
@@ -41,6 +54,12 @@ $height: 40px;
   justify-content: center;
   clip: rect(0px, 0px, 80px, 0px);
   transition: clip .5s;
+  @media (max-width: $mediaXS) {
+    height: 50px;
+  }
+  @media #{$isTouch} {
+    clip: unset;
+  }
 }
 
 .gradient {
@@ -50,6 +69,10 @@ $height: 40px;
   width: 345px;
   height: 80px;
   z-index: -1;
+  @media (max-width: $mediaXS) {
+    width: 240px;
+    height: 50px;
+  }
 }
 
 .rect {
@@ -64,4 +87,10 @@ $height: 40px;
   height: 80px;
   overflow: hidden;
   transition: width .5s;
+  @media (max-width: $mediaXS) {
+    height: 50px;
+  }
+  @media #{$isTouch} {
+    width: 100%;
+  }
 }

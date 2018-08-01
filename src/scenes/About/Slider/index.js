@@ -281,7 +281,7 @@ export default class Slider extends Component {
                                    onClick={this.setCurrentSlideByClick.bind(null, 0)}
                                    currentSlide={currentSlide}
                                    slideImageSetLoaded={Slider.slideImageSetLoaded}
-                                   imgLoaded={Slider.slideImageGetLoaded(slides[0].id) || false}/>);
+                                   imgLoaded={true || Slider.slideImageGetLoaded(slides[0].id) || false}/>);
 
         for (let i = 1; i < slides.length; i = i + 3) {
             let slidesSubArray = [];
@@ -291,7 +291,7 @@ export default class Slider extends Component {
                     slidesSubArray.push(<SlideSmall {...slides[j]}
                                                     key={slides[j].id}
                                                     slideImageSetLoaded={Slider.slideImageSetLoaded}
-                                                    imgLoaded={Slider.slideImageGetLoaded(slides[j].id) || false}/>);
+                                                    imgLoaded={true || Slider.slideImageGetLoaded(slides[j].id) || false}/>);
             }
 
             slidesSubArray.id = slides[i].id;

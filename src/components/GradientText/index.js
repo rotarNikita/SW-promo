@@ -11,7 +11,10 @@ export default class GradientText extends Component {
 
         this.width = 0;
         this.height = 0;
+
+        this.timeout = null;
     }
+
     componentWillMount () {
         StaticDOM.add(LinearGradient);
         StaticDOM.render();
@@ -35,15 +38,14 @@ export default class GradientText extends Component {
 
         const maxWidth = Math.max.apply(null, tspanSizes);
 
-        for (let i = 0; i < tspanSizes.length; i++) {
-            console.log('' + (maxWidth - tspanSizes[i]) / 2);
-
+        for (let i = 0; i < tspanSizes.length; i++)
             tspans[i].setAttribute('x', '' + (maxWidth - tspanSizes[i]) / 2)
-        }
     }
 
     sizeCalc = () => {
-        setTimeout(() => {
+        clearTimeout(this.timeout);
+
+        this.timeout = setTimeout(() => {
             const textSize = this.textBlock.getBoundingClientRect();
 
             const width = textSize.width;
@@ -63,6 +65,10 @@ export default class GradientText extends Component {
             if (this.props.alignCenter) this.alignCenterAllTspan();
         }, 15)
     };
+
+    componentWillUnmount() {
+        clearTimeout(this.timeout)
+    }
 
     render () {
         const textClass = this.props.textClass || '';

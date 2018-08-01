@@ -1,3 +1,5 @@
+@import "../../../generals/variables";
+
 @keyframes slideRight {
   from {
     opacity: 0;
@@ -26,6 +28,9 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+  @media (max-width: $mediaS) {
+    width: 90%;
+  }
   &.slideLeft {
     animation: slideLeft 1s;
   }
@@ -38,4 +43,16 @@
   font-size: 18px;
   font-weight: 400;
   letter-spacing: 0.9px;
+  @media (max-width: $mediaS) {
+    text-align: center;
+    font-size: 16px;
+    line-height: 20px;
+    text-shadow: 2px 2px rgba($themeColor2, .4);
+    letter-spacing: 0.7px;
+  }
+  @media (max-width: $mediaXS) {
+    text-shadow: 1px 1px rgba($themeColor2, .4);
+    font-size: 14px;
+    line-height: 18px;
+  }
 }

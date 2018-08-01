@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { GRADIENT_COLOR_1, GRADIENT_COLOR_2 } from '../../../data/constants';
 import generateKey from '../../../generals/generateKey';
+import MQC from '../../../actions/MediaQueryChecker';
 
 export default class LinearGradient extends Component {
     constructor (props) {
@@ -12,7 +13,12 @@ export default class LinearGradient extends Component {
     }
 
     componentDidMount () {
-        window.addEventListener('mousemove', this.changeGradient);
+        if (!MQC.isTouchDevice)
+            window.addEventListener('mousemove', this.changeGradient);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('mousemove', this.changeGradient);
     }
 
     changeGradient = (event) => {

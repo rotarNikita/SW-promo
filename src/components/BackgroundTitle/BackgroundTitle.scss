@@ -1,5 +1,16 @@
 @import "../../generals/variables";
 
+@keyframes ticker {
+  0% {
+    left: 100%;
+    transform: translateX(0%);
+  }
+  100% {
+    left: 0;
+    transform: translateX(-100%);
+  }
+}
+
 .text {
   position: absolute;
   top: 110px;
@@ -10,6 +21,9 @@
   user-select: none;
   white-space: nowrap;
   z-index: -1;
+  @media (max-width: $mediaS) {
+    animation: ticker 10s infinite linear;
+  }
 }
 
 .sub {

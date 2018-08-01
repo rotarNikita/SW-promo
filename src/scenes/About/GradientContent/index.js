@@ -4,6 +4,9 @@ import styles from './GradientContent.scss';
 import Button from './Button';
 import Lng from '../../../components/Header/Menu/Lng';
 import gradientContent from '../../../data/aboutUsSlider/gradientContent';
+import MQC from '../../../actions/MediaQueryChecker';
+import StaticDOM from "../../../components/StaticDOM";
+import LinearGradient from "../../../components/GradientText/LinearGradient";
 
 export default class GradientContent extends PureComponent {
     constructor (props) {
@@ -11,21 +14,38 @@ export default class GradientContent extends PureComponent {
 
         this.state = {
             show: props.mount
-        }
+        };
+
+        this.MQCIDs = MQC.addResizeChecker({
+            callback: this.forceUpdate.bind(this)
+        })
     }
 
     componentWillMount () {
-        this.firstMount = true
+        this.firstMount = true;
+
+        if (window.innerWidth <= 768) {
+            StaticDOM.add(LinearGradient);
+            StaticDOM.render();
+        }
     }
 
+    setTimeoutUpdating = () => {
+        this.forceUpdate();
+
+        setTimeout(this.forceUpdate.bind(this), 30)
+    };
+
     componentDidMount () {
-        Lng.relativeComponentOrCallback = this;
+        Lng.relativeComponentOrCallback = this.setTimeoutUpdating;
 
         this.firstMount = false
     }
 
     componentWillUnmount() {
-        Lng.relativeComponentOrCallback.remove(this);
+        Lng.relativeComponentOrCallback.remove(this.setTimeoutUpdating);
+
+        MQC.removeResizeChecker(this.MQCIDs);
     }
 
     componentWillReceiveProps (nextProps) {
@@ -46,11 +66,14 @@ export default class GradientContent extends PureComponent {
         if (show) return (
             <div onAnimationEnd={this.animationEnd}
                  className={styles.wrapper + ' ' + animateClass}>
-                <GradientText textClass={styles.text} alignCenter={true}>
-                    {gradientContent()}
-                </GradientText>
+                {window.innerWidth > 768 && <GradientText textClass={styles.text} alignCenter={true}>
+                    {gradientContent()()}
+                </GradientText>}
+                {window.innerWidth <= 768 && <p className={styles.text}>
+                    {gradientContent()()}
+                </p>}
                 <br/>
-                <Button style={{marginTop: '50px'}} onClick={nextButtonClick}>
+                <Button style={{marginTop: window.innerWidth > 425 ? '50px' : '20px'}} onClick={nextButtonClick}>
                     {({ru: 'Наша команда', en: 'Our team'})[Lng.currentLng]}
                 </Button>
             </div>

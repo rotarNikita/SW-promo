@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import styles from './BackgroundTitle.scss';
+import MQC from '../../actions/MediaQueryChecker';
 
 const BACKGROUND_TITLE_MAX_OFFSET_X = 10;
 const BACKGROUND_TITLE_MAX_OFFSET_Y = 5;
@@ -16,7 +17,7 @@ export default class BackgroundTitle extends PureComponent {
     }
 
     componentDidMount () {
-        window.addEventListener('mousemove', this.mouseMove)
+        if (!MQC.isTouchDevice) window.addEventListener('mousemove', this.mouseMove)
     }
 
     componentWillUnmount () {

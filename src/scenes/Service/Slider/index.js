@@ -184,8 +184,6 @@ export default class Slider extends Component {
     titleNextMaskSetClip() {
         const left = this.dataSlides[0].width + this.newPositionX - (window.innerWidth - this.titleNextMaskWidth);
 
-        console.log(this.dataSlides[0].width, this.newPositionX, this.titleNextMaskRight);
-
         this.titleNextMask.style.clip = `rect(0, ${this.titleNextMaskWidth}px, ${this.titleNextMaskHeight}px, ${left}px)`;
     }
 
