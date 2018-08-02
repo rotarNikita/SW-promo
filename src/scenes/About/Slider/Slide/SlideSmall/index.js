@@ -10,7 +10,9 @@ export default class SlideSmall extends Component {
 
         this.state = {
             imgLoaded: props.imgLoaded
-        }
+        };
+
+        this.timeout = null;
     }
 
     componentDidMount () {
@@ -34,10 +36,16 @@ export default class SlideSmall extends Component {
     }
 
     imgLoad = () => {
-        setTimeout(() => {
+        clearTimeout(this.timeout);
+
+        this.timeout = setTimeout(() => {
             this.imgTeg.classList.add(stylesSlideBig.show)
         }, 15)
     };
+
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
+    }
 
     render () {
         const { text, name, img } = this.props;
@@ -64,7 +72,10 @@ export default class SlideSmall extends Component {
     }
 }
 
-const LEFT_BREAKPOINT = [200, 100, 0];
+let LEFT_BREAKPOINT;
+if (window.innerWidth > 768) LEFT_BREAKPOINT = [200, 100, 0];
+else LEFT_BREAKPOINT = [180, 90, 0];
+
 const SCALE_BREAKPOINT = [0.9, 0.9, 1];
 const OPACITY_BREAKPOINT = [0, 0.7, 1];
 

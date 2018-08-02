@@ -10,6 +10,7 @@ import Scroll from '../../../actions/Scroll';
 import NaNimate from '../../../generals/NaNimate'
 import { PAGE_TRANSITION_TIME } from "../../../data/constants";
 import Lng from '../../../components/Header/Menu/Lng';
+import MQC from '../../../actions/MediaQueryChecker';
 
 const ANIMATION_DURATION = {
     slow: PAGE_TRANSITION_TIME,
@@ -25,19 +26,24 @@ export default class Slider extends Component {
     constructor (props) {
         super(props);
 
+        let slidesInOneWrapper = 3;
+
+        if (window.innerWidth > 1200) slidesInOneWrapper = 3;
+        else if (window.innerWidth > 768) slidesInOneWrapper = 2;
+        else slidesInOneWrapper = 1;
+
         this.state = {
             currentSlide: 0,
             sliderShow: false,
             sliderMount: false,
-            prevButtonMount: false
+            prevButtonMount: false,
+            slidesInOneWrapper
         };
 
-        const length = Math.ceil((slides.length - 1) / 3) + 1;
+        this.state.length = Math.ceil((slides.length - 1) / slidesInOneWrapper) + 1;
+
         this.sliderData = {
-            length,
             width: window.innerWidth,
-            leftBoundSlide: 0,
-            rightBoundScroll: length - 1,
             animation: new NaNimate({
                 duration: ANIMATION_DURATION.fast,
                 timingFunction: ANIMATION_TIMING_FUNCTION.fast,
@@ -62,7 +68,30 @@ export default class Slider extends Component {
             stateCurrentSlide: this.state.currentSlide
         };
 
+        this.MQCIDs = MQC.addResizeChecker({
+            to: 768,
+            callback: this.setSlidesInOneWrapper(1)
+        }, {
+            from: 769,
+            to: 1200,
+            callback: this.setSlidesInOneWrapper(2)
+        }, {
+            from: 1201,
+            callback: this.setSlidesInOneWrapper(3)
+        });
+
         props.syncNextButtonClick(this.nextButtonClick)
+    }
+
+    setSlidesInOneWrapper(count) {
+        return () => {
+            const slidesInOneWrapper = count;
+            const length = Math.ceil((slides.length - 1) / slidesInOneWrapper) + 1;
+
+            this.moveData.stateCurrentSlide = 0;
+
+            this.setState({slidesInOneWrapper, length, currentSlide: 0});
+        }
     }
 
     componentDidMount() {
@@ -74,21 +103,26 @@ export default class Slider extends Component {
             scrollData.allow = true
         }, PAGE_TRANSITION_TIME);
 
-        window.addEventListener('mousemove', this.move);
-        window.addEventListener('mouseup', this.endMove);
+        if (MQC.isTouchDevice) {
+            window.addEventListener("touchend", this.endMove);
+            window.addEventListener("touchmove", this.move);
+        } else {
+            window.addEventListener('mousemove', this.move);
+            window.addEventListener('mouseup', this.endMove);
+        }
 
         Lng.relativeComponentOrCallback = this;
     }
 
     startMove = event => {
         const { moveData } = this;
-        const { pageX } = event;
+        const clientX = event.clientX !== undefined ? event.clientX : event.touches[0].clientX;
 
         this.sliderData.animation.stop();
 
         moveData.allow = true;
-        moveData.startX = pageX;
-        moveData.positionX = pageX;
+        moveData.startX = clientX;
+        moveData.positionX = clientX;
         moveData.stateCurrentSlide = this.state.currentSlide;
     };
 
@@ -96,7 +130,7 @@ export default class Slider extends Component {
         const { moveData, sliderData } = this;
 
         if (moveData.allow) {
-            moveData.positionX = event.pageX;
+            moveData.positionX = event.clientX !== undefined ? event.clientX : event.touches[0].clientX;
 
             const currentSlide = moveData.stateCurrentSlide + (moveData.startX - moveData.positionX) / sliderData.width;
 
@@ -108,16 +142,20 @@ export default class Slider extends Component {
         const { moveData, sliderData } = this;
 
         if (moveData.allow) {
-            const { pageX } = event;
+            const clientX = event.clientX !== undefined ? event.clientX : event.changedTouches[0].clientX;
 
             moveData.allow = false;
-            moveData.endX = pageX;
-            moveData.positionX = pageX;
+            moveData.endX = clientX;
+            moveData.positionX = clientX;
 
             sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.fast;
             sliderData.animation.duration = ANIMATION_DURATION.fast;
 
-            this.animate();
+            if (MQC.isTouchDevice) {
+                if (moveData.startX - moveData.endX > window.innerWidth * 0.1) this.animate('ceil');
+                else if (moveData.startX - moveData.endX < -window.innerWidth * 0.1) this.animate('floor')
+                else this.animate();
+            } else this.animate();
         }
     };
 
@@ -129,8 +167,8 @@ export default class Slider extends Component {
     }
 
     animateTo(destinationSlide) {
-        const { currentSlide } = this.state;
-        const { animation, length } = this.sliderData;
+        const { currentSlide, length } = this.state;
+        const { animation } = this.sliderData;
 
         if (destinationSlide > length - 1) destinationSlide = length - 1;
         else if (destinationSlide < 0) destinationSlide = 0;
@@ -146,6 +184,7 @@ export default class Slider extends Component {
 
     scroll = event => {
         const { scrollData, sliderData, state } = this;
+        const { length } = state;
 
         if (scrollData.allow && state.sliderMount) {
             scrollData.globalRightAllow = false;
@@ -160,10 +199,10 @@ export default class Slider extends Component {
                 let {currentSlide} = prevState;
                 currentSlide -= delta / sliderData.width;
 
-                if (currentSlide > sliderData.rightBoundScroll)
-                    currentSlide = sliderData.rightBoundScroll;
-                else if (currentSlide < sliderData.leftBoundSlide)
-                    currentSlide = sliderData.leftBoundSlide;
+                if (currentSlide > length - 1)
+                    currentSlide = length - 1;
+                else if (currentSlide < 0)
+                    currentSlide = 0;
 
                 return {currentSlide}
             });
@@ -171,9 +210,9 @@ export default class Slider extends Component {
             scrollData.timeout = setTimeout(() => {
                 scrollData.allow = false;
 
-                if (this.state.currentSlide >= sliderData.rightBoundScroll)
+                if (this.state.currentSlide >= length - 1)
                     scrollData.globalRightAllow = true;
-                else if (this.state.currentSlide <= sliderData.leftBoundSlide)
+                else if (this.state.currentSlide <= 0)
                     scrollData.globalLeftAllow = true;
 
                 sliderData.animation.timingFunction = ANIMATION_TIMING_FUNCTION.fast;
@@ -209,8 +248,12 @@ export default class Slider extends Component {
 
         window.removeEventListener('mousemove', this.move);
         window.removeEventListener('mouseup', this.endMove);
+        window.removeEventListener('mousemove', this.move);
+        window.removeEventListener('mouseup', this.endMove);
 
         Lng.relativeComponentOrCallback.remove(this);
+
+        MQC.removeResizeChecker(this.MQCIDs)
     }
 
     nextButtonClick = () => {
@@ -220,7 +263,7 @@ export default class Slider extends Component {
 
             this.sliderData.animation.stop();
 
-            if (this.state.currentSlide + 1 < this.sliderData.length)
+            if (this.state.currentSlide + 1 < this.state.length)
                 this.animateTo(this.state.currentSlide + 1)
         } else {
             this.props.gradientContentVisibility(false);
@@ -268,10 +311,8 @@ export default class Slider extends Component {
             })
     };
 
-    render () {
-        const { sliderMount, sliderShow, prevButtonMount, currentSlide } = this.state;
-        const sliderClassName = styles.slider + ' ' + (sliderMount ? styles.open : styles.close);
-        const currentLocation = window.location.pathname === '/about';
+    slidesRenderM() {
+        const { currentSlide, slidesInOneWrapper } = this.state;
 
         const slidesArray = [];
 
@@ -283,10 +324,10 @@ export default class Slider extends Component {
                                    slideImageSetLoaded={Slider.slideImageSetLoaded}
                                    imgLoaded={true || Slider.slideImageGetLoaded(slides[0].id) || false}/>);
 
-        for (let i = 1; i < slides.length; i = i + 3) {
+        for (let i = 1; i < slides.length; i = i + slidesInOneWrapper) {
             let slidesSubArray = [];
 
-            for (let j = i; j < i + 3; j++) {
+            for (let j = i; j < i + slidesInOneWrapper; j++) {
                 if (slides[j])
                     slidesSubArray.push(<SlideSmall {...slides[j]}
                                                     key={slides[j].id}
@@ -298,9 +339,21 @@ export default class Slider extends Component {
             slidesArray.push(slidesSubArray);
         }
 
+        return slidesArray;
+    }
+
+    render () {
+        const { sliderMount, sliderShow, prevButtonMount, currentSlide, slidesInOneWrapper } = this.state;
+        const sliderClassName = styles.slider + ' ' + (sliderMount ? styles.open : styles.close);
+        const currentLocation = window.location.pathname === '/about';
+
+        const slidesArray = this.slidesRenderM();
+
         return (
-            <div>
-                {sliderShow && <div className={styles.wrapper} onMouseDown={this.startMove}>
+            <div style={{height: '100%'}}>
+                {sliderShow && <div className={styles.wrapper}
+                                    onTouchStart={MQC.isTouchDevice ? this.startMove : () => {}}
+                                    onMouseDown={!MQC.isTouchDevice ? this.startMove : () => {}}>
                     <div className={sliderClassName} onAnimationEnd={this.animationEnd}>
                         {slidesArray.map((item, index) => {
                                 if (item instanceof Array)
@@ -313,7 +366,7 @@ export default class Slider extends Component {
                                             {(() => {
                                                 const additionalElements = [];
 
-                                                for (let i = 0; i < 3 - item.length; i++) {
+                                                for (let i = 0; i < slidesInOneWrapper - item.length; i++) {
                                                     additionalElements.push(<div key={i} className={slideSmallStyles.slide}/>)
                                                 }
 
@@ -331,7 +384,7 @@ export default class Slider extends Component {
                     {currentSlide <= 0 ? ({ru: 'О нас', en: 'About us'})[Lng.currentLng] : 'Prev'}
                 </Prev>
 
-                <Next onClick={this.nextButtonClick} mount={slidesArray.length - 1 > currentSlide && currentLocation}>
+                <Next onClick={this.nextButtonClick} mount={this.state.length - 1 > currentSlide && currentLocation}>
                     {sliderMount ? 'Next' : ({ru: 'Наша команда', en: 'Our team'})[Lng.currentLng]}
                 </Next>
             </div>

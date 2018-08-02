@@ -27,7 +27,7 @@ export default class About extends Component {
         const { mountGradientContent } = this.state;
 
         return (
-            <div className="container">
+            <div className="container" style={{height: '100%'}}>
                 <BackgroundTitle>
                     About us
                 </BackgroundTitle>

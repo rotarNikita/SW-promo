@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import styles from './SlideBig.scss';
 import loader from '../../../../../generals/photoLoader/index';
 
-const LEFT_BREAKPOINT = [200, 100, 0];
+let LEFT_BREAKPOINT;
+if (window.innerWidth > 768) LEFT_BREAKPOINT = [200, 100, 0];
+else LEFT_BREAKPOINT = [180, 90, 0];
+
 const SCALE_BREAKPOINT = [0.9, 0.9, 1];
 const OPACITY_BREAKPOINT = [0, 0.7, 1];
 
@@ -43,7 +46,7 @@ export default class SlideBig extends Component {
         return {
             transform: `translateY(-50%) scale(${scale}, ${scale})`,
             left: `${left}%`,
-            opacity: opacity
+            opacity
         }
     }
 
@@ -80,12 +83,12 @@ export default class SlideBig extends Component {
         return (
             <div onClick={onClick} className={styles.slide} style={this.slidePosition()}>
                 <div className={styles.content}>
-                    <p className={styles.text} dangerouslySetInnerHTML={{__html: text}}/>
                     <div className={styles.description}>
                         <h3 className={styles.title}>{title}</h3>
                         {title && name && <div className={styles.line} />}
                         <p className={styles.name}>{name}</p>
                     </div>
+                    <p className={styles.text} dangerouslySetInnerHTML={{__html: text}}/>
                 </div>
                 {img && <div className={styles.imageContainer}>
                     {imgLoaded && <img className={styles.image}

@@ -259,6 +259,10 @@ export default class Slider extends Component {
 
         if (MQC.isTouchDevice) window.addEventListener('touchend', this.dragStop);
         else window.addEventListener('mouseup', this.dragStop);
+
+        this.dataScroll.timeout = setTimeout(() => {
+            Scroll.action = this.changeSlideByScroll;
+        }, PAGE_TRANSITION_TIME)
     };
 
     componentDidMount() {
@@ -266,10 +270,6 @@ export default class Slider extends Component {
 
         Lng.relativeComponentOrCallback = this.initPageTitleMaskTimeout;
         Lng.relativeComponentOrCallback = this.initTitlePrevMaskTimeout;
-
-        this.dataScroll.timeout = setTimeout(() => {
-            Scroll.action = this.changeSlideByScroll;
-        }, PAGE_TRANSITION_TIME)
     }
 
     changeSlideByScroll = event => {
@@ -467,6 +467,8 @@ export default class Slider extends Component {
     componentWillUnmount() {
         window.removeEventListener('mouseup', this.dragStop);
         window.removeEventListener('touchend', this.dragStop);
+        window.removeEventListener('touchmove', this.move);
+        window.removeEventListener('mousemove', this.move);
 
         this.menuButton.removeChild(this.menuButtonMask);
 

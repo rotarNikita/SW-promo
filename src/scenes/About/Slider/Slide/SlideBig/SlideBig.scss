@@ -8,6 +8,11 @@
   left: 0;
   opacity: 1;
   justify-content: space-between;
+  @media (max-width: $mediaM) {
+    &:first-of-type {
+      flex-direction: column-reverse;
+    }
+  }
 }
 
 .image, .loader {
@@ -39,6 +44,15 @@
   width: 440px;
   height: 440px;
   position: relative;
+  @media (max-width: $mediaM) {
+    width: 300px;
+    height: 300px;
+    margin-bottom: 10px;
+  }
+  @media (max-width: $mediaS) {
+    width: 200px;
+    height: 200px;
+  }
 }
 
 .content {
@@ -54,11 +68,25 @@
   font-weight: 400;
   line-height: 30px;
   letter-spacing: 0.9px;
+  @media (max-width: $mediaM) {
+    position: static;
+  }
+  @media (max-width: $mediaS) {
+    font-size: 14px;
+    line-height: 16px;
+  }
+  @media (max-width: $mediaXS) {
+    font-size: 10px;
+    line-height: 12px;
+  }
 }
 
 .description {
   position: absolute;
   bottom: 40px;
+  @media (max-width: $mediaM) {
+    position: static;
+  }
 }
 
 .title {
@@ -66,6 +94,13 @@
   font-size: 24px;
   text-transform: uppercase;
   padding-bottom: 25px;
+  @media (max-width: $mediaS) {
+    font-size: 16px;
+    padding-bottom: 10px;
+  }
+  @media (max-width: $mediaXS) {
+    display: none;
+  }
 }
 
 .line {
@@ -73,9 +108,16 @@
   height: 2px;
   background-color: $themeColor1;
   margin-bottom: 25px;
+  @media (max-width: $mediaS) {
+    margin-bottom: 10px;
+  }
 }
 
 .name {
   font-size: 18px;
   font-weight: 500;
+  @media (max-width: $mediaS) {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
 }

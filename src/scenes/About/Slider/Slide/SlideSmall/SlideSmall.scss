@@ -2,12 +2,24 @@
 
 .slide {
   width: 350px;
+  @media (max-width: $mediaM) {
+    width: 300px;
+  }
+  @media (max-width: $mediaS) {
+    width: 200px;
+  }
 }
 
 .imageContainer {
   width: 100%;
   height: 350px;
   position: relative;
+  @media (max-width: $mediaM) {
+    height: 300px;
+  }
+  @media (max-width: $mediaS) {
+    height: 200px;
+  }
 }
 
 .image {
@@ -20,14 +32,26 @@
   height: 2px;
   background-color: $themeColor1;
   margin: 20px 0;
+  @media (max-width: $mediaS) {
+    margin: 10px 0;
+  }
 }
 
 .name {
   font-size: 16px;
   letter-spacing: 0.8px;
   padding-bottom: 20px;
+  @media (max-width: $mediaS) {
+    font-size: 14px;
+    line-height: 18px;
+    padding-bottom: 10px;
+  }
 }
 
 .text {
   font-weight: 400;
+  @media (max-width: $mediaS) {
+    font-size: 14px;
+    line-height: 16px;
+  }
 }
