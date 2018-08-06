@@ -78,20 +78,22 @@ export default class Footer extends Component {
 
         return (
             <footer className={'container ' + styles.footer}>
-                <div id="footer-left">
+                <div>
                     <Email mount={currentPage ? currentPage.link === '/' : false}/>
                     {prevPage &&
                     <TitlePrev prevPage={prevPage}
                                currentPage={currentPage}
                                historyPrevPage={historyPrevPage}/>}
+                    <div id="footer-left" />
                 </div>
                 <div id="footer-center">
                 </div>
-                <div id="footer-right">
+                <div>
                     {nextPage &&
                     <TitleNext nextPage={nextPage}
                                historyPrevPage={historyPrevPage}
                                currentPage={currentPage}/>}
+                    <div id="footer-right" />
                 </div>
             </footer>
         )

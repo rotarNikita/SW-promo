@@ -12,7 +12,17 @@ export default class Prev extends PureComponent {
         };
 
         this.el = document.createElement('div');
+        Object.assign(this.el.style, {
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            whiteSpace: 'nowrap'
+        });
     }
+
+    static defaultProps = {
+        needAnimationState: true
+    };
 
     animationEnd = () => {
         let state = {animation: false};
@@ -20,24 +30,31 @@ export default class Prev extends PureComponent {
         if (!this.props.mount) {
             state.show = false;
             state.animation = true;
-            document.getElementById('footer-left').removeChild(this.el)
         }
 
         this.setState(state)
     };
 
+    componentWillUnmount() {
+        const parent = document.getElementById('footer-left');
+
+        if (parent.contains(this.el)) parent.removeChild(this.el)
+    }
+
     componentWillReceiveProps (nextProps) {
-        if (nextProps.mount) {
+        if (nextProps.mount && !this.state.show) {
             this.setState({ show: true });
             document.getElementById('footer-left').appendChild(this.el);
         }
     }
 
     render () {
-        const { mount, ...restProps } = this.props;
+        const { mount, needAnimationState, ...restProps } = this.props;
         const { show, animation } = this.state;
 
-        const className = styles.text + ' ' + (mount ? animation ? styles.open : '' : styles.close);
+        let className;
+        if (needAnimationState) className = styles.text + ' ' + (mount ? animation ? styles.open : '' : styles.close);
+        else className = styles.text + ' ' + (mount ? styles.open : styles.close);
 
         if (show) return ReactDOM.createPortal(
             <div {...restProps}

@@ -3,7 +3,7 @@ import styles from './SlideBig.scss';
 import loader from '../../../../../generals/photoLoader/index';
 
 let LEFT_BREAKPOINT;
-if (window.innerWidth > 768) LEFT_BREAKPOINT = [200, 100, 0];
+if (window.innerWidth > 530) LEFT_BREAKPOINT = [200, 100, 0];
 else LEFT_BREAKPOINT = [180, 90, 0];
 
 const SCALE_BREAKPOINT = [0.9, 0.9, 1];

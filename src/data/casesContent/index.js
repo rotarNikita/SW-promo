@@ -77,10 +77,10 @@ export const VIDEOS = [
         subtitle: 'Design, Development',
         link: 'http://skad.in.ua/',
         sources: [
-            {
-                type: 'video/mp4',
-                src: require('./Nokian1.mp4')
-            },
+            // {
+            //     type: 'video/mp4',
+            //     src: require('./Nokian1.mp4')
+            // },
             {
                 type: 'image/gif',
                 src: require('./nokian111.gif')
@@ -127,10 +127,10 @@ export const VIDEOS = [
         subtitle: 'Design, Development, Сorporate identity',
         link: 'moon.swagency.xyz',
         sources: [
-            {
-                type: 'video/mp4',
-                src: require('./moondeer.mp4')
-            },
+            // {
+            //     type: 'video/mp4',
+            //     src: require('./moondeer.mp4')
+            // },
             {
                 type: 'image/gif',
                 src: require('./moonder1.gif')

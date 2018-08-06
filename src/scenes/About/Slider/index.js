@@ -29,7 +29,7 @@ export default class Slider extends Component {
         let slidesInOneWrapper = 3;
 
         if (window.innerWidth > 1200) slidesInOneWrapper = 3;
-        else if (window.innerWidth > 768) slidesInOneWrapper = 2;
+        else if (window.innerWidth > 530) slidesInOneWrapper = 2;
         else slidesInOneWrapper = 1;
 
         this.state = {
@@ -69,10 +69,10 @@ export default class Slider extends Component {
         };
 
         this.MQCIDs = MQC.addResizeChecker({
-            to: 768,
+            to: 530,
             callback: this.setSlidesInOneWrapper(1)
         }, {
-            from: 769,
+            from: 531,
             to: 1200,
             callback: this.setSlidesInOneWrapper(2)
         }, {

@@ -8,9 +8,33 @@ import { HEADER_LOGO_SVG_DEF_ID } from "../../../data/constants";
 import MQC from '../../../actions/MediaQueryChecker';
 
 export default class HeaderLogo extends Component {
-    state = {
-        show: this.props.mount
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            show: props.mount,
+            width: window.innerWidth > 768 ? 82 : 41,
+            height: window.innerWidth > 768 ? 48 : 24
+        };
+
+        this.MQCIDs = MQC.addResizeChecker({
+            from: 769,
+            callback: () => {
+                this.setState({
+                    width: 82,
+                    height: 48
+                })
+            }
+        }, {
+            to: 768,
+            callback: () => {
+                this.setState({
+                    width: 41,
+                    height: 24
+                })
+            }
+        })
+    }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.mount) this.setState({show: true})
@@ -26,13 +50,13 @@ export default class HeaderLogo extends Component {
     };
 
     render () {
-        const { show } = this.state;
+        const { show, width, height } = this.state;
         const { mount } = this.props;
 
         const logoClassName = [styles.logo, mount ? styles.slideLeft : styles.slideRight].join(' ');
 
         const SVGElement = () => (
-            <svg width={82} height={48}>
+            <svg width={width} height={height}>
                 <use href={`#${HEADER_LOGO_SVG_DEF_ID}`} xlinkHref={`#${HEADER_LOGO_SVG_DEF_ID}`} />
             </svg>
         );

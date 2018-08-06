@@ -5,6 +5,9 @@ import { PAGE_TRANSITION_TIME } from "../../../data/constants";
 import Navigation from './Navigation';
 import NaNimate from '../../../generals/NaNimate';
 import PropTypes from 'prop-types';
+import MQC from '../../../actions/MediaQueryChecker';
+import Next from '../../About/Slider/Next';
+import Prev from '../../About/Slider/Prev';
 
 const ANIMATION_DURATION = {
     slow: PAGE_TRANSITION_TIME,
@@ -31,7 +34,8 @@ export default class Slider extends Component {
             currentX: undefined,
             endX: undefined,
             position: 0,
-            slow: false
+            slow: false,
+            sensitive: 10
         };
 
         this.sliderData = {
@@ -69,6 +73,24 @@ export default class Slider extends Component {
 
         this.menuButton = null;
         this.menuLinks = [];
+
+        this.MQCIDs = MQC.addResizeChecker({
+            callback: () => {
+                this.sliderData.width = window.innerWidth;
+                this.slideDataCalc();
+                this.animatingSlideChange();
+            }
+        }, {
+            to: 768,
+            callback: () => {
+                this.movementData.sensitive = 10
+            }
+        }, {
+            from: 769,
+            callback: () => {
+                this.movementData.sensitive = 2
+            }
+        })
     }
 
     static childContextTypes = {
@@ -89,8 +111,13 @@ export default class Slider extends Component {
         this.menuButton = document.getElementById('menuButton');
         this.menuLinks = document.querySelectorAll('[class^="MenuItem__item"]');
 
-        window.addEventListener('mousemove', this.move);
-        window.addEventListener('mouseup', this.moveEnd);
+        if (MQC.isTouchDevice) {
+            window.addEventListener('touchmove', this.move);
+            window.addEventListener('touchend', this.moveEnd);
+        } else {
+            window.addEventListener('mousemove', this.move);
+            window.addEventListener('mouseup', this.moveEnd);
+        }
 
         this.menuButton.addEventListener('click', this.menuClick);
         this.menuLinkListener('addEventListener');
@@ -174,7 +201,7 @@ export default class Slider extends Component {
 
         for (let i = 0; i < slides.length; i++) {
             let slideWidth = slides[i].DOMElement.offsetWidth;
-            let slidePosition = (width - slideWidth) / 2 - trackWidth ;
+            let slidePosition = (width - slideWidth) / 2 - trackWidth;
 
             slidesPositions.push(slidePosition);
             slidesWidths.push(slideWidth);
@@ -186,7 +213,7 @@ export default class Slider extends Component {
         sliderData.slidesPositions = slidesPositions;
         sliderData.trackWidth = trackWidth;
         sliderData.leftBound = slidesPositions[0];
-        sliderData.rightBound = slidesPositions[sliderData.length - 1]
+        sliderData.rightBound = slidesPositions[sliderData.length - 1];
     };
 
     moveStart = event => {
@@ -194,8 +221,8 @@ export default class Slider extends Component {
 
         sliderData.animation.stop(true);
 
-        movementData.startX = event.clientX;
-        movementData.currentX = event.clientX;
+        movementData.startX = event.clientX !== undefined ? event.clientX : event.touches[0].clientX;
+        movementData.currentX = movementData.startX;
         movementData.position = this.state.position;
         movementData.move = true;
         movementData.slow = false;
@@ -203,8 +230,8 @@ export default class Slider extends Component {
 
     moveEnd = event => {
         if (this.movementData.move) {
-            this.movementData.endX = event.clientX;
-            this.movementData.currentX = event.clientX;
+            this.movementData.endX = event.clientX !== undefined ? event.clientX : event.changedTouches[0].clientX;
+            this.movementData.currentX = this.movementData.endX;
             this.movementData.move = false;
             this.movementData.position = this.state.position;
 
@@ -233,7 +260,7 @@ export default class Slider extends Component {
 
     chooseCurrentSlide(type) {
         const { length, slidesWidths, width } = this.sliderData;
-        const { endX, startX } = this.movementData;
+        const { endX, startX, sensitive } = this.movementData;
         const { position } = this.state;
 
 
@@ -244,7 +271,7 @@ export default class Slider extends Component {
                 for (let j = 0; j < i; j++)
                     widthPrevSlides += slidesWidths[j];
 
-                if (width - position > widthPrevSlides + slidesWidths[i] / 2) {
+                if (width - position > widthPrevSlides + slidesWidths[i] / sensitive) {
                     this.sliderData.currentSlide = i;
                     break;
                 }
@@ -256,7 +283,7 @@ export default class Slider extends Component {
                 for (let j = 0; j < i; j++)
                     widthPrevSlides += slidesWidths[j];
 
-                if (-position < widthPrevSlides + slidesWidths[i] / 2) {
+                if (-position < widthPrevSlides + slidesWidths[i] * (1 - 1 / sensitive)) {
                     this.sliderData.currentSlide = i;
                     break;
                 }
@@ -271,27 +298,43 @@ export default class Slider extends Component {
             const { position } = this.state;
             const { slidesPositions, length } = this.sliderData;
 
-            if ((-position > -slidesPositions[length - 1] && movementData.endX > event.clientX) ||
-                (-position < -slidesPositions[0] && movementData.endX < event.clientX)) {
+            const clientX = event.clientX !== undefined ? event.clientX : event.touches[0].clientX;
+
+            if ((-position > -slidesPositions[length - 1] && movementData.endX > clientX) ||
+                (-position < -slidesPositions[0] && movementData.endX < clientX)) {
                 movementData.slow = true;
             } else {
                 if (movementData.slow) {
-                    this.movementData.startX = event.clientX;
+                    this.movementData.startX = clientX;
                     this.movementData.position = position;
 
                     movementData.slow = false;
                 }
 
-                movementData.currentX = event.clientX;
+                movementData.currentX = clientX;
             }
 
-            movementData.endX = event.clientX;
+            movementData.endX = clientX;
 
             this.setState({
                 position: movementData.position + movementData.currentX - movementData.startX +
                 (movementData.slow ? (movementData.endX - movementData.currentX) / 5 : 0)
             })
         }
+    };
+
+    nextClick = e => {
+        const { currentSlide, length } = this.sliderData;
+
+        e.stopPropagation();
+        if (currentSlide + 1 < length) this.dotClick(currentSlide + 1);
+    };
+
+    prevClick = e => {
+        const { currentSlide } = this.sliderData;
+
+        e.stopPropagation();
+        if (currentSlide > 0) this.dotClick(currentSlide - 1);
     };
 
     dotClick = slide => {
@@ -303,6 +346,8 @@ export default class Slider extends Component {
     componentWillUnmount() {
         window.removeEventListener('mousemove', this.move);
         window.removeEventListener('mouseup', this.moveEnd);
+        window.removeEventListener('touchmove', this.move);
+        window.removeEventListener('touchend', this.moveEnd);
 
         Scroll.action.remove(this.slideScroll);
         clearTimeout(this.scrollData.scrollTimeout);
@@ -314,25 +359,35 @@ export default class Slider extends Component {
 
         this.scrollData.globalRight = true;
         this.scrollData.globalLeft = true;
+
+        MQC.removeResizeChecker(this.MQCIDs);
     }
 
     render() {
         const { children } = this.props;
         const { position, menuOpened } = this.state;
-        const { currentSlide, slides } = this.sliderData;
+        const { currentSlide, slides, length } = this.sliderData;
 
-        const showNavigation = window.location.pathname === '/cases' && !menuOpened;
+        const currentPage = window.location.pathname === '/cases';
+        const mountNavigation = currentPage && !menuOpened;
 
         return (
-            <div onMouseDown={this.moveStart} className={styles.wrapper}>
+            <div onMouseDown={!MQC.isTouchDevice ? this.moveStart : () => {}}
+                 onTouchStart={MQC.isTouchDevice ? this.moveStart : () => {}}
+                 className={styles.wrapper}>
                 <div className={styles.track}
                      style={{left: `${position}px`}}>
                     {children}
                 </div>
-                <Navigation mount={showNavigation}
+                <Navigation mount={mountNavigation}
                             slides={slides}
                             dotClick={this.dotClick}
                             currentSlide={currentSlide}/>
+
+                <Next onClick={this.nextClick} mount={currentSlide < length - 1 && currentPage}>Next</Next>
+                <Prev onClick={this.prevClick}
+                      needAnimationState={false}
+                      mount={currentSlide > 0 && currentPage}>Prev</Prev>
             </div>
         )
     }

@@ -29,7 +29,7 @@
   right: 0;
   transform: translateY(-50%);
   @media (max-width: $mediaS) {
-    top: 12px;
+    top: 14px;
   }
   &.slideLeft {
     animation: slideLeft .5s;

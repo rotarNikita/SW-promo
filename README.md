@@ -2,7 +2,9 @@
 
 ## Version log
 
-### v. 1.4.1
+### v. 1.5.2
+- mobile header logo
+- mobile page "Cases"
 - mobile page "About us"
 - mobile service page
 - menu ball canvas bug fix on resolution change

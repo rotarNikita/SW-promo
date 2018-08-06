@@ -20,7 +20,7 @@
   }
 }
 
-.list {
+.list, .counter {
   display: flex;
   margin: 0 -5px;
   z-index: -1;
@@ -30,4 +30,12 @@
   &.slideRight {
     animation: slideRight .5s;
   }
+}
+
+.counter {
+  display: block;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
 }

@@ -1,17 +1,30 @@
 import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './Navigation.scss';
-import NavItem from './NavItem'
+import NavItem from './NavItem';
+import MQC from '../../../../actions/MediaQueryChecker';
 
 export default class Navigation extends PureComponent {
     constructor(props) {
         super(props);
 
         this.state = {
-            show: props.mount
+            show: props.mount,
+            size: 'M'
         };
 
+        if (window.innerWidth > 1200) this.state.size = 'M';
+        else this.state.size = 'S';
+
         this.container = document.createElement('div');
+
+        this.MQCIDs = MQC.addResizeChecker({
+            from: 1201,
+            callback: this.setState.bind(this, {size: 'M'})
+        }, {
+            to: 1200,
+            callback: this.setState.bind(this, {size: 'S'})
+        })
     }
 
     componentDidMount() {
@@ -23,7 +36,9 @@ export default class Navigation extends PureComponent {
     }
 
     componentWillUnmount() {
-        document.getElementById('headerRight').removeChild(this.container)
+        document.getElementById('headerRight').removeChild(this.container);
+
+        MQC.removeResizeChecker(this.MQCIDs);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -34,10 +49,7 @@ export default class Navigation extends PureComponent {
         if (!this.props.mount) this.setState({show: false})
     };
 
-    render() {
-        const { show } = this.state;
-        const { mount, slides, currentSlide, dotClick } = this.props;
-
+    renderSizeM({ mount, slides, currentSlide, dotClick }) {
         const content = slides.map((slide, i) => <NavItem key={slide.props.data.id}
                                                           onClick={dotClick.bind(null, i)}
                                                           slide={slide}
@@ -45,11 +57,28 @@ export default class Navigation extends PureComponent {
 
         const addingClass = mount ? styles.slideLeft : styles.slideRight;
 
-        if (show) return ReactDOM.createPortal(
+        return (
             <ul className={`${styles.list} ${addingClass}`} onAnimationEnd={this.animationEnd}>
                 {content}
-            </ul>, this.container
-        );
+            </ul>
+        )
+    }
+
+    renderSizeS({ mount, slides, currentSlide }) {
+        const { length } = slides;
+        const addingClass = mount ? styles.slideLeft : styles.slideRight;
+
+        return (
+            <div className={`${styles.counter} ${addingClass}`} onAnimationEnd={this.animationEnd}>
+                {currentSlide + 1}/{length}
+            </div>
+        )
+    }
+
+    render() {
+        const { show, size } = this.state;
+
+        if (show) return ReactDOM.createPortal(this[`renderSize${size}`](this.props), this.container);
 
         return null;
     }

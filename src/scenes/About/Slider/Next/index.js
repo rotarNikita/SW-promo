@@ -10,15 +10,24 @@ export default class Next extends PureComponent {
             show: false
         };
 
-        this.el = document.createElement('div')
+        this.el = document.createElement('div');
+        Object.assign(this.el.style, {
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            whiteSpace: 'nowrap'
+        });
     }
 
     animationEnd = () => {
         if (!this.props.mount) {
             this.setState({show: false});
-            document.getElementById('footer-right').removeChild(this.el)
         }
     };
+
+    componentWillUnmount() {
+        document.getElementById('footer-right').removeChild(this.el)
+    }
 
     componentWillReceiveProps (nextProps) {
         setTimeout(() => {

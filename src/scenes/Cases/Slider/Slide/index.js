@@ -2,14 +2,19 @@ import React, { PureComponent } from 'react';
 import styles from './Slide.scss';
 import loader from '../../../../generals/photoLoader';
 import PropsTypes from 'prop-types';
+import MQC from '../../../../actions/MediaQueryChecker';
 
 export default class Slide extends PureComponent {
     constructor(props, context) {
         super(props, context);
 
         this.state = {
-            load: props.loaded
+            load: props.loaded,
+            size: 'M'
         };
+
+        if (window.innerWidth > 768) this.state.size = 'M';
+        else this.state.size = 'S';
 
         this.resources = {
             videos: [],
@@ -17,12 +22,24 @@ export default class Slide extends PureComponent {
         };
 
         this.checkResources();
+
+        this.MQCIDs = MQC.addResizeChecker({
+            from: 769,
+            callback: this.setState.bind(this, {size: 'M'})
+        }, {
+            to: 768,
+            callback: this.setState.bind(this, {size: 'S'})
+        })
     }
 
     componentDidMount() {
         if (!this.resources.videos.length) {
             this.loadImage();
         }
+    }
+
+    componentWillUnmount() {
+        MQC.removeResizeChecker(this.MQCIDs)
     }
 
     loadImage() {
@@ -57,17 +74,32 @@ export default class Slide extends PureComponent {
         slideClick: PropsTypes.func
     };
 
+    static renderDescription({ data }) {
+        return (
+            <div className={`${window.innerWidth > 768 ? styles.media : ''} ${styles.description}`}>
+                <div className={styles.title}>
+                    {data.title}
+                    <br/>
+                    <div className={styles.subtitle}>{data.subtitle}</div>
+                </div>
+                {data.link && <a className={styles.link}
+                                 target="_blank"
+                                 href={data.link}>DISCOVER</a>}
+            </div>
+        )
+    }
+
     render() {
         const { data, slideIndex } = this.props;
         const { resources } = this;
-        const { load } = this.state;
+        const { load , size } = this.state;
         const { slideClick } = this.context;
 
         return (
             <div className={styles.slide} ref={slide => this.DOMElement = slide}>
                 <div onClick={slideClick.bind(null, slideIndex)} className={styles.inner}>
-                    {resources.videos.length &&
-                    <video className={`${styles.media} ${styles.video}`}
+                    {resources.videos.length !== 0 &&
+                    <video className={styles.media}
                            onCanPlayThrough={this.hideLoader}
                            autoPlay
                            muted
@@ -78,19 +110,14 @@ export default class Slide extends PureComponent {
                     {!resources.videos.length &&
                     resources.image &&
                     <img className={`${styles.media} ${styles.image}`}
+                         alt={data.title}
                          src={load ? resources.image : ''}/>}
                     {!load && <div className={`${styles.media} ${styles.loader}`}>
                         <div className={styles.loaderInner} style={{backgroundImage: `url(${loader})`}}/>
                     </div>}
-                    {load && <div className={`${styles.media} ${styles.description}`}>
-                        <div className={styles.title}>
-                            {data.title}
-                            <br/>
-                            <div className={styles.subtitle}>{data.subtitle}</div>
-                        </div>
-                        {data.link && <a className={styles.link} href={data.link}>DISCOVER</a>}
-                    </div>}
+                    {size === 'M' && load && Slide.renderDescription(this.props)}
                 </div>
+                {size === 'S' && Slide.renderDescription(this.props)}
             </div>
         )
     }

@@ -9,19 +9,19 @@ export default class Dots extends PureComponent {
 
         this.state = {
             show: false,
-            showNumbers: window.innerWidth >= 426
+            showNumbers: window.innerWidth >= 1201
         };
 
         this.container = document.createElement('div');
 
         this.MQCIDs = MQC.addResizeChecker({
-            to: 425,
+            to: 1200,
             callback: () => {
                 this.setState({showNumbers: false})
             }
         },
         {
-            from: 426,
+            from: 1201,
             callback: () => {
                 this.setState({showNumbers: true})
             }
@@ -39,14 +39,14 @@ export default class Dots extends PureComponent {
     show = () => {
         if (this.props.mount) {
             this.setState({ show: true });
-            document.getElementById('footer-right').appendChild(this.container);
+            document.getElementById('footer-right').parentNode.appendChild(this.container);
         }
     };
 
     animationEnd = () => {
         if (!this.props.mount) {
             this.setState({ show: false });
-            document.getElementById('footer-right').removeChild(this.container);
+            document.getElementById('footer-right').parentNode.removeChild(this.container);
         }
 
     };
