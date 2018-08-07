@@ -2,6 +2,7 @@ import ReactDOM from "react-dom";
 import React, { PureComponent } from "react";
 import Button from '../../../components/Button';
 import styles from './ContactsButton.scss';
+import MQC from '../../../actions/MediaQueryChecker';
 
 export default class ContactsButton extends PureComponent {
     constructor(props) {
@@ -9,10 +10,15 @@ export default class ContactsButton extends PureComponent {
 
         this.state = {
             show: true,
-            mouseDown: false
+            mouseDown: false,
+            portal: window.innerWidth > 425
         };
 
-        this.container = document.createElement('div')
+        this.container = document.createElement('div');
+
+        this.MQCIDs = MQC.addResizeChecker({
+            callback: () => this.setState({portal: window.innerWidth > 425})
+        })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -25,6 +31,8 @@ export default class ContactsButton extends PureComponent {
 
     componentWillUnmount() {
         document.getElementById('footer-right').removeChild(this.container);
+
+        MQC.removeResizeChecker(this.MQCIDs)
     }
 
     animationEnd = () => {
@@ -41,12 +49,12 @@ export default class ContactsButton extends PureComponent {
 
     render() {
         const { children, mount, ...restProps } = this.props;
-        const { show, mouseDown } = this.state;
+        const { show, mouseDown, portal } = this.state;
 
         const mountAnimation = mount ? styles.slideLeft : styles.slideRight;
         const mouseDownClass = mouseDown ? styles.mouseDown : '';
 
-        if (show) return ReactDOM.createPortal(
+        const button = (
             <Button onAnimationEnd={this.animationEnd}
                     onMouseDown={this.mouseDown}
                     onMouseUp={this.mouseUp}
@@ -54,9 +62,12 @@ export default class ContactsButton extends PureComponent {
                     className={`${styles.button} ${mountAnimation} ${mouseDownClass}`}
                     {...restProps}>
                 {children}
-            </Button>,
-            this.container
+            </Button>
         );
+
+        if (show) return portal ?
+            ReactDOM.createPortal(button, this.container) :
+            button;
 
         return null
     }

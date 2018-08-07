@@ -31,6 +31,7 @@ export class DefaultInput extends PureComponent {
             value: '',
             valid: false,
             error: false,
+            focus: false
         };
 
         context.addToData(props.name, '', false, props.required);
@@ -43,7 +44,7 @@ export class DefaultInput extends PureComponent {
     };
 
     reset = () => {
-        this.setState({value: '', valid: false, error: false})
+        this.setState({value: '', valid: false, error: false, focus: false})
     };
 
     componentWillReceiveProps(nextProps) {
@@ -77,14 +78,17 @@ export class DefaultInput extends PureComponent {
 
         this.setState(state)
     };
-    
+
+    focus = () => this.setState({focus: true});
+    blur = () => this.setState({focus: !!this.state.value});
+
     render() {
         const { label, required } = this.props;
-        const { value, valid, error } = this.state;
+        const { value, valid, error, focus } = this.state;
 
         return (
             <div className={styles.wrapper}>
-                <label className={styles.label} htmlFor={this.id}>
+                <label className={focus ? styles.label + ' ' + styles.focus : styles.label} htmlFor={this.id}>
                     <span>
                         {label}
                     </span>
@@ -95,6 +99,7 @@ export class DefaultInput extends PureComponent {
                            type="text"
                            value={value}
                            onBlur={this.blur}
+                           onFocus={this.focus}
                            onChange={this.handleChange}/>
                     <div className={styles.line}/>
                 </div>
@@ -112,10 +117,12 @@ const REGEXP_PATTERN = /\+ \d{2} \(\d{3}\) \d{3} \d{2} \d{2}/;
 const MIN_LENGTH = TELEPHONE_PATTERN.indexOf(CHAR_SAMPLE) + 1;
 
 export class TelInput extends DefaultInput {
-    blur = () => {
+    blur() {
+        super.blur();
+
         if (this.state.value.length < MIN_LENGTH)
             this.setState({value: ''})
-    };
+    }
 
     static parseToPattern(value) {
         let newValue = value;
@@ -155,7 +162,8 @@ export class Select extends PureComponent {
 
         this.state = {
             opened: false,
-            value: ''
+            value: '',
+            focus: false
         };
 
         this.id = 'Input__' + generateKey();
@@ -176,7 +184,7 @@ export class Select extends PureComponent {
 
     reset = () => {
         this.unselectAll();
-        this.setState({value: ''})
+        this.setState({value: '', focus: false})
     };
 
     getChildContext() {
@@ -202,20 +210,20 @@ export class Select extends PureComponent {
     }
 
     handleFocus = () => {
-        this.setState({opened: true})
+        this.setState({opened: true, focus: true})
     };
 
     handleBlur = () => {
-        this.setState({opened: false})
+        this.setState({opened: false, focus: !!this.state.value})
     };
 
     render() {
         const { label, children } = this.props;
-        const { value, opened } = this.state;
+        const { value, opened, focus } = this.state;
 
         return (
             <div className={styles.wrapper}>
-                <label className={styles.label} htmlFor={this.id}>
+                <label className={focus ? styles.label + ' ' + styles.focus : styles.label} htmlFor={this.id}>
                     <span>
                         {label}
                     </span>
@@ -279,7 +287,8 @@ export class TextArea extends PureComponent {
 
         this.state = {
             value: '',
-            showLabel: true
+            showLabel: true,
+            focus: false
         };
 
         this.id = 'Input__' + generateKey();
@@ -294,7 +303,7 @@ export class TextArea extends PureComponent {
     };
 
     reset = () => {
-        this.setState({value: ''})
+        this.setState({value: '', focus: false})
     };
 
     handleChange = event => {
@@ -309,23 +318,23 @@ export class TextArea extends PureComponent {
     };
 
     handleFocus = () => {
-        this.setState({showLabel: false})
+        this.setState({focus: true})
     };
 
     handleBlur = () => {
-        this.setState(prevState => ({showLabel: !prevState.value}))
+        this.setState(prevState => ({focus: !!prevState.value}))
     };
 
     render() {
-        const { value, showLabel } = this.state;
+        const { value, focus } = this.state;
         const { label } = this.props;
 
         return (
             <div className={styles.wrapper}>
                 <div className={`${styles.inputWrapper} ${styles.textarea}`}>
-                    {showLabel && <label htmlFor={this.id} className={styles.textareaLabel}>
+                    <label htmlFor={this.id} className={focus ? styles.textareaLabel + ' ' + styles.focus : styles.textareaLabel}>
                         {label}
-                    </label>}
+                    </label>
                     <textarea className={styles.input}
                               id={this.id}
                               onBlur={this.handleBlur}

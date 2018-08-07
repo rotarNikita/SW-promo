@@ -83,9 +83,6 @@ export default class Form extends PureComponent {
     submit = event => {
         event.preventDefault();
 
-        // console.log(this.formData);
-        // ajax send data
-
         const { formData } = this;
 
         const errorsInValidation = {};

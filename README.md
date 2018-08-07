@@ -2,7 +2,8 @@
 
 ## Version log
 
-### v. 1.5.2
+### v. 1.6.2
+- mobile page "Contacts"
 - mobile header logo
 - mobile page "Cases"
 - mobile page "About us"

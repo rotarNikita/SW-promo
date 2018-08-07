@@ -51,11 +51,14 @@
 .wrapper {
   position: fixed;
   top: 0;
-  right: 0;
   left: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
   background-color: $themeColor3;
   z-index: 120;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .form {
@@ -64,6 +67,12 @@
   width: 100%;
   left: 0;
   transform: translateY(-50%);
+  @media (max-width: $mediaXS) {
+    transform: none;
+    position: static;
+    padding-top: 80px;
+    padding-bottom: 20px;
+  }
 }
 
 .showForm {
@@ -80,6 +89,9 @@
   left: 0;
   text-align: right;
   top: $pageSpaceTopBottom;
+  @media (max-width: $mediaXS) {
+    top: 10px;
+  }
 }
 
 .cross {
@@ -117,11 +129,17 @@ $padding: 25px;
 .row {
   display: flex;
   margin: 0 -$padding;
+  @media (max-width: $mediaXS) {
+    flex-wrap: wrap;
+  }
 }
 
 .col {
   width: 50%;
   padding: 0 $padding;
+  @media (max-width: $mediaXS) {
+    width: 100%;
+  }
 }
 
 .submitWrapper {
@@ -130,6 +148,12 @@ $padding: 25px;
   transform: translateX(-50%);
   top: calc(100% + 30px);
   text-align: center;
+  @media (max-width: $mediaXS) {
+    width: 100%;
+    padding-top: 15px;
+    position: static;
+    transform: none;
+  }
 }
 
 .success {
@@ -137,6 +161,10 @@ $padding: 25px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.8px;
+  @media (max-width: $mediaXS) {
+    font-size: 10px;
+    letter-spacing: 1.4px;
+  }
 }
 
 .resetButton {

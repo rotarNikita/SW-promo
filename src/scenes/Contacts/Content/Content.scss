@@ -1,6 +1,18 @@
+@import "../../../generals/variables";
+
 .row {
   display: flex;
-  position: relative;
+  position: absolute;
   top: 50vh;
+  width: calc(100% - 20px);
   transform: translateY(-30%);
+  @media (max-width: $mediaS) {
+    top: 50%;
+    transform: translateY(-50%);
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar { width: 0 !important }
+  }
 }

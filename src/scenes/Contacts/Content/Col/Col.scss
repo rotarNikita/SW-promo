@@ -2,6 +2,12 @@
 
 .col {
   flex: 0 0 25%;
+  @media (max-width: $mediaS) {
+    flex-basis: 50%;
+  }
+  @media (max-width: $mediaXS) {
+    flex-basis: 100%;
+  }
 }
 
 .title {
@@ -9,6 +15,9 @@
   font-size: 14px;
   font-weight: 300;
   margin-bottom: 50px;
+  @media (max-width: $mediaS) {
+    margin-bottom: 30px;
+  }
 }
 
 .mail, .tel {
@@ -17,6 +26,9 @@
   text-decoration: none;
   margin-bottom: 20px;
   display: inline-block;
+  @media (max-width: $mediaS) {
+    margin-bottom: 10px;
+  }
 }
 
 .mail {
@@ -37,4 +49,8 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
+  @media (max-width: $mediaS) {
+    font-size: 14px;
+    line-height: 20px;
+  }
 }

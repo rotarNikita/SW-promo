@@ -25,6 +25,17 @@ $height: 40px;
       clip: rect(0px, 100vw, $height, 0px);
     }
   }
+  @media #{$isTouch} {
+    &:hover {
+      .textCopy {
+        clip: unset;
+      }
+    }
+  }
+  @media (max-width: $mediaS) {
+    width: 230px;
+    height: 50px;
+  }
 }
 
 .textCopy {
@@ -41,6 +52,9 @@ $height: 40px;
   justify-content: center;
   clip: rect($height / 2, 100vw, $height / 2, 0px);
   transition: clip .3s;
+  @media #{$isTouch} {
+    display: none;
+  }
 }
 
 .gradient {

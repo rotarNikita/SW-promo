@@ -10,6 +10,18 @@
   align-items: center;
   padding-bottom: 20px;
   border-bottom: 2px solid #c9c9c9;
+  @media (max-width: $mediaS) {
+    width: 100%;
+    padding-bottom: 0;
+    border-bottom: none;
+    position: absolute;
+    top: 2px;
+    transition: all .3s;
+    &.focus {
+      font-size: 8px;
+      top: -10px;
+    }
+  }
 }
 
 .input {
@@ -27,6 +39,9 @@
   background: transparent;
   color: #4d4d4d;
   line-height: 1.3;
+  @media (max-width: $mediaS) {
+    padding: 0 0 5px 0;
+  }
   &:-webkit-autofill {
     background: transparent;
   }
@@ -49,6 +64,9 @@
   width: 66.67%;
   border-bottom: 2px solid #c9c9c9;
   position: relative;
+  @media (max-width: $mediaS) {
+    width: 100%;
+  }
 }
 
 .line {
@@ -77,6 +95,9 @@
   right: 0;
   top: 42px;
   color: $themeColor1;
+  @media (max-width: $mediaS) {
+    top: 27px;
+  }
 }
 
 .dropdown {
@@ -89,8 +110,12 @@
   height: 0;
   transition: height .5s;
   z-index: 1;
+  background: $themeColor3;
   &.opened {
     height: 256px;
+    @media (max-width: $mediaS) {
+      height: 160px;
+    }
   }
 }
 
@@ -107,6 +132,17 @@
     background-color: #e8e8e8;
     color: #2a2929;
   }
+  @media (max-width: $mediaS) {
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 15px;
+    &:nth-child(2n) {
+      background-color: lighten(#e8e8e8, 5%);
+      &.selected {
+        background-color: #e8e8e8;
+      }
+    }
+  }
 }
 
 .select {
@@ -122,6 +158,12 @@
     resize: none;
     line-height: 1;
   }
+  @media (max-width: $mediaS) {
+    height: 126px;
+  }
+  @media (max-width: $mediaXS) {
+    height: 50px;
+  }
 }
 
 .textareaLabel {
@@ -132,6 +174,17 @@
   position: absolute;
   top: 0;
   left: 0;
+  &.focus {
+    display: none;
+  }
+  @media (max-width: $mediaS) {
+    transition: all .3s;
+    &.focus {
+      display: block;
+      font-size: 8px;
+      top: -12px;
+    }
+  }
 }
 
 .file {
@@ -145,6 +198,9 @@
   letter-spacing: 1.4px;
   cursor: pointer;
   vertical-align: middle;
+  @media (max-width: $mediaXS) {
+    font-size: 10px;
+  }
 }
 
 @keyframes rotate {
@@ -168,6 +224,10 @@
   &.loading {
     animation: rotate 1s infinite linear;
   }
+  @media (max-width: $mediaXS) {
+    font-size: 18px;
+    top: 1px;
+  }
 }
 
 .fileName {
@@ -180,4 +240,8 @@
   letter-spacing: 1.2px;
   height: 15px;
   padding-top: 20px;
+  @media (max-width: $mediaXS) {
+    padding-top: 0;
+    height: auto;
+  }
 }
