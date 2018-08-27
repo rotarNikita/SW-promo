@@ -33,7 +33,7 @@ export default class Slide extends PureComponent {
     }
 
     componentDidMount() {
-        if (!this.resources.videos.length) {
+        if (this.resources.image) {
             this.loadImage();
         }
     }
@@ -55,13 +55,13 @@ export default class Slide extends PureComponent {
         const { resources } = this;
 
         for (let i = 0; i < sources.length; i++) {
-            if (/video/.test(sources[i].type)) {
+            if (/video/.test(sources[i].type))
                 resources.videos.push(<source key={sources[i].src}
                                               src={sources[i].src}
-                                              type={sources[i].type}/>)
-            } else if (/image/.test(sources[i].type)) {
+                                              type={sources[i].type}/>);
+
+            if (/image/.test(sources[i].type))
                 resources.image = sources[i].src
-            }
         }
     }
 
@@ -99,6 +99,7 @@ export default class Slide extends PureComponent {
             <div className={styles.slide} ref={slide => this.DOMElement = slide}>
                 <div onClick={slideClick.bind(null, slideIndex)} className={styles.inner}>
                     {resources.videos.length !== 0 &&
+                    (!MQC.isTouchDevice || !resources.image) &&
                     <video className={styles.media}
                            onCanPlayThrough={this.hideLoader}
                            autoPlay
@@ -107,7 +108,7 @@ export default class Slide extends PureComponent {
                            playsInline>
                         {resources.videos}
                     </video>}
-                    {!resources.videos.length &&
+                    {(!resources.videos.length || MQC.isTouchDevice) &&
                     resources.image &&
                     <img className={`${styles.media} ${styles.image}`}
                          alt={data.title}

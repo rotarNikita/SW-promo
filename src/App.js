@@ -50,6 +50,8 @@ export default class App extends Component {
     }
 }
 
+window.COPYRIGHT = () => console.log('© SW agency / Nikita Rotar');
+
 function PageTransition (props) {
     return (
         <Route render={({ location }) => {

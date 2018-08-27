@@ -2,6 +2,9 @@
 
 ## Version log
 
+### v. 1.6.3
+- change video on cases to gif and render gif on mobile
+
 ### v. 1.6.2
 - mobile page "Contacts"
 - mobile header logo

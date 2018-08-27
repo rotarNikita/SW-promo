@@ -27,25 +27,8 @@ export const VIDEOS = [
         link: 'http://lawyers.com.ua/',
         sources: [
             {
-                type: 'video/mp4',
-                src: require('./ap1.mp4')
-            }
-        ]
-    },
-    {
-        id: generateKey(),
-        get title() {
-            return ({
-                ru: 'Центр косметологии «КОМПЛИМЕНТ»',
-                en: 'Beauty center "Compliment"'
-            })[Lng.currentLng]
-        },
-        subtitle: 'Design, Development',
-        link: 'http://compliment.ua/',
-        sources: [
-            {
-                type: 'video/mp4',
-                src: require('./kompliment1.mp4')
+                type: 'image/gif',
+                src: require('./ap.gif')
             }
         ]
     },
@@ -61,8 +44,8 @@ export const VIDEOS = [
         link: 'http://lubeoil1.com.ua/',
         sources: [
             {
-                type: 'video/mp4',
-                src: require('./mobil.mp4')
+                type: 'image/gif',
+                src: require('./mobil.gif')
             }
         ]
     },
@@ -77,13 +60,9 @@ export const VIDEOS = [
         subtitle: 'Design, Development',
         link: 'http://skad.in.ua/',
         sources: [
-            // {
-            //     type: 'video/mp4',
-            //     src: require('./Nokian1.mp4')
-            // },
             {
                 type: 'image/gif',
-                src: require('./nokian111.gif')
+                src: require('./nokian.gif')
             }
         ]
     },
@@ -94,8 +73,8 @@ export const VIDEOS = [
         link: 'http://polishchukproject.com/',
         sources: [
             {
-                type: 'video/mp4',
-                src: require('./polishuk1.mp4')
+                type: 'image/gif',
+                src: require('./polishchuk.gif')
             }
         ]
     },
@@ -127,10 +106,6 @@ export const VIDEOS = [
         subtitle: 'Design, Development, Сorporate identity',
         link: 'moon.swagency.xyz',
         sources: [
-            // {
-            //     type: 'video/mp4',
-            //     src: require('./moondeer.mp4')
-            // },
             {
                 type: 'image/gif',
                 src: require('./moonder1.gif')
@@ -151,6 +126,10 @@ export const VIDEOS = [
             {
                 type: 'video/mp4',
                 src: require('./domira1.mp4')
+            },
+            {
+                type: 'image/gif',
+                src: require('./domira.gif')
             }
         ]
     },
@@ -166,8 +145,8 @@ export const VIDEOS = [
         link: 'https://van.ua/',
         sources: [
             {
-                type: 'video/mp4',
-                src: require('./van1.mp4')
+                type: 'image/gif',
+                src: require('./van.ua.gif')
             }
         ]
     }
