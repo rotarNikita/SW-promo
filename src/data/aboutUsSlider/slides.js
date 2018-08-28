@@ -15,73 +15,183 @@ const slidesData = [
             })[Lng.currentLng]
         },
         title: 'SW AGENCY',
-        name: 'Сороченко Олег, CEO',
+        get name() {
+            return ({
+                ru: 'Сороченко Олег, CEO',
+                en: 'Oleg, CEO'
+            })[Lng.currentLng]
+        },
         img: require('./oleg.jpg')
     },
     {
         id: generateKey(),
         text: 'Head of international department',
-        name: 'Геннадий Белый, Co-Founder',
+        get name() {
+            return ({
+                ru: 'Геннадий Белый, Co-Founder',
+                en: 'Gennady, Co-Founder'
+            })[Lng.currentLng]
+        },
         img: require('./genka.jpg')
     },
     {
         id: generateKey(),
-        text: 'В ответе за всех кого приручила',
-        name: 'Арина Чабанова, Deputy CEO',
+        get text() {
+            return ({
+                ru: 'В ответе за всех кого приручила',
+                en: 'The most responsible'
+            })[Lng.currentLng]
+        },
+        get name() {
+            return ({
+                ru: 'Арина Чабанова, Deputy CEO',
+                en: 'Arina, Deputy CEO'
+            })[Lng.currentLng]
+        },
         img: require('./arina.jpg')
     },
     {
         id: generateKey(),
-        text: 'Любит говорить по телефону',
-        name: 'Черкез Алла, Sales Partner',
+        get text() {
+            return ({
+                ru: 'Любит говорить по телефону',
+                en: 'Life and soul of our office'
+            })[Lng.currentLng]
+        },
+        get name() {
+            return ({
+                ru: 'Черкез Алла, Sales Partner',
+                en: 'Alla, Sales Partner'
+            })[Lng.currentLng]
+        },
         img: require('./alla.jpg')
     },
     {
         id: generateKey(),
-        text: 'Самый везучий',
-        name: 'Масюк Даниэль, Sales Partner',
+        get text() {
+            return ({
+                ru: 'Самый везучий',
+                en: 'The wolf from Wall Street'
+            })[Lng.currentLng]
+        },
+        get name() {
+            return ({
+                ru: 'Масюк Даниэль, Sales Partner',
+                en: 'Daniel, Sales Partner'
+            })[Lng.currentLng]
+        },
         img: require('./danya.jpg')
     },
     {
         id: generateKey(),
-        text: 'Приносит печеньки и управляет проектами',
-        name: 'Мизина Анжелика, Project Manager',
+        get text() {
+            return ({
+                ru: 'Приносит печеньки и управляет проектами',
+                en: 'Takes care of projects and chocolate chip cookies '
+            })[Lng.currentLng]
+        },
+        get name() {
+            return ({
+                ru: 'Мизина Анжелика, Project Manager',
+                en: 'Anjelica, Project Manager',
+            })[Lng.currentLng]
+        },
         img: require('./ang.jpg')
     },
     {
         id: generateKey(),
-        text: 'Играется со шрифтами',
-        name: 'Марина Рубан, UI/UX Designer',
+        get text() {
+            return ({
+                ru: 'Играется со шрифтами',
+                en: 'Knows any font and color'
+            })[Lng.currentLng]
+        },
+        get name() {
+            return ({
+                ru: 'Марина Рубан, UI/UX Designer',
+                en: 'Marina, UI/UX Designer'
+            })[Lng.currentLng]
+        },
         img: require('./marina.jpg')
     },
     {
         id: generateKey(),
-        text: 'Не любит jQuery',
-        name: 'Ротарь Никита, Head of Front-end',
+        get text() {
+            return ({
+                ru: 'Не любит jQuery',
+                en: 'Dosn\'t like jQuery'
+            })[Lng.currentLng]
+        },
+        get name() {
+            return ({
+                ru: 'Ротарь Никита, Head of Front-end',
+                en: 'Nikita, Head of Front-end'
+            })[Lng.currentLng]
+        },
         img: require('./nikita.jpg')
     },
     {
         id: generateKey(),
-        text: 'Не брезгует PHP',
-        name: 'Шкапенко Леша, Head of Back-end',
+        get text() {
+            return ({
+                ru: 'Не брезгует PHP',
+                en: 'PHP monster'
+            })[Lng.currentLng]
+        },
+        get name() {
+           return ({
+               ru: 'Шкапенко Леша, Head of Back-end',
+               en: 'Alex, Head of Back-end'
+           })[Lng.currentLng]
+        },
         img: require('./alex.jpg')
     },
     {
         id: generateKey(),
-        text: 'Подсела на Flex и Grid',
-        name: 'Тесля Анна, Star of Front-end',
+        get text() {
+            return ({
+                ru: 'Подсела на Flex и Grid',
+                en: 'Flex and Grid addict'
+            })[Lng.currentLng]
+        },
+        get name() {
+            return ({
+                ru: 'Тесля Анна, Star of Front-end',
+                en: 'Anna, Star of Front-end',
+            })[Lng.currentLng]
+        },
         img: require('./anya.jpg')
     },
     {
         id: generateKey(),
-        text: 'Big Data Architect',
-        name: 'Копельчук Сергей, Star of Back-end',
+        get text() {
+            return ({
+                ru: 'Big Data Architect',
+                en: 'Big Data Architect'
+            })[Lng.currentLng]
+        },
+        get name() {
+            return ({
+                ru: 'Копельчук Сергей, Star of Back-end',
+                en: 'Sergei, Star of Back-end'
+            })[Lng.currentLng]
+        },
         img: require('./serg.jpg')
     },
     {
         id: generateKey(),
-        text: 'Любит экспериментировать',
-        name: 'Марга Игорь, Star of Front-end',
+        get text() {
+            return ({
+                ru: 'Любит экспериментировать',
+                en: 'Increases a site speed'
+            })[Lng.currentLng]
+        },
+        get name() {
+            return ({
+               ru: 'Марга Игорь, Star of Front-end',
+               en: 'Igor, Star of Front-end'
+            })[Lng.currentLng]
+        },
         img: require('./ihor.jpg')
     }
 ];

@@ -90,7 +90,7 @@ export const VIDEOS = [
         link: 'http://anslon.com.ua/',
         sources: [
             {
-                type: 'video/mp4',
+                type: 'Video/mp4',
                 src: require('./slon1.mp4')
             }
         ]
@@ -124,7 +124,7 @@ export const VIDEOS = [
         link: 'http://domira.com.ua/',
         sources: [
             {
-                type: 'video/mp4',
+                type: 'Video/mp4',
                 src: require('./domira1.mp4')
             },
             {

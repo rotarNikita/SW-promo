@@ -2,8 +2,10 @@
 
 ## Version log
 
-### v. 1.6.3
+### v. 1.6.5
 - change video on cases to gif and render gif on mobile
+- add lng to team's people
+- add video to our team
 
 ### v. 1.6.2
 - mobile page "Contacts"
